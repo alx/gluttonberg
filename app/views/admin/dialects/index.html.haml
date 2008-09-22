@@ -1,0 +1,20 @@
+- @page_title = "Dialects"
+
+- if @dialects.empty?
+  %p No dialects available
+- else
+  %table{:cellpadding => 0, :cellspacing => 0}
+    %thead
+      %tr
+        %th Dialect
+        %th.controls Controls
+    %tbody
+      - for dialect in @dialects
+        %tr
+          %td= "#{dialect.name} (#{dialect.code})"
+          %td.controls
+            %ul
+              %li= link_to('Edit', url(:edit_admin_dialect,  dialect))
+              %li= link_to("Delete", url(:delete_admin_dialect, dialect))
+        
+%p.newLink= link_to 'New', url(:new_admin_dialect)

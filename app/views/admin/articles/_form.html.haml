@@ -1,0 +1,9 @@
+- form_for(@article, :action => action) do
+  = error_messages_for(@article)
+  = text_control(:title, :label => "Title")
+  - if @article.new_record?
+    - fields_for(@article_localization) do
+      = text_area_control(:body, :label => "Body")
+      = select_control(:page_localization_id, :collection => @page_localizations, :value_method => "id", :text_method => "name_and_code", :label => "Localization")
+  = submit_button("save")
+  

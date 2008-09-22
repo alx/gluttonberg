@@ -1,0 +1,6 @@
+%h1 Settings
+- form_tag(:action => url(:admin_settings), :method => :put) do
+  - fieldset(:legend => "Localization & Internationalization") do
+    = checkbox_field(:name => "settings[localize]", :label => "Localize", :value => @settings.localize)
+    = text_field(:name => "settings[localize]", :label => "Default", :value => @settings.default_localization)
+    = submit_button("Update")

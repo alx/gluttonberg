@@ -1,0 +1,14 @@
+= form_for(@template, :action => action) do
+  = error_messages_for(@template)
+  = fieldset(:legend => "Template") do
+    %div.fieldset
+      = text_field(:name, :label => "Name")
+      = text_field(:file_name, :label => "File Name")
+      = select(:type, :collection => %w(view layout), :label => "Type")
+      = select(:format, :collection => %w(html json xml), :label => "Format")
+      = select(:language, :collection => %w(haml erb builder), :label => "Template Language")
+      
+  %p.controls
+    = submit("Save")
+    of
+    = link_to("Cancel", url(:admin_templates))

@@ -1,0 +1,17 @@
+= form_for(@page_localization, :action => action) do
+  = error_messages_for(@page_localization)
+  = fieldset(:legend => "Localization") do
+    %div.fieldset
+      = text_field(:name, :label => "Name")
+      = text_field(:slug, :label => "Slug")
+      - unless @dialects.empty?
+        = select(:dialect_id, :collection => @dialects, :value_method => "id", :text_method => "name", :include_blank => true, :label => "Dialect")
+      - unless @locales.empty?
+        = select(:locale_id, :collection => @locales, :value_method => "id", :text_method => "name", :include_blank => true, :label => "Locale")
+    
+  = fieldset(:legend => "Localization") do
+    %div.fieldset
+      - for article in @page_localization.articles
+        = text_area(:name => "content", :class => "wide", :label => article.article.section_name)
+  
+  = submit("save")

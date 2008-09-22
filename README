@@ -1,0 +1,83 @@
+== Codename Gluttonberg - A Content Management System
+This is an open source content management system being developed by 
+Freerange Future (www.freerangefuture.com)
+
+The first rule for this CMS is that it shouldn’t try to be everything to 
+everybody. Rather, it should provide the basic components needed for content 
+management, a small and simple API for additional components, authentication 
+etc. and otherwise just stay out of the way.
+
+One problem with most existing CMSs is the need to customise them for each
+client. Those CMSs that do allow for customisations usually use plugins. This
+approach sucks. It boils down to this; you’re limited to what the plugin API
+gives you. This makes it really hard to do any complex customisations. Often
+you might find yourself hacking the actual CMS code to do what you need.
+That’s a maintenance nightmare, especially when you need to update an
+installation with the latest version of the CMS.
+
+The answer is to make the CMS itself into a plugin. This leaves you free to 
+write any application code you want to, while still having access to the CMS 
+functionality via an API.
+
+Luckily Merb gives us something like a plugin API for free. Merb-slices will 
+allow us to create a CMS slice that can be included in any application. 
+Additional plugins can also be created as slices. One of the beauty of slices 
+is that they also allow your application code to over-ride any of the 
+templates or code in the slice. Dead easy customisations, without making 
+upgrades difficult.
+
+== Helping
+Firstly, YES PLEASE :) We've got a whole bunch of good ideas for developing
+this CMS and would love to have other people pitch in.
+
+If you're interested, send a message to lukesutton through GitHub.
+
+== Roadmap / Feature-set
+This describes the feature set we are aiming for. Most of the actual 
+implementation details are glossed over, instead we're just stating what we'd
+like to achieve with the system.
+
+=== Localization
+All contents in the CMS will be localized. In the simple case this would 
+involve providing translations for each specified dialect. The more complex
+case involves creating localizations which may then also provide multiple 
+translations.
+
+The localization can also optionally be turned off, with the system 
+transparently choosing a default for the users.
+
+The CMS itself will parse URLs and request headers to set the correct 
+locale/dialect. Any component in the CMS can then use this information to
+serve the correct content to users.
+
+=== Pages and Content
+Like any decent CMS, this one will allow users to add pages, arrange them in
+a hierarchy and edit their contents. 
+
+=== Custom Components
+These would come in two forms. The first may be third-party components 
+distributed as slices. Say a forum or a webshop. These slices would have 
+register themselves with the CMS and integrate with the admin interface and
+make use of the localization and authentication features.
+
+=== Authentication
+Authentication for the back end, but also a generic authentication framework 
+that can be used on the public side. Consider building a forum component and 
+needing to authenticate both administrators and other users. You don't really
+want to have to roll all your own custom authentication code.
+
+We are currently considering using hassox's merb-auth-core to handle the 
+under-lying implementation, with maybe a little sugar on top to integrate it
+with the CMS.
+
+=== Asset Library
+All content systems need some way to manage assets to be used in the site. 
+This includes images, video and documents (PDF, Word, Excel etc).
+
+The plan is to build an asset library with an API that allows the CMS 
+components to access and manipulate it's contents. For example you need to be
+able to add images to pages in the site, so the content component needs to
+prompt the user to choose an asset, then link it to the page model.
+
+You would also be able to have custom components hook into the asset library
+via the API.

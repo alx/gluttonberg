@@ -1,0 +1,11 @@
+!!! Strict
+%html
+  %head
+    %title Public
+    = css_include_tag :public
+  %body
+    %div#sidebar
+      %h1 Public
+    
+    %div#content
+      = catch_content(:for_layout)

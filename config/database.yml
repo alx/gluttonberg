@@ -1,0 +1,13 @@
+---
+:development: &defaults
+  :adapter: sqlite3
+  :database: db/development.db
+  :encoding: utf8
+
+:test:
+  <<: *defaults
+  :database: db/test.db
+
+:production:
+  <<: *defaults
+  :database: db/production.db

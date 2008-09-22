@@ -1,0 +1,113 @@
+TODOS
+-----
+- Test path generation for PageLocalization
+- Plan out implementation of Content classes — how they register with the page
+  class, how can they be stubbed out when a template changes
+- Update page delete notice to warn about removing sub-children
+- Have locales destroy page localizations
+
+NOTES
+-----
+- Templating
+  - Create a TemplateSection model
+  - A TemplateSection instance specifies the Content class it wants
+  - It can also specify certain constraints. For example it might specify
+    a range of content instances. Say 1..8 images.
+- Auto-generating records
+  - Since there are many intermediate models and localized versions, there 
+    needs to be plenty of automatic generation of models
+    - Add a page, have the content models and localizations stubbed out
+  - This is further complicated by the need to update records when the 
+    template changes
+    - You may need to add more records
+    - You may need to assign them to different sections in the template
+    - Where the system gets that wrong, the user needs to be able to easily
+      correct it
+    - Any records that don't fit into a new template need to be marked as
+      orphaned. The user then needs to have the option of deleting, swapping
+      or merging with another content block.
+  - Events
+    - Adding new page
+    - Changing page template
+    - Adding Locale
+      - Generate new localizations and articles for localization
+    - Removing Locale
+      - Destroy page localizations and content localizations
+- Path Caching
+  - For quick queries, we will cache the full path to a page in the DB
+  - The path itself will also be localized. Any changes to the parent slug
+    will affect the child pages.
+  - Localizing slugs for localized pages is optional. If they're not defined,
+    they fall back onto the slug defined in the page.
+  - This means a path stored in a localized page may have been calculated from
+    localized and default slugs.
+- Error handling
+  - Template errors; When a template is missing or broken, raise a custom 
+    error and try to give the users some guidance on correcting it.
+  - Custom errors for missing locales/dialects, which the exceptions 
+    controller can then catch and display a nice message.
+- Localization
+  - There needs to be some way to set defaults — to handle fall backs — and 
+    turn off the localization and internationalization.
+  - With locales/dialects turned off, all the auto-generation code needs to 
+    account for it and generate using a default. 
+  - The interface may also need to change slightly to mask the existence of 
+    localizations. Since this is a common case, it's worth thinking carefully 
+    about.
+  - The localization/internationalization split is mutually-exclusive, so we
+    need to have a simple option which let's us check in the back-end — then
+    we can display the correct controls on a form, the models could even
+    guard against at dodgy stuff.
+  - Choosing locale/dialect
+    - Use the URL first, then the Accept-Language header, final fall back is
+      the default — in the future this might even be set using GeoIP
+    - Encoding the locale/dialect into the URL need to be configurable. For
+      example, we may wish to use a subdomain for a locale and an entry in
+      the URL to indicate a dialect.
+- Settings
+  - Need to be modifiable at runtime
+  - Localization/Internationalization
+    - Path/URL formatting
+- Authentication
+  - We need to have authentication for both the administration and for the 
+    public side.
+  - The public authentication will be arbitrary — it will change on an install
+    by install basis. 
+  - Investigate using merb-auth-core. Use it for authenticating the backend, 
+    but also expose it so that it can be used in code in the front-end
+- Content
+  - These belong_to the Page model and are registered as special content 
+    classes.
+  - May or may not be localized and can have their own strategies for 
+    fallbacks if a locale is missing.
+  - For editing, these classes can have a custom partial, which will then be 
+    put inline when editing the page.
+  - Example classes
+    - RichTextContent
+    - PlainTextContent
+    - ImageContent; may specify things like image size, caption etc
+- Asset Manager
+  - Assets consist of an Asset model which has n AssetLocalizations. The
+    localization models contain a localized description of the asset and
+    point to the localized version of the file — say a splash image which has
+    translated text for each locale.
+  - Uploaded assets can be browsed by date, type (PDF, Video, Image) or 
+    collection.
+  - A collection is way of organising assets. They don't behave like folders.
+    The assets sit in a flat namespace. Collections are just a way of grouping
+    related assets. An asset may belong to multiple collections.
+  - Searching; obviously users will want to be able to search. It should look
+    in the asset name, description and perhaps for text-documents, the actual
+    content — this could be done by parsing the content on upload and stashing 
+    it in an indexed_content field or similar.
+  - Browsing
+    - When selecting an asset to attach to a page, we need a dialog which
+      allows the user to browse and search for an existing asset. They also
+      need to have the option of uploading a new asset from the same dialog.
+      When the user has completed using this dialog, it returns a asset id.
+    - Processing; when attaching an asset, it may need to be 
+  - Uploading
+    - Extract meta-data from files where possible — exif in images etc.
+    - Store file sizes
+    - Generate previews
+    - Store on disk, organised by locale/dialect

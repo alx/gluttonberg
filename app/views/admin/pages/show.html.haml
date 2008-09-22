@@ -1,0 +1,53 @@
+- @page_title = "Page: #{@page.name}"
+%ul#subnav
+  %li= link_to("Overview", "#overview", :class => "current")
+  %li= link_to("History", "#history")
+  %li.edit= link_to 'Edit', url(:edit_admin_page, @page)
+  %li.delete= link_to 'Delete', url(:delete_admin_page, @page)
+  
+  
+%h2 Properties
+%dl
+  %dt Slug
+  %dd= @page.slug
+  %dt Template
+  %dd= @page.template.name || "None set"
+  %dt Template Section Count
+  %dd= @page.template ? @page.template.sections.length : 0
+
+%h2 Articles
+- if @page.articles.empty?
+  %p.empty No Articles
+- else
+  %ul
+    - for article in @page.articles
+      %li
+        = article.section_name
+        = "(#{article.id})"
+        = "(Orphaned)" if article.orphaned
+      
+%p.newLink= link_to("New", url(:new_admin_page_article, :page_id => @page))
+
+%h2 Localizations
+- if @page.localizations.empty?
+  %p.empty No localizations set
+- else
+  %table{:cellpadding => 0, :cellspacing => 0}
+    %thead
+      %tr
+        %th Locale
+        %th Language
+        %th Path
+        %th.controls Controls
+    %tbody
+      - for localization in @page.localizations
+        %tr
+          %td= localization.locale.name if localization.locale
+          %td= "#{localization.dialect.name} (#{localization.dialect.code})"
+          %td= localization.path
+          %td.controls
+            %ul
+              %li= link_to("Edit", url(:edit_admin_page_localization, :page_id => @page, :id => localization))
+              %li= link_to("Delete", url(:delete_admin_page_localization, :page_id => @page, :id => localization))
+              
+%p.newLink= link_to("New", url(:new_admin_page_localization, :page_id => @page))

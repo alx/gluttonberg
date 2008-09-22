@@ -1,0 +1,10 @@
+= form_for(@template_section, :action => action) do
+  = error_messages_for(@template_section)
+  %div.fieldset
+    = text_field(:label, :label => "Label")
+    = text_field(:name, :label => "Name")
+    = select(:type, :collection => %(article), :label => "Type")
+  %p.controls
+    = submit("Save")
+    or
+    = link_to("<strong>Cancel</strong>", url(:admin_template_sections, :template_id => @template))

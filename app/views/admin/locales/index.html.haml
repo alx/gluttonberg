@@ -1,0 +1,22 @@
+- @page_title = "Locales"
+
+- if @locales.empty?
+  %p.empty No locales
+- else
+  %table{:cellspacing => 0, :cellpadding => 0}
+    %thead
+      %tr
+        %th Locale
+        %th Dialects
+        %th.controls Controls
+    %tbody
+      - for locale in @locales
+        %tr
+          %td= locale.name
+          %td= locale.dialects.collect {|d| d.name_and_code}.join(", ")
+          %td.controls
+            %ul
+              %li= link_to('Edit', url(:edit_admin_locale,  locale))
+              %li= link_to('Delete', url(:delete_admin_locale, locale))
+
+%p.newLink= link_to('New', url(:new_admin_locale))

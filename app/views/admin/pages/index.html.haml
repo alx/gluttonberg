@@ -1,0 +1,21 @@
+- @page_title = "Pages"
+
+- if @pages.empty?
+  %p.empty No Pages
+- else
+  %table{:cellpadding => 0, :cellspacing => 0}
+    %thead
+      %tr
+        %th Page
+        %th.controls Controls
+    %tbody
+      - for page in @pages
+        %tr{:class => cycle(:rows, "odd", "even")}
+          %td= page.name
+          %td.controls
+            %ul
+              %li= link_to 'Show', url(:admin_page, page)
+              %li= link_to 'Edit', url(:edit_admin_page, page)
+              %li= link_to 'Delete', url(:delete_admin_page, page)
+              
+%p.newLink= link_to('New', url(:new_admin_page), :class => "buttonGrey")

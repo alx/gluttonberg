@@ -1,0 +1,14 @@
+!!! Strict
+%html
+  %head
+    %title Administration
+    = css_include_tag :admin
+  %body{:id => "delete"}
+    = form(:action => @options[:action], :method => "delete") do
+      %h1= @options[:title]
+      %p.message= @options[:message]
+      
+      %p.controls
+        = submit("Delete")
+        or 
+        = link_to("<strong>Cancel</strong>", @options[:return_url])
