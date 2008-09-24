@@ -1,1 +1,4 @@
 db/*.db
+log/*.log
+log/*.pid
+.DS_Store
