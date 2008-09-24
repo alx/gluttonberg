@@ -3,7 +3,7 @@ module Glutton
     module Localization
       def self.included(klass)
         klass.class_eval do
-          include Localization::ClassMethods
+          extend Localization::ClassMethods
           
           property :created_at,   Time
           property :updated_at,   Time
@@ -14,7 +14,7 @@ module Glutton
       
       module ClassMethods
         def localizes(name)
-          belongs_to name
+          belongs_to :parent, :class_name => Extlib::Inflection.classify(name.to_s)
         end
       end
     end

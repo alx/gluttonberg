@@ -9,9 +9,9 @@ module Glutton
           extend Block::ClassMethods
           include Block::InstanceMethods
           
-          @@localized = false
+          class << self; attr_accessor :localized end
+          @localized = false
           
-          property :section_name, String,                       :length => 1..255
           property :orphaned,     ::DataMapper::Types::Boolean, :default => false
           property :created_at,   Time
           property :updated_at,   Time 
@@ -28,13 +28,13 @@ module Glutton
       module ClassMethods
         # Short-hand for setting up the association to the 
         def has_localizations(model_name)
-          @@localized = true
+          self.localized = true
           has n, :localizations, :class_name => Extlib::Inflection.classify(model_name.to_s), :dependent => :destroy
         end
         
         # Does this class have an associated localization class.
         def localized?
-          @@localized
+          self.localized
         end
       end
       
