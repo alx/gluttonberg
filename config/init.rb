@@ -22,6 +22,7 @@ dependency 'haml'
 # Merb.push_path(:lib, (Merb.root / "lib"), "**/*.rb")
 dependency 'lib/core_ext'
 dependency 'lib/admin_controller'
+dependency 'lib/content'
 
 Merb::Config.use do |c|
   c[:session_id_key] = 'low_fat_content_management'
@@ -30,6 +31,8 @@ Merb::Config.use do |c|
 end
 
 Merb::BootLoader.after_app_loads do
+  # Set up the content
+  Glutton::Content.setup
   # This is a temporary fix, to force DM to load all the association properties
   descendants = DataMapper::Resource.descendants.dup
   descendants.each do |model|
