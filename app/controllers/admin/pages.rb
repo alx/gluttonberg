@@ -32,8 +32,8 @@ module Admin
     def delete
       display_delete_confirmation(
         :title      => "Delete “#{@page.name}” page?",
-        :action     => url(:admin_page, @page),
-        :return_url => url(:admin_page, @page)
+        :action     => url(:page, @page),
+        :return_url => url(:page, @page)
       )
     end
   
@@ -44,7 +44,7 @@ module Admin
       #       @page.localizations << @page_localization
       # Create a default localization based on the user's choices
       if @page.save
-        redirect url(:admin_page, @page)
+        redirect url(:page, @page)
       else
         prepare_to_edit
         render :new
@@ -53,7 +53,7 @@ module Admin
   
     def update
       if @page.update_attributes(params[:page]) || !@page.dirty?
-        redirect url(:admin_page, @page)
+        redirect url(:page, @page)
       else
         raise BadRequest
       end
@@ -61,7 +61,7 @@ module Admin
   
     def destroy
       if @page.destroy
-        redirect url(:admin_pages)
+        redirect url(:pages)
       else
         raise BadRequest
       end

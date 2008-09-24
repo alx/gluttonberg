@@ -29,15 +29,15 @@ module Admin
       raise NotFound unless @locale
       display_delete_confirmation(
         :title      => "Delete the “#{@locale.name}” locale?",
-        :action     => url(:admin_locale, @locale),
-        :return_url => url(:admin_locales)
+        :action     => url(:locale, @locale),
+        :return_url => url(:locales)
       )
     end
   
     def create
       @locale = Locale.new(params[:locale])
       if @locale.save
-        redirect url(:admin_locales)
+        redirect url(:locales)
       else
         prepare_to_edit
         render :new
@@ -48,7 +48,7 @@ module Admin
       @locale = Locale.get(params[:id])
       raise NotFound unless @locale
       if @locale.update_attributes(params[:locale]) || !@locale.dirty?
-        redirect url(:admin_locales)
+        redirect url(:locales)
       else
         prepare_to_edit
         render :edit
@@ -59,7 +59,7 @@ module Admin
       @locale = Locale.get(params[:id])
       raise NotFound unless @locale
       if @locale.destroy
-        redirect url(:admin_locales)
+        redirect url(:locales)
       else
         raise BadRequest
       end

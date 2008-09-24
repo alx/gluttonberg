@@ -15,7 +15,7 @@
           %td= section.type
           %td
             %ul
-              %li= link_to("Edit", url(:edit_admin_template_section, :id => section, :template_id => @template))
-              %li= link_to("Delete", url(:delete_admin_template_section, :id => section, :template_id => @template))
+              %li= link_to("Edit", url(:edit_template_section, :id => section, :template_id => @template))
+              %li= link_to("Delete", url(:delete_template_section, :id => section, :template_id => @template))
               
-%p.newLink= link_to("New", url(:new_admin_template_section, :template_id => @template))
+%p.newLink= link_to("New", url(:new_template_section, :template_id => @template))

@@ -24,15 +24,15 @@ module Admin
     def delete
       display_delete_confirmation(
         :title      => "Delete “#{@template.name}” template?",
-        :action     => url(:admin_template, @template),
-        :return_url => url(:admin_templates)
+        :action     => url(:template, @template),
+        :return_url => url(:templates)
       )
     end
     
     def create
       @template = Template.new(params[:template])
       if @template.save
-        redirect url(:admin_templates)
+        redirect url(:templates)
       else
         render :new
       end
@@ -40,7 +40,7 @@ module Admin
   
     def update
       if @template.update_attributes(params[:template])
-        redirect url(:admin_templates)
+        redirect url(:templates)
       else
         render :edit
       end
@@ -48,7 +48,7 @@ module Admin
   
     def destroy
       if @template.destroy
-        redirect url(:admin_templates)
+        redirect url(:templates)
       else
         raise BadRequest
       end

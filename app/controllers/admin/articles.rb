@@ -35,7 +35,7 @@ module Admin
       @article_localization = ArticleLocalization.new(:title => params[:article][:title], :body => params[:article][:body])
       @article.localizations << @article_localization
       if @article.save
-        redirect url(:admin_article, @article)
+        redirect url(:article, @article)
       else
         render :new
       end
@@ -45,7 +45,7 @@ module Admin
       @article = Article.get(params[:id])
       raise NotFound unless @article
       if @article.update_attributes(params[:article]) || !@article.dirty?
-        redirect url(:admin_article, @article)
+        redirect url(:article, @article)
       else
         raise BadRequest
       end
@@ -55,7 +55,7 @@ module Admin
       @article = Article.get(params[:id])
       raise NotFound unless @article
       if @article.destroy
-        redirect url(:admin_article)
+        redirect url(:article)
       else
         raise BadRequest
       end

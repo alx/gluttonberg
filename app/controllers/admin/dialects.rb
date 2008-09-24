@@ -22,15 +22,15 @@ module Admin
     def delete
       display_delete_confirmation(
         :title      => "Delete “#{@dialect.name}” dialect?",
-        :action     => url(:admin_dialect, @dialect),
-        :return_url => url(:admin_dialects)
+        :action     => url(:dialect, @dialect),
+        :return_url => url(:dialects)
       )
     end
   
     def create
       @dialect = Dialect.new(params[:dialect])
       if @dialect.save
-        redirect url(:admin_dialects)
+        redirect url(:dialects)
       else
         render :new
       end
@@ -38,7 +38,7 @@ module Admin
   
     def update
       if @dialect.update_attributes(params[:dialect]) || !@dialect.dirty?
-        redirect url(:admin_dialects)
+        redirect url(:dialects)
       else
         render :edit
       end
@@ -46,7 +46,7 @@ module Admin
   
     def destroy
       if @dialect.destroy
-        redirect url(:admin_dialects)
+        redirect url(:dialects)
       else
         raise BadRequest
       end

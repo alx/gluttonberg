@@ -24,15 +24,15 @@ module Admin
     def delete
       display_delete_confirmation(
         :title      => "Delete “#{@template_section.name}” section?",
-        :action     => url(:admin_template_section, :id => @template_section, :template_id => @template),
-        :return_url => url(:admin_template_sections, :template_id => @template)
+        :action     => url(:template_section, :id => @template_section, :template_id => @template),
+        :return_url => url(:template_sections, :template_id => @template)
       )
     end
   
     def create
       @template_section = @template.sections.build(params[:template_section])
       if @template_section.save
-        redirect url(:admin_template_sections, :template_id => @template)
+        redirect url(:template_sections, :template_id => @template)
       else
         render :new
       end
@@ -40,7 +40,7 @@ module Admin
   
     def update
       if @template_section.update_attributes(params[:template_section]) || !@template_section.dirty?
-        redirect url(:admin_template_sections, :template_id => @template)
+        redirect url(:template_sections, :template_id => @template)
       else
         raise BadRequest
       end
@@ -48,7 +48,7 @@ module Admin
   
     def destroy
       if @template_section.destroy
-        redirect url(:admin_template_sections, :template_id => @template)
+        redirect url(:template_sections, :template_id => @template)
       else
         raise BadRequest
       end
