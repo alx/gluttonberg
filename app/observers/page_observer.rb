@@ -7,30 +7,35 @@ class PageObserver
   # template. These models will be empty, but ready to be displayed in the 
   # admin interface for editing.
   after :create do
-    Merb.logger.info("Generating first page localization")
-    localization = localizations.build(
-      :name       => name, 
-      :slug       => slug, 
-      :dialect_id => dialect_id, 
-      :locale_id  => locale_id
-    )
+    Merb.logger.info("Generating page localizations")
+    Locale.all.each do |locale|
+      locale.dialects.all.each do |dialect|
+        loc = localizations.create(
+          :name     => name, 
+          :slug     => slug, 
+          :dialect  => dialect,
+          :locale   => locale
+        )
+      end
+    end
     Merb.logger.info("Generating stubbed content for new page")
     template.sections.each do |section|
-      article = articles.build(:section_name => section.name)
-      article.save
-      # Create a localized article as well
-      localization.articles.build(:article => article)
+      # Create the content
+      association = send(section.type.pluralize)
+      content = association.create(:section => section)
+      # Create each localization
+      localizations.all.each do |localization|
+        content.localizations.create(:parent => content, :page_localization => localization)
+      end
     end
-    # Save all the localized models together
-    localization.save
   end
   
   # Check to see if we need to update articles or cascade through 
   # localizations to update the slugs.
-  before :save do
-    @articles_need_updating = true if attribute_dirty?(:template_id)
-    @paths_need_updating = true if attribute_dirty?(:slug)
-  end
+  # before :save do
+  #   @articles_need_updating = true if attribute_dirty?(:template_id)
+  #   @paths_need_updating = true if attribute_dirty?(:slug)
+  # end
   
   # Handles two cases. One if the template is changed. The other if the slug
   # for the page has changed.

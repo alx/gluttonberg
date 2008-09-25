@@ -15,16 +15,10 @@
   %dt Template Section Count
   %dd= @page.template ? @page.template.sections.length : 0
 
-%h2 Articles
-- if @page.articles.empty?
-  %p.empty No Articles
-- else
-  %ul
-    - for article in @page.articles
-      %li
-        = article.section_name
-        = "(#{article.id})"
-        = "(Orphaned)" if article.orphaned
+%h2 Sections
+%ul
+  - for section in @page.template.sections
+    %li= section.label
       
 %p.newLink= link_to("New", url(:new_page_article, :page_id => @page))
 

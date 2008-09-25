@@ -12,6 +12,7 @@ module Glutton
     # extra associations or do house-keeping once everything is required and
     # running
     def self.setup
+      Merb.logger.info("Setting up content classes and assocations")
       [Page, TemplateSection].each do |klass|
         klass.class_eval do
           Glutton::Content.content_associations.each { |assoc| has n, assoc }
@@ -36,3 +37,6 @@ module Glutton
     end
   end
 end
+
+# Run setup after the app loads
+Merb::BootLoader.after_app_loads { Glutton::Content.setup }

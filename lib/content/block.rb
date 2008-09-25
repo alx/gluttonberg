@@ -7,7 +7,6 @@ module Glutton
       def self.included(klass)
         klass.class_eval do
           extend Block::ClassMethods
-          include Block::InstanceMethods
           
           class << self; attr_accessor :localized end
           @localized = false
@@ -26,20 +25,35 @@ module Glutton
       end
     
       module ClassMethods
-        # Short-hand for setting up the association to the 
-        def has_localizations(model_name)
+        def is_localized(&blk)
           self.localized = true
-          has n, :localizations, :class_name => Extlib::Inflection.classify(model_name.to_s), :dependent => :destroy
+        
+          # Generate the localization model
+          storage_name = Extlib::Inflection.tableize(self.name + "Localization")
+          self.const_set("Localization", DataMapper::Model.new(storage_name))
+        
+          # Mix in our base set of properties and methods
+          self::Localization.send(:include, Glutton::Content::Localization)
+          # Generate additional properties from the block passed in
+          self::Localization.class_eval(&blk)
+        
+          # Set up filters on the class to make sure the localization gets migrated
+          self.after_class_method :auto_migrate! do
+            self::Localization.auto_migrate!
+          end
+          self.after_class_method :auto_upgrade! do
+            self::Localization.auto_upgrade!
+          end
+        
+          # Set up the associations
+          has n, :localizations
+          self::Localization.belongs_to(:parent, :class_name => self.name)
         end
         
         # Does this class have an associated localization class.
         def localized?
           self.localized
         end
-      end
-      
-      module InstanceMethods
-        
       end
     end
   end

@@ -11,7 +11,12 @@ class PageLocalization
   belongs_to :page
   belongs_to :dialect
   belongs_to :locale
-  has n, :articles, :class_name => "ArticleLocalization"
+  
+  before :valid?, :cache_path
+  
+  def cache_path
+    attribute_set(:path, "/#{slug}")
+  end
   
   def name_and_code
     "#{name} (#{locale.name}/#{dialect.code})"

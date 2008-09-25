@@ -31,8 +31,6 @@ Merb::Config.use do |c|
 end
 
 Merb::BootLoader.after_app_loads do
-  # Set up the content
-  Glutton::Content.setup
   # This is a temporary fix, to force DM to load all the association properties
   descendants = DataMapper::Resource.descendants.dup
   descendants.each do |model|

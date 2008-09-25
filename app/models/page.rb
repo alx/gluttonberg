@@ -26,6 +26,16 @@ class Page
   
   attr_accessor :current_localization, :dialect_id, :locale_id
   
+  # Returns all the content classes for this page. This is a slightly naive 
+  # implementation in that it just iterates over the content associations and
+  # calls all on each.
+  def contents
+    @contents ||= Glutton::Content.content_associations.inject([]) do |memo, assoc|
+      memo += send(assoc).all
+      memo
+    end
+  end
+  
   # This finder grabs the matching page and under the hood also grabs the 
   # relevant localization.
   #
