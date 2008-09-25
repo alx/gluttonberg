@@ -24,7 +24,7 @@ Template.fixture(:layout) {{
 TemplateSection.fixture {{
   :label => (label = /\w+/.gen),
   :name  => label.downcase.gsub(" ", "_"),
-  :type  => :article
+  :type  => "rich_text_content"
 }}
 
 Page.fixture(:no_templates) {{
@@ -52,7 +52,6 @@ PageLocalization.fixture {{
   :slug => name.downcase.gsub(" ", "_")
 }}
 
-ArticleLocalization.fixture {{
-  :title  => /\w+ \w+/.gen,
-  :body   => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
+RichTextContent::Localization.fixture {{
+  :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
 }}

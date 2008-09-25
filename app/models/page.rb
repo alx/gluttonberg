@@ -19,9 +19,8 @@ class Page
   is_list :scope => [:parent_id]
   is_tree
   
-  has n,      :articles
   has n,      :localizations, :class_name => "PageLocalization"
-  has n,      :children,      :class_name => "Page", :child_key => [:parent_id]
+  has n,      :children,      :class_name => "Page",      :child_key => [:parent_id]
   belongs_to  :layout,        :class_name => "Template",  :child_key => [:layout_id]
   belongs_to  :template
   
