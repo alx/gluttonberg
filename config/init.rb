@@ -6,18 +6,18 @@ Gem.path.unshift(Merb.root / "gems")
 
 use_orm :datamapper
 use_test :rspec
+use_template_engine :haml
 
-dependency 'dm-is-tree',        "= 0.9.6"
-dependency 'dm-observer',       "= 0.9.6"
-dependency 'dm-is-list',        "= 0.9.6"
-dependency 'dm-validations',    "= 0.9.6"
-dependency 'dm-timestamps',     "= 0.9.6"
-dependency 'dm-types',          "= 0.9.6"
-dependency 'merb-haml',         "= 0.9.6"
-dependency 'merb-assets',       "= 0.9.6"
-dependency 'merb-action-args',  "= 0.9.6"
-dependency 'merb_helpers',      "= 0.9.5"
-dependency 'haml'
+
+dependency 'dm-is-tree'
+dependency 'dm-observer'
+dependency 'dm-is-list'
+dependency 'dm-validations'
+dependency 'dm-timestamps'
+dependency 'dm-types'
+dependency 'merb-assets'
+dependency 'merb-action-args'
+dependency 'merb_helpers'
 # Some additional load paths for auto-loading
 # Merb.push_path(:lib, (Merb.root / "lib"), "**/*.rb")
 dependency 'lib/core_ext'
