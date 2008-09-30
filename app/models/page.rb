@@ -24,7 +24,16 @@ class Page
   belongs_to  :layout,        :class_name => "Template",  :child_key => [:layout_id]
   belongs_to  :template
   
-  attr_accessor :current_localization, :dialect_id, :locale_id
+  attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
+  
+  def slug=(new_slug)
+    @paths_need_recaching = true
+    attribute_set(:slug, new_slug)
+  end
+  
+  def paths_need_recaching?
+    @paths_need_recaching
+  end
   
   # Returns all the content classes for this page. This is a slightly naive 
   # implementation in that it just iterates over the content associations and

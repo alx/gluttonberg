@@ -1,13 +1,9 @@
 # Turn on UTF-8 with this opaque assignment here
 $KCODE = "UTF-8"
 
-Gem.clear_paths
-Gem.path.unshift(Merb.root / "gems")
-
 use_orm :datamapper
 use_test :rspec
 use_template_engine :haml
-
 
 dependency 'dm-is-tree'
 dependency 'dm-observer'
@@ -31,13 +27,14 @@ Merb::Config.use do |c|
 end
 
 Merb::BootLoader.after_app_loads do
+  Glutton::Content.setup
+  Merb.logger.info("Force DM associations to load")
   # This is a temporary fix, to force DM to load all the association properties
   descendants = DataMapper::Resource.descendants.dup
   descendants.each do |model|
-    descendants.merge(model.descendants) if model.respond_to?(:descendants)
+    descendants.merge(model.descendants) if model.respond_to?(:descendantss)
   end
   descendants.each do |model|
     model.relationships.each_value { |r| r.child_key if r.child_model == model }
   end
 end
-

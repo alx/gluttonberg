@@ -37,6 +37,3 @@ module Glutton
     end
   end
 end
-
-# Run setup after the app loads
-Merb::BootLoader.after_app_loads { Glutton::Content.setup }

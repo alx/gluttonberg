@@ -5,7 +5,7 @@ Dialect.fixture {{
 
 Locale.fixture {{
   :name => /\w+/.gen.capitalize,
-  :dialects => 2.of { Dialect.pick }
+  :dialects => (1..3).of { Dialect.pick }
 }}
 
 Template.fixture(:view) {{
@@ -28,7 +28,7 @@ TemplateSection.fixture {{
 }}
 
 Page.fixture(:no_templates) {{
-  :name     => (name = /\w+/.gen),
+  :name     => (name = (1..3).of { /\w+/.gen }).capitalize,
   :slug     => name.downcase.gsub(" ", "_")
 }}
 
@@ -40,7 +40,7 @@ Page.fixture(:parent) {{
 }}
 
 Page.fixture(:child) {{
-  :parent_id  => Page.pick(:parent).id,
+  :parent     => Page.pick(:parent),
   :name       => (name = /\w+/.gen),
   :slug       => name.downcase.gsub(" ", "_"),
   :template   => Template.pick(:view),
@@ -48,10 +48,17 @@ Page.fixture(:child) {{
 }}
 
 PageLocalization.fixture {{
-  :name => (name = /\w+/.gen),
+  :name => (name = (1..3).of { /\w+/.gen }).capitalize,
   :slug => name.downcase.gsub(" ", "_")
 }}
 
 RichTextContent::Localization.fixture {{
   :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
 }}
+
+5.of { Dialect.generate }
+3.of { Locale.generate }
+3.of { Template.generate(:layout) }
+8.of { Template.generate(:view) }
+5.of { Page.generate(:parent) }
+12.of { Page.generate(:child) }

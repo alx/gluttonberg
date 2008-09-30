@@ -11,21 +11,14 @@ class PageLocalization
   belongs_to :page
   belongs_to :dialect
   belongs_to :locale
+
+  attr_accessor :paths_need_recaching
   
-  before :valid?, :cache_path
-  
-  def cache_path
-    attribute_set(:path, "/#{slug}")
+  def paths_need_recaching?
+    @paths_need_recaching
   end
   
   def name_and_code
     "#{name} (#{locale.name}/#{dialect.code})"
-  end
-
-  def cache_path!(path_prefix)
-    update_attributes(:path => "#{path_prefix}/#{slug}")
-    # See if we have any children to update
-    decendants = page.children.localizations.all(:locale_id => locale_id, :dialect_id => dialect_id)
-    decendants.each { |l| l.cache_path!(path) } unless decendants.empty?
   end
 end

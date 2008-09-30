@@ -5,6 +5,9 @@ Merb::Config.use { |c|
   c[:reload_time] = 0.5
   c[:log_auto_flush ] = true
 }
+
+dependency 'dm-sweatshop'
+
 Merb::BootLoader.after_app_loads do
   # Load observers last
   Merb.push_path(:observers, Merb.root / "app/observers")
