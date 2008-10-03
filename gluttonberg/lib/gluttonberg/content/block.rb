@@ -8,7 +8,7 @@ module Gluttonberg
         klass.class_eval do
           extend Block::ClassMethods
           
-          class << self; attr_accessor :localized end
+          class << self; attr_accessor :localized, :content_name end
           @localized = false
           
           property :orphaned,     ::DataMapper::Types::Boolean, :default => false
@@ -21,10 +21,16 @@ module Gluttonberg
         
         # This registers this class so that the page can later query which 
         # classes it needs to be aware of.
-        Glutton::Content.register_as_content(klass)
+        Gluttonberg::Content.register_as_content(klass)
       end
     
       module ClassMethods
+        # Returns either the specified name or the default — the full class 
+        # name inc. modules
+        def content_name
+          @content_name || name
+        end
+        
         def is_localized(&blk)
           self.localized = true
         
@@ -33,7 +39,7 @@ module Gluttonberg
           self.const_set("Localization", DataMapper::Model.new(storage_name))
         
           # Mix in our base set of properties and methods
-          self::Localization.send(:include, Glutton::Content::Localization)
+          self::Localization.send(:include, Gluttonberg::Content::Localization)
           # Generate additional properties from the block passed in
           self::Localization.class_eval(&blk)
         

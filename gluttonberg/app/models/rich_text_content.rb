@@ -1,10 +1,12 @@
 module Gluttonberg
   class RichTextContent
     include DataMapper::Resource
-    include Glutton::Content::Block
+    include Gluttonberg::Content::Block
 
     property :id, Serial
-
+    
+    content_name = "Rich Text"
+    
     is_localized do
       property :text, Text
     end

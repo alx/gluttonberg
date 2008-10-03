@@ -5,8 +5,7 @@ require content / "content" / "localization"
 
 module Gluttonberg
   module Content
-    @@content_associations  = []
-    @@content_classes       = []
+    @@content_associations  = {}
     
     # This is called after the application loads so that we can define any
     # extra associations or do house-keeping once everything is required and
@@ -15,14 +14,9 @@ module Gluttonberg
       Merb.logger.info("Setting up content classes and assocations")
       [Page, TemplateSection].each do |klass|
         klass.class_eval do
-          Glutton::Content.content_associations.each { |assoc| has n, assoc }
+          Gluttonberg::Content.content_associations.each { |name, klass| has n, name, :class_name => klass }
         end
       end
-    end
-    
-    # Returns an array of classes that have been registered as content blocks
-    def self.content_classes
-      @@content_classes
     end
     
     # Returns an array of content associations as symbols
@@ -31,9 +25,8 @@ module Gluttonberg
     end
     
     def self.register_as_content(klass)
-      @@content_classes << klass
-      name = Extlib::Inflection.underscore(klass.name.pluralize).to_sym
-      @@content_associations << name
+      name = Extlib::Inflection.underscore(klass.name.gsub("::", "").pluralize).to_sym
+      @@content_associations[name] = klass
     end
   end
 end

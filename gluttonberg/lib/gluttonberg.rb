@@ -37,18 +37,24 @@ if defined?(Merb::Plugins)
     def self.deactivate
     end
     
-    # Setup routes inside the host application
-    #
-    # @param scope<Merb::Router::Behaviour>
-    #  Routes will be added within this scope (namespace). In fact, any 
-    #  router behaviour is a valid namespace, so you can attach
-    #  routes at any level of your router setup.
-    #
-    # @note prefix your named routes with :gluttonberg_
-    #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
-      # example of a named route
-      scope.match('/index(.:format)').to(:controller => 'main', :action => 'index').name(:index)
+      # Controllers in the content module
+      scope.match("/content").to(:namespace => "content") do |c|
+        c.match("").to(:controller => "content/main").name(:content)
+        c.resources(:pages) do |p| 
+          p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
+            l.match("/edit").to(:action => "edit").name(:edit_localization)
+            l.match(:method => "put").to(:action => "update")
+          end
+        end
+        c.resources(:templates) do |t|
+          t.resources(:sections, :controller => "content/template_sections")
+        end
+      end
+      
+      # Top level controllers
+      scope.resources(:locales)
+      scope.resources(:dialects)
     end
     
   end
@@ -74,5 +80,10 @@ if defined?(Merb::Plugins)
   dependency "gluttonberg/content"
   dependency "gluttonberg/admin_controller"
   dependency "gluttonberg/public_controller"
+  
+  # For testing/dev, see if we're running in standalone mode
+  if Gluttonberg.standalone?
+    require File.join(File.dirname(__FILE__), "../../dev/config/init")
+  end
   
 end

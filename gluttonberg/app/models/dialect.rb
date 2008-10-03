@@ -8,6 +8,7 @@ module Gluttonberg
     property :default,  Boolean,  :default  => false
 
     has n, :page_localizations, :class_name => "Gluttonberg::PageLocalization"
+    has n, :locales, :through => Resource
 
     # Returns a formatted string with both the name and the ISO code for this
     # localization

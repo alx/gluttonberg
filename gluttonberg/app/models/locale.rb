@@ -8,7 +8,7 @@ module Gluttonberg
 
     belongs_to  :fallback_locale,     :class_name => "Gluttonberg::Locale"
     has n,      :page_localizations,  :class_name => "Gluttonberg::PageLocalization"
-    has n,      :dialects,            :through => Resource
+    has n,      :dialects,            :through => Resource, :class_name => "Gluttonberg::Dialect"
 
     # This replaces the existing set of associated dialects with a new set based
     # on the array of IDs passed in.
