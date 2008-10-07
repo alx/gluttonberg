@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class Public < Application
+    class Public < Gluttonberg::Application
       include Gluttonberg::PublicController
       
       before :set_localization_and_path, :only => :show

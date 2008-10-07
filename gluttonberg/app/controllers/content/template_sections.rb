@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class TemplateSections < Application
+    class TemplateSections < Gluttonberg::Application
       include Gluttonberg::AdminController
 
       before :find_template

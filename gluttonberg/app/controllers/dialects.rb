@@ -1,5 +1,5 @@
 module Gluttonberg
-  class Dialects < Application
+  class Dialects < Gluttonberg::Application
     include AdminController
     
     before :find_dialect, :only => [:delete, :edit, :delete, :update, :destroy]

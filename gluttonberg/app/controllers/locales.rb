@@ -1,5 +1,5 @@
 module Gluttonberg
-  class Locales < Application
+  class Locales < Gluttonberg::Application
     include AdminController
     # provides :xml, :yaml, :js
   

@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class Pages < Application
+    class Pages < Gluttonberg::Application
       include Gluttonberg::AdminController
 
       before :find_page, :only => [:show, :edit, :delete, :update, :destroy]

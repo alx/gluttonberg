@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class Main < Application
+    class Main < Gluttonberg::Application
       include Gluttonberg::AdminController
 
       def index

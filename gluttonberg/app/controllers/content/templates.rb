@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class Templates < Application
+    class Templates < Gluttonberg::Application
       include Gluttonberg::AdminController
 
       before :find_template, :only => [:show, :edit, :delete, :update, :destroy]

@@ -1,6 +1,6 @@
 module Gluttonberg
   module Content
-    class PageLocalizations < Application
+    class PageLocalizations < Gluttonberg::Application
       include Gluttonberg::AdminController
       # provides :xml, :yaml, :js
 
