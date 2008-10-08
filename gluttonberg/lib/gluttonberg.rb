@@ -55,6 +55,17 @@ if defined?(Merb::Plugins)
       # Top level controllers
       scope.resources(:locales)
       scope.resources(:dialects)
+      
+      # Assets
+      scope.match("/assets").to(:namespace => "assets") do |a|
+        a.match("").to(:controller => "assets/main").name(:assets)
+      end
+      
+      # Users
+      scope.match("/users").to(:controller => "users").name(:users)
+      
+      # Settings
+      scope.match("/settings").to(:controller => "settings").name(:settings)
     end
     
   end

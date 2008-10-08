@@ -22,15 +22,15 @@ module Gluttonberg
     def delete
       display_delete_confirmation(
         :title      => "Delete “#{@dialect.name}” dialect?",
-        :action     => url(:dialect, @dialect),
-        :return_url => url(:dialects)
+        :action     => slice_url(:gluttonberg, :dialect, @dialect),
+        :return_url => slice_url(:gluttonberg, :dialects)
       )
     end
   
     def create
       @dialect = Dialect.new(params[:dialect])
       if @dialect.save
-        redirect url(:dialects)
+        redirect slice_url(:gluttonberg, :dialects)
       else
         render :new
       end
@@ -38,7 +38,7 @@ module Gluttonberg
   
     def update
       if @dialect.update_attributes(params[:dialect]) || !@dialect.dirty?
-        redirect url(:dialects)
+        redirect slice_url(:gluttonberg, :dialects)
       else
         render :edit
       end
@@ -46,7 +46,7 @@ module Gluttonberg
   
     def destroy
       if @dialect.destroy
-        redirect url(:dialects)
+        redirect slice_url(:gluttonberg, :dialects)
       else
         raise BadRequest
       end

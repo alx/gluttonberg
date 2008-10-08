@@ -14,7 +14,7 @@
           %td= "#{dialect.name} (#{dialect.code})"
           %td.controls
             %ul
-              %li= link_to('Edit', url(:edit_dialect,  dialect))
-              %li= link_to("Delete", url(:delete_dialect, dialect))
+              %li= link_to('Edit', slice_url(:gluttonberg, :edit_dialect,  dialect))
+              %li= link_to("Delete", slice_url(:gluttonberg, :delete_dialect, dialect))
         
-%p.newLink= link_to 'New', url(:new_dialect)
+%p.newLink= link_to 'New', slice_url(:gluttonberg, :new_dialect)
