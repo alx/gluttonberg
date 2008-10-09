@@ -31,7 +31,7 @@ module Gluttonberg
       end
 
       def create
-        @template_section = @template.sections.build(params[:template_section])
+        @template_section = @template.sections.build(params["gluttonberg::template_section"])
         if @template_section.save
           redirect slice_url(:template_sections, :template_id => @template)
         else
@@ -40,7 +40,7 @@ module Gluttonberg
       end
 
       def update
-        if @template_section.update_attributes(params[:template_section]) || !@template_section.dirty?
+        if @template_section.update_attributes(params["gluttonberg::template_section"]) || !@template_section.dirty?
           redirect slice_url(:template_sections, :template_id => @template)
         else
           raise BadRequest

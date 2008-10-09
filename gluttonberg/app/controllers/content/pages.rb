@@ -39,11 +39,7 @@ module Gluttonberg
       end
 
       def create
-        @page = Page.new(params[:page])
-        # localization_params = params[:page_localization].merge(:name => params[:page][:name], :slug => params[:page][:slug])
-        #       @page_localization = PageLocalization.new(localization_params)
-        #       @page.localizations << @page_localization
-        # Create a default localization based on the user's choices
+        @page = Page.new(params["gluttonberg::page"])
         if @page.save
           redirect slice_url(:page, @page)
         else
@@ -53,7 +49,7 @@ module Gluttonberg
       end
 
       def update
-        if @page.update_attributes(params[:page]) || !@page.dirty?
+        if @page.update_attributes(params["gluttonberg::page"]) || !@page.dirty?
           redirect slice_url(:page, @page)
         else
           raise BadRequest

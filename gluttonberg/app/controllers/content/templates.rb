@@ -31,7 +31,7 @@ module Gluttonberg
       end
 
       def create
-        @template = Template.new(params[:template])
+        @template = Template.new(params["gluttonberg::template"])
         if @template.save
           redirect slice_url(:templates)
         else
@@ -40,7 +40,7 @@ module Gluttonberg
       end
 
       def update
-        if @template.update_attributes(params[:template])
+        if @template.update_attributes(params["gluttonberg::template"])
           redirect slice_url(:templates)
         else
           render :edit
