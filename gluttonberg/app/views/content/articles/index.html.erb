@@ -8,11 +8,11 @@
 
 <% for article in @articles %>
   <tr>
-    <td><%= link_to 'Show', url(:article, article) %></td>
-    <td><%= link_to 'Edit', url(:edit_article,  article) %></td>
+    <td><%= link_to 'Show', slice_url(:article, article) %></td>
+    <td><%= link_to 'Edit', slice_url(:edit_article,  article) %></td>
     <td><%= delete_button :article, article %></td>
   </tr>
 <% end %>
 </table>
 
-<%= link_to 'New', url(:new_article) %>
+<%= link_to 'New', slice_url(:new_article) %>

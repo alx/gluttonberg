@@ -25,15 +25,15 @@ module Gluttonberg
       def delete
         display_delete_confirmation(
           :title      => "Delete “#{@template.name}” template?",
-          :action     => url(:template, @template),
-          :return_url => url(:templates)
+          :action     => slice_url(:template, @template),
+          :return_url => slice_url(:templates)
         )
       end
 
       def create
         @template = Template.new(params[:template])
         if @template.save
-          redirect url(:templates)
+          redirect slice_url(:templates)
         else
           render :new
         end
@@ -41,7 +41,7 @@ module Gluttonberg
 
       def update
         if @template.update_attributes(params[:template])
-          redirect url(:templates)
+          redirect slice_url(:templates)
         else
           render :edit
         end
@@ -49,7 +49,7 @@ module Gluttonberg
 
       def destroy
         if @template.destroy
-          redirect url(:templates)
+          redirect slice_url(:templates)
         else
           raise BadRequest
         end

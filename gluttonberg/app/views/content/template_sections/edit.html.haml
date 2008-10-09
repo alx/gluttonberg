@@ -1,2 +1,2 @@
 - @page_title = "Edit section for “#{@template.name}” template"
-= partial(:form, :action => url(:template_section, :id => @template_section, :template_id => @template))
+= partial(:form, :action => slice_url(:template_section, :id => @template_section, :template_id => @template))

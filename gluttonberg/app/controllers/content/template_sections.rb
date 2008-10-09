@@ -25,15 +25,15 @@ module Gluttonberg
       def delete
         display_delete_confirmation(
           :title      => "Delete “#{@template_section.name}” section?",
-          :action     => url(:template_section, :id => @template_section, :template_id => @template),
-          :return_url => url(:template_sections, :template_id => @template)
+          :action     => slice_url(:template_section, :id => @template_section, :template_id => @template),
+          :return_url => slice_url(:template_sections, :template_id => @template)
         )
       end
 
       def create
         @template_section = @template.sections.build(params[:template_section])
         if @template_section.save
-          redirect url(:template_sections, :template_id => @template)
+          redirect slice_url(:template_sections, :template_id => @template)
         else
           render :new
         end
@@ -41,7 +41,7 @@ module Gluttonberg
 
       def update
         if @template_section.update_attributes(params[:template_section]) || !@template_section.dirty?
-          redirect url(:template_sections, :template_id => @template)
+          redirect slice_url(:template_sections, :template_id => @template)
         else
           raise BadRequest
         end
@@ -49,7 +49,7 @@ module Gluttonberg
 
       def destroy
         if @template_section.destroy
-          redirect url(:template_sections, :template_id => @template)
+          redirect slice_url(:template_sections, :template_id => @template)
         else
           raise BadRequest
         end

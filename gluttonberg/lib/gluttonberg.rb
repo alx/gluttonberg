@@ -41,14 +41,14 @@ if defined?(Merb::Plugins)
       scope.identify DataMapper::Resource => :id do |s|
         # Controllers in the content module
         s.match("/content").to(:controller => "content/main").name(:content)
-        s.match("/content").to(:namespace => "content") do |c|
-          c.resources(:pages) do |p| 
+        s.match("/content") do |c|
+          c.resources(:pages, :controller => "content/pages") do |p| 
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)
               l.match(:method => "put").to(:action => "update")
             end
           end
-          c.resources(:templates) do |t|
+          c.resources(:templates, :controller => "content/templates") do |t|
             t.resources(:sections, :controller => "content/template_sections")
           end
         end
@@ -58,9 +58,7 @@ if defined?(Merb::Plugins)
         s.resources(:dialects)
       
         # Assets
-        s.match("/assets").to(:namespace => "assets") do |a|
-          a.match("").to(:controller => "assets/main").name(:assets)
-        end
+        s.match("/assets").to(:controller => "assets/main").name(:assets)
       
         # Users
         s.match("/users").to(:controller => "users").name(:users)

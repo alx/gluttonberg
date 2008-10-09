@@ -19,9 +19,9 @@
             %td= template.format
             %td.controls
               %ul
-                %li= link_to("Edit", url(:edit_template, template))
-                %li= link_to("Edit Sections", url(:template_sections, :template_id => template))
-                %li= link_to("Delete", url(:delete_template, template))
+                %li= link_to("Edit", slice_url(:edit_template, template))
+                %li= link_to("Edit Sections", slice_url(:template_sections, :template_id => template))
+                %li= link_to("Delete", slice_url(:delete_template, template))
       - unless @layouts.empty?
         %tr
           %th{:colspan => 3} Layouts
@@ -31,7 +31,7 @@
             %td= template.format
             %td.controls
               %ul
-                %li= link_to("Edit", url(:edit_template, template))
-                %li= link_to("Delete", url(:delete_template, template))
+                %li= link_to("Edit", slice_url(:edit_template, template))
+                %li= link_to("Delete", slice_url(:delete_template, template))
 
-%p.newLink= link_to("New", url(:new_template))
+%p.newLink= link_to("New", slice_url(:new_template))

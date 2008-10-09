@@ -3,5 +3,5 @@
 <p>Edit this file in <tt>app/views/articles/show.html.erb</tt></p>
 
 
-<%= link_to 'Edit',  url(:edit_article,  @article) %> |
-<%= link_to 'Back', url(:articles) %>
+<%= link_to 'Edit',  slice_url(:edit_article,  @article) %> |
+<%= link_to 'Back', slice_url(:articles) %>

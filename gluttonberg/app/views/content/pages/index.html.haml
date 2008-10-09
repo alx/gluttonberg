@@ -14,8 +14,8 @@
           %td= page.name
           %td.controls
             %ul
-              %li= link_to 'Show', url(:page, page)
-              %li= link_to 'Edit', url(:edit_page, page)
-              %li= link_to 'Delete', url(:delete_page, page)
+              %li= link_to 'Show', slice_url(:page, page)
+              %li= link_to 'Edit', slice_url(:edit_page, page)
+              %li= link_to 'Delete', slice_url(:delete_page, page)
               
-%p.newLink= link_to('New', url(:new_page), :class => "buttonGrey")
+%p.newLink= link_to('New', slice_url(:new_page), :class => "buttonGrey")

@@ -33,8 +33,8 @@ module Gluttonberg
       def delete
         display_delete_confirmation(
           :title      => "Delete “#{@page.name}” page?",
-          :action     => url(:page, @page),
-          :return_url => url(:page, @page)
+          :action     => slice_url(:page, @page),
+          :return_url => slice_url(:page, @page)
         )
       end
 
@@ -45,7 +45,7 @@ module Gluttonberg
         #       @page.localizations << @page_localization
         # Create a default localization based on the user's choices
         if @page.save
-          redirect url(:page, @page)
+          redirect slice_url(:page, @page)
         else
           prepare_to_edit
           render :new
@@ -54,7 +54,7 @@ module Gluttonberg
 
       def update
         if @page.update_attributes(params[:page]) || !@page.dirty?
-          redirect url(:page, @page)
+          redirect slice_url(:page, @page)
         else
           raise BadRequest
         end
@@ -62,7 +62,7 @@ module Gluttonberg
 
       def destroy
         if @page.destroy
-          redirect url(:pages)
+          redirect slice_url(:pages)
         else
           raise BadRequest
         end

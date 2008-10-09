@@ -1,2 +1,2 @@
 %h1 Edit Article
-= partial(:form, :action => url(:page_article, :page_id => params[:page_id], :id => @article))
+= partial(:form, :action => slice_url(:page_article, :page_id => params[:page_id], :id => @article))

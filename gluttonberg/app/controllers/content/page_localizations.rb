@@ -29,7 +29,7 @@ module Gluttonberg
         @page_localization = PageLocalization.new(params[:page_localization])
         @page_localization.page = Page.get(params[:page_id])
         if @page_localization.save
-          redirect url(:page, params[:page_id])
+          redirect slice_url(:page, params[:page_id])
         else
           records_for_editing
           render :new
@@ -40,7 +40,7 @@ module Gluttonberg
         @page_localization = PageLocalization.get(params[:id])
         raise NotFound unless @page_localization
         if @page_localization.update_attributes(params[:page_localization]) || !@page_localization.dirty?
-          redirect url(:admin, params[:page_id])
+          redirect slice_url(:admin, params[:page_id])
         else
           records_for_editing
           render :edit
@@ -51,7 +51,7 @@ module Gluttonberg
         @page_localization = PageLocalization.get(params[:id])
         raise NotFound unless @page_localization
         if @page_localization.destroy
-          redirect url(:page_localization)
+          redirect slice_url(:page_localization)
         else
           raise BadRequest
         end
