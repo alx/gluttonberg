@@ -29,15 +29,15 @@ module Gluttonberg
       raise NotFound unless @locale
       display_delete_confirmation(
         :title      => "Delete the “#{@locale.name}” locale?",
-        :action     => url(:locale, @locale),
-        :return_url => url(:locales)
+        :action     => slice_url(:locale, @locale),
+        :return_url => slice_url(:locales)
       )
     end
   
     def create
-      @locale = Locale.new(params[:locale])
+      @locale = Locale.new(params["gluttonberg::locale"])
       if @locale.save
-        redirect url(:locales)
+        redirect slice_url(:locales)
       else
         prepare_to_edit
         render :new
@@ -47,8 +47,8 @@ module Gluttonberg
     def update
       @locale = Locale.get(params[:id])
       raise NotFound unless @locale
-      if @locale.update_attributes(params[:locale]) || !@locale.dirty?
-        redirect url(:locales)
+      if @locale.update_attributes(params["gluttonberg::locale"]) || !@locale.dirty?
+        redirect slice_url(:locales)
       else
         prepare_to_edit
         render :edit
@@ -59,7 +59,7 @@ module Gluttonberg
       @locale = Locale.get(params[:id])
       raise NotFound unless @locale
       if @locale.destroy
-        redirect url(:locales)
+        redirect slice_url(:locales)
       else
         raise BadRequest
       end

@@ -16,7 +16,7 @@
           %td= locale.dialects.collect {|d| d.name_and_code}.join(", ")
           %td.controls
             %ul
-              %li= link_to('Edit', url(:edit_locale,  locale))
-              %li= link_to('Delete', url(:delete_locale, locale))
+              %li= link_to('Edit', slice_url(:edit_locale,  locale))
+              %li= link_to('Delete', slice_url(:delete_locale, locale))
 
-%p.newLink= link_to('New', url(:new_locale))
+%p.newLink= link_to('New', slice_url(:new_locale))

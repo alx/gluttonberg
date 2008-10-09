@@ -13,9 +13,9 @@ module Gluttonberg
     # This replaces the existing set of associated dialects with a new set based
     # on the array of IDs passed in.
     def dialect_ids=(new_ids)
-      # I'm not quite sure why we need to clear out this association in order to 
-      # get the dialects to update properly. But, whatevs.
-      self.dialect_locales = []
+      # This is slightly crude, but lets just delete the join models that we
+      # don't need anymore.
+      self.gluttonberg_dialect_gluttonberg_locales.all(:dialect_id.not => new_ids).destroy!
       self.dialects = Dialect.all(:id => new_ids)
     end
   end
