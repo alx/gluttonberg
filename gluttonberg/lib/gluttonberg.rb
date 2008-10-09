@@ -40,8 +40,8 @@ if defined?(Merb::Plugins)
     def self.setup_router(scope)
       scope.identify DataMapper::Resource => :id do |s|
         # Controllers in the content module
+        s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content").to(:namespace => "content") do |c|
-          c.match("").to(:controller => "content/main").name(:content)
           c.resources(:pages) do |p| 
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)
