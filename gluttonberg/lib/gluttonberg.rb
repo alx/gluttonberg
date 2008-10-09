@@ -38,36 +38,37 @@ if defined?(Merb::Plugins)
     end
     
     def self.setup_router(scope)
-      # Controllers in the content module
-      scope.match("/content").to(:namespace => "content") do |c|
-        c.match("").to(:controller => "content/main").name(:content)
-        c.resources(:pages) do |p| 
-          p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
-            l.match("/edit").to(:action => "edit").name(:edit_localization)
-            l.match(:method => "put").to(:action => "update")
+      scope.identify DataMapper::Resource => :id do |s|
+        # Controllers in the content module
+        s.match("/content").to(:namespace => "content") do |c|
+          c.match("").to(:controller => "content/main").name(:content)
+          c.resources(:pages) do |p| 
+            p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
+              l.match("/edit").to(:action => "edit").name(:edit_localization)
+              l.match(:method => "put").to(:action => "update")
+            end
+          end
+          c.resources(:templates) do |t|
+            t.resources(:sections, :controller => "content/template_sections")
           end
         end
-        c.resources(:templates) do |t|
-          t.resources(:sections, :controller => "content/template_sections")
+      
+        # Top level controllers
+        s.resources(:locales)
+        s.resources(:dialects)
+      
+        # Assets
+        s.match("/assets").to(:namespace => "assets") do |a|
+          a.match("").to(:controller => "assets/main").name(:assets)
         end
+      
+        # Users
+        s.match("/users").to(:controller => "users").name(:users)
+      
+        # Settings
+        s.match("/settings").to(:controller => "settings").name(:settings)
       end
-      
-      # Top level controllers
-      scope.resources(:locales)
-      scope.resources(:dialects)
-      
-      # Assets
-      scope.match("/assets").to(:namespace => "assets") do |a|
-        a.match("").to(:controller => "assets/main").name(:assets)
-      end
-      
-      # Users
-      scope.match("/users").to(:controller => "users").name(:users)
-      
-      # Settings
-      scope.match("/settings").to(:controller => "settings").name(:settings)
     end
-    
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
