@@ -28,7 +28,7 @@ module Gluttonberg
     end
   
     def create
-      @dialect = Dialect.new(params[:dialect])
+      @dialect = Dialect.new(params["gluttonberg::dialect"])
       if @dialect.save
         redirect slice_url(:gluttonberg, :dialects)
       else
@@ -37,7 +37,7 @@ module Gluttonberg
     end
   
     def update
-      if @dialect.update_attributes(params[:dialect]) || !@dialect.dirty?
+      if @dialect.update_attributes(params["gluttonberg::dialect"]) || !@dialect.dirty?
         redirect slice_url(:gluttonberg, :dialects)
       else
         render :edit
