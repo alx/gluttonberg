@@ -18,6 +18,10 @@ Merb.start_environment(
   :session_store => 'memory'
 )
 
+DataMapper.auto_migrate!
+
+require File.join(File.dirname(__FILE__), 'spec_fixtures')
+
 module Merb
   module Test
     module SliceHelper

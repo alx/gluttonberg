@@ -1,7 +1,9 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
-describe TemplateSection do
+module Gluttonberg
+  describe TemplateSection do
 
-  it "should have specs"
+    it "should have specs"
 
+  end  
 end

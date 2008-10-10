@@ -57,8 +57,12 @@ if defined?(Merb::Plugins)
         s.resources(:locales)
         s.resources(:dialects)
       
-        # Assets
-        s.match("/assets").to(:controller => "assets/main").name(:assets)
+        # Asset Library
+        s.match("/library").to(:controller => "library/main").name(:library)
+        s.match("/library") do |a|
+          a.resources(:assets, :controller => "library/assets")
+          a.resources(:collections, :controller => "library/collections")
+        end
       
         # Users
         s.match("/users").to(:controller => "users").name(:users)
@@ -70,7 +74,9 @@ if defined?(Merb::Plugins)
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
-  Gluttonberg.push_path(:observers, Gluttonberg.root / "app" / "observers")
+  unless Merb.environment == 'test'
+    Gluttonberg.push_path(:observers, Gluttonberg.root / "app" / "observers")
+  end
   
   # Default directory layout
   Gluttonberg.setup_default_structure!

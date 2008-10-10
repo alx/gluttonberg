@@ -1,17 +1,17 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
-describe Locale do
+describe Gluttonberg::Locale do
 
   before :all do
-    Locale.all.destroy!
-    Dialect.all.destroy!
+    Gluttonberg::Locale.all.destroy!
+    Gluttonberg::Dialect.all.destroy!
   end
 
   it "should swap associated dialects" do
-    5.of { Dialect.generate }
+    5.of { Gluttonberg::Dialect.generate }
     
-    locale              = Locale.generate
-    new_dialects        = 3.of { Dialect.pick }
+    locale              = Gluttonberg::Locale.generate
+    new_dialects        = 3.of { Gluttonberg::Dialect.pick }
     locale.dialect_ids  = new_dialects.collect { |d| d.id }
     
     locale.dialects.each { |d| new_dialects.include?(d).should be_true }
