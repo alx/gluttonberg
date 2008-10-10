@@ -19,8 +19,6 @@
 %ul
   - for section in @page.template.sections
     %li= section.label
-      
-%p.newLink= link_to("New", slice_url(:new_page_article, :page_id => @page))
 
 %h2 Localizations
 - if @page.localizations.empty?
@@ -41,7 +39,4 @@
           %td= localization.path
           %td.controls
             %ul
-              %li= link_to("Edit", slice_url(:edit_page_localization, :page_id => @page, :id => localization))
-              %li= link_to("Delete", slice_url(:delete_page_localization, :page_id => @page, :id => localization))
-              
-%p.newLink= link_to("New", slice_url(:new_page_localization, :page_id => @page))
+              %li= link_to("Edit", slice_url(:page_edit_localization, :page_id => @page, :id => localization))

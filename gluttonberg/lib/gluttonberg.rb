@@ -46,7 +46,7 @@ if defined?(Merb::Plugins)
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)
               l.match(:method => "put").to(:action => "update")
-            end
+            end.name(:localization)
           end
           c.resources(:templates, :controller => "content/templates") do |t|
             t.resources(:sections, :controller => "content/template_sections")
