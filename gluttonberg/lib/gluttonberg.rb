@@ -31,6 +31,7 @@ if defined?(Merb::Plugins)
     # Activation hook - runs after AfterAppLoads BootLoader
     def self.activate
       Content.setup
+      Library.setup
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -94,6 +95,7 @@ if defined?(Merb::Plugins)
 
   # Various mixins and classes
   dependency "gluttonberg/content"
+  dependency "gluttonberg/library"
   dependency "gluttonberg/admin_controller"
   dependency "gluttonberg/public_controller"
   
