@@ -8,7 +8,7 @@ module Gluttonberg
         klass.class_eval do
           extend Block::ClassMethods
           
-          class << self; attr_accessor :localized, :content_name end
+          class << self; attr_accessor :localized, :label, :association_name end
           @localized = false
           
           property :orphaned,     ::DataMapper::Types::Boolean, :default => false
@@ -25,10 +25,17 @@ module Gluttonberg
       end
     
       module ClassMethods
-        # Returns either the specified name or the default — the full class 
-        # name inc. modules
-        def content_name
-          @content_name || name
+        
+        # Is used to set defaults for this class
+        def is_content(opts = {})
+          self.label = opts[:label] || name
+          self.association_name = begin
+            if opts[:association_name]
+              opts[:association_name].to_s.pluralize.to_sym
+            else
+              Extlib::Inflection.underscore(name.gsub("::", "_").pluralize).to_sym
+            end
+          end
         end
         
         def is_localized(&blk)

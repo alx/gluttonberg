@@ -5,7 +5,7 @@ module Gluttonberg
 
     property :id, Serial
     
-    content_name = "Rich Text"
+    is_content :label => "Rich Text", :association_name => :rich_texts
     
     is_localized do
       property :text, Text

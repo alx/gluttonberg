@@ -3,7 +3,7 @@
   %div.fieldset
     = text_field(:label, :label => "Label")
     = text_field(:name, :label => "Name")
-    = select(:type, :collection => %(rich_text_content), :label => "Type")
+    = select(:type, :collection => Gluttonberg::Content.types, :text_method => :label, :value_method => :association_name, :selected => @template_section.type, :label => "Type")
   %p.controls
     = submit("Save")
     or
