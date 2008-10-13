@@ -1,6 +1,14 @@
 module Gluttonberg
   module Library
-    TYPES = [:image, :video, :document, :archive, :binary]
+    TYPE_MATCHERS = {
+      :audio    => /audio/,
+      :image    => /image/,
+      :video    => /video/,
+      :document => /[text|pdf]/,
+      :archive  => /binary/,
+      :binary   => /binary/
+    }
+    TYPES = TYPE_MATCHERS.collect {|k, v| k}
     
     @@assets_root = nil
     @@asset_dirs  = {}
@@ -10,12 +18,13 @@ module Gluttonberg
     # they are missing. It also stores the various paths so they can be 
     # retreived using the assets_dir method.
     def self.setup
+      Merb.logger.info("Gluttonberg is checking for asset folders")
       @@assets_root = Merb.dir_for(:public) / "assets"
       FileUtils.mkdir(assets_dir) unless File.exists?(assets_dir)
       # Set up a directory for each type and store a reference to each.
       TYPES.each do |type|
         type_dir = assets_dir / type.to_s.pluralize
-        @@asset_dirs[type.to_s.pluralize.to_sym] = type_dir
+        @@asset_dirs[type] = type_dir
         FileUtils.mkdir(type_dir) unless File.exists?(type_dir)
       end
     end

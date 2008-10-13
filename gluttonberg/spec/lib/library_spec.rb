@@ -15,8 +15,12 @@ module Gluttonberg
         path = Merb.dir_for(:public) / "assets" / plural
         
         File.exists?(path).should be_true
-        Library.assets_dir(plural.to_sym).should == path
+        Library.assets_dir(type).should == path
       end
+    end
+    
+    it "should return the expected directory" do
+      Library.assets_dir(:audio).should == (Merb.dir_for(:public) / "assets" / "audios")
     end
   end
 end
