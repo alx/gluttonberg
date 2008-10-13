@@ -30,7 +30,7 @@ em
 body
   :background
     :color= !mid_grey
-    :image url(/images/admin/page_bkg.gif)
+    :image url(/images/page_bkg.gif)
     :repeat repeat-x
   :margin 20px 20px 20px 220px
   :font
@@ -66,7 +66,7 @@ body
     :padding 10px
     
     a
-      :background left center no-repeat url(/images/admin/sidebar/icon_content.gif)
+      :background left center no-repeat url(/images/sidebar/icon_content.gif)
       :color white !important
       :text-decoration none !important
       :font-weight bold
@@ -78,7 +78,7 @@ body
     :display block
     
   li.current
-    :background right center no-repeat url(/images/admin/sidebar/current_bkg.gif)
+    :background right center no-repeat url(/images/sidebar/current_bkg.gif)
     /* Browser-specific border-radius
     :-moz-border-radius-topleft 3px
     :-moz-border-radius-bottomleft 3px
@@ -86,7 +86,7 @@ body
     :-webkit-border-bottom-left-radius 3px
     
   p
-    :background left top no-repeat url(/images/admin/sidebar/icon_logged_in.gif)
+    :background left top no-repeat url(/images/sidebar/icon_logged_in.gif)
     :color #666666
     :padding 0 0 0 30px
     :margin 10px 20px 0 20px
@@ -97,7 +97,7 @@ body
     
 /* Wrapper
 #wrapper
-  :background right bottom no-repeat url(/images/admin/wrapper_bkg.png)
+  :background right bottom no-repeat url(/images/wrapper_bkg.png)
   :padding 0 7px 7px 0
   :width 100%
   :min-height 20em
@@ -113,7 +113,7 @@ body
 
 /* Sub-navigation
 #subnav
-  :background left center repeat-x url(/images/admin/subnav_bkg.gif)
+  :background left center repeat-x url(/images/subnav_bkg.gif)
   :border-top 1px solid #2B3134
   :border-bottom 1px solid #2B3134
   :padding 4px 0
@@ -145,7 +145,7 @@ body
       :color white !important
       :background
         :color= !mid_aqua
-        :image url(/images/admin/button_bkg_aqua.gif)
+        :image url(/images/button_bkg_aqua.gif)
         :repeat repeat-x
       :border 2px solid white 
       :margin 0 8px 0 0
@@ -167,13 +167,13 @@ body
 .buttonAqua
   :background
     :color= !mid_aqua
-    :image url(/images/admin/button_bkg_aqua.gif)
+    :image url(/images/button_bkg_aqua.gif)
     :repeat repeat-x
   :border 2px solid white
   :color white !important
 
 .buttonGrey
-  :background #cccccc left top repeat-x url(/images/admin/button_bkg_grey.gif)
+  :background #cccccc left top repeat-x url(/images/button_bkg_grey.gif)
   :border 
     :width 2px
     :style solid
@@ -188,7 +188,7 @@ table
   :clear both
 
 thead th
-  :background #eaeaea left top repeat-x url(/images/admin/table_head_bkg.gif)
+  :background #eaeaea left top repeat-x url(/images/table_head_bkg.gif)
   :border-top 1px solid white
   :border-bottom 1px solid #999999
   :border-right 1px solid white
@@ -273,13 +273,15 @@ input.inline
   
 input.text,
 input.checkbox,
+input.radio,
 textarea,
 select
   :margin-bottom 1em
   :float left
   :clear right
 
-input.checkbox
+input.checkbox,
+input.radio
   :margin-top 0.35em
   :margin-left 12.6em
   :clear left
@@ -287,7 +289,7 @@ input.checkbox
 /* Input/textarea styles and widths
 input.text,
 textarea
-  :background white left top no-repeat url(/images/admin/form/input_bkg.gif)
+  :background white left top no-repeat url(/images/form/input_bkg.gif)
   :border 1px solid #999999
   :padding 0.2em 0.5em
   
@@ -326,7 +328,7 @@ p.controls
   :margin 0.5em 0 0 0
 
   input
-    :background #cccccc left top repeat-x url(/images/admin/button_bkg_grey.gif)
+    :background #cccccc left top repeat-x url(/images/button_bkg_grey.gif)
     :border 
       :width 2px
       :style solid
@@ -344,7 +346,7 @@ p.controls
     
 /* Error display
 div.error
-  :background 25px 10px no-repeat url(/images/admin/form/warning.gif)
+  :background 25px 10px no-repeat url(/images/form/warning.gif)
   :background-color= !error_bkg
   :border 2px solid #CDCCA3
   :padding 15px 0
@@ -369,7 +371,7 @@ div.error
   :margin-left 20px
   
   form
-    :background 15px 25px no-repeat url(/images/admin/form/warning.gif)
+    :background 15px 25px no-repeat url(/images/form/warning.gif)
     :background-color= !error_bkg
     :border 4px solid #807F65 
     :margin 8em auto 0 auto
@@ -421,7 +423,7 @@ ul.plusAndMinus
     :list-style-type none
 
   a
-    :background left top no-repeat url(/images/admin/form/plus_and_minus.gif)
+    :background left top no-repeat url(/images/form/plus_and_minus.gif)
     :letter-spacing -1000em
     :text-indent -1000em
 
