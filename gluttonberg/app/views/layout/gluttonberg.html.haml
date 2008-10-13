@@ -8,10 +8,10 @@
     %div#sidebar
       %h1 Gluttonberg
       %ul#navigation
-        %li.current= link_to("Content", slice_url(:gluttonberg, :content))
-        %li= link_to("Assets", slice_url(:gluttonberg, :assets))
-        %li= link_to("Users", slice_url(:gluttonberg, :users))
-        %li= link_to("Settings", slice_url(:gluttonberg, :settings))
+        %li.current= link_to("Content", slice_url(:content))
+        %li= link_to("Asset Library", slice_url(:library))
+        %li= link_to("Users", slice_url(:users))
+        %li= link_to("Settings", slice_url(:settings))
       %p
         Logged in as
         %br/

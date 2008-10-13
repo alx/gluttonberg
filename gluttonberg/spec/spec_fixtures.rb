@@ -1,4 +1,23 @@
 module Gluttonberg
+  
+  module Library
+    Asset.fixture {{
+      :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+      :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
+      :file         => Library.mock_file(File.join(File.dirname(__FILE__), "fixtures"))
+    }}
+    
+    def self.mock_file(path)
+      file = Dir.entries(path).reject{|c| c[0].chr == '.'}.map{ |c| path / c }.pick
+      {
+        :filename     => /\w+/.gen, 
+        :content_type => /\w+\/\w+/.gen, 
+        :size         => (300...8000).pick, 
+        :tempfile     => file
+      }
+    end
+  end
+  
   Dialect.fixture {{
     :code => /\w{2}/.gen.downcase,
     :name => /\w+/.gen.capitalize

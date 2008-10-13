@@ -1,3 +1,5 @@
+require Pathname(__FILE__).dirname.expand_path / "library" / "attachment_mixin"
+
 module Gluttonberg
   module Library
     TYPE_MATCHERS = {
