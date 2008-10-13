@@ -1,5 +1,4 @@
-dev/*
-
+public/assets/*
 .DS_Store
 spec/log/*
 log/*
