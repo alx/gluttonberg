@@ -94,14 +94,9 @@ if defined?(Merb::Plugins)
   dependency 'merb-helpers'
 
   # Various mixins and classes
-  dependency "gluttonberg/content"
-  dependency "gluttonberg/library"
-  dependency "gluttonberg/admin_controller"
-  dependency "gluttonberg/public_controller"
-  
-  # For testing/dev, see if we're running in standalone mode
-  if Gluttonberg.standalone?
-    require File.join(File.dirname(__FILE__), "../../dev/config/init")
-  end
+  require "gluttonberg/content"
+  require "gluttonberg/library"
+  require "gluttonberg/admin_controller"
+  require "gluttonberg/public_controller"
   
 end

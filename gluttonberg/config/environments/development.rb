@@ -1,5 +1,4 @@
 Merb::Config.use do |c|
-  c[:log_file] = "log" / "development.log"
   c[:exception_details] = true
   c[:reload_templates] = true
   c[:reload_classes] = true

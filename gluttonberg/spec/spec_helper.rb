@@ -18,11 +18,10 @@ Merb.start_environment(
   :session_store => 'memory'
 )
 
+dependency 'dm-sweatshop'
+require File.join(File.dirname(__FILE__), "spec_fixtures")
+
 DataMapper.auto_migrate!
-
-require File.join(File.dirname(__FILE__), 'spec_fixtures')
-
-Merb::Router.prepare { |r| r.add_slice(:gluttonberg) } if Gluttonberg.standalone?
 
 module Merb
   module Test
