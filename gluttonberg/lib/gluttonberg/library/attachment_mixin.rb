@@ -15,7 +15,7 @@ module Gluttonberg
       def file=(new_file)
         unless new_file.blank?
           # Forgive me this naive sanitisation, I'm still a regex n00b
-          clean_filename = new_file[:filename].gsub(" ", "_").gsub(/[^A-Za-z0-9-_.]/, "").downcase
+          clean_filename = new_file[:filename].gsub(" ", "_").gsub(/[^A-Za-z0-9\-_.]/, "").downcase
           attribute_set(:file_name, clean_filename)
           attribute_set(:size, new_file[:size])
           @file = new_file
