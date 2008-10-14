@@ -18,7 +18,7 @@ module Gluttonberg
       # How this would be encoded into the path would depend on the options
       # specified in the settings. For example the locale may be set via a sub-domain
       # and the language set via the path in the URL.
-      @path = params[:path]
+      @path = params[:full_path]
     end
 
     def cascade_to_dialect(dialects, requested_dialect)

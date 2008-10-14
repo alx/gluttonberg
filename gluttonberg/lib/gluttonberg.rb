@@ -72,11 +72,28 @@ if defined?(Merb::Plugins)
         s.match("/settings").to(:controller => "settings").name(:settings)
       end
     end
+    
+    # If we're in standalone mode, we want to expose the public routes 
+    # automatically.
+    if Gluttonberg.standalone?
+      Merb::BootLoader.after_app_loads do
+        Merb::Router.append { gluttonberg_pages("public") }
+      end
+    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
   unless Merb.environment == 'test'
     Gluttonberg.push_path(:observers, Gluttonberg.root / "app" / "observers")
+  end
+  
+  # This allows users to publish the path to the public pages
+  Merb::Router.extensions do
+    def gluttonberg_pages(prefix = nil)
+      path = prefix ? "/#{prefix}(/:full_path)" : "(/:full_path)"
+      match(path, :full_path => /\S+/).to(:controller => "gluttonberg/content/public", :action => "show").
+        name(:gluttonberg_public_page)
+    end
   end
   
   # Default directory layout
@@ -98,5 +115,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/library"
   require "gluttonberg/admin_controller"
   require "gluttonberg/public_controller"
+  require "gluttonberg/core_ext"
   
 end
