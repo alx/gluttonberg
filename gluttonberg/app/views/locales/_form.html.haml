@@ -4,6 +4,7 @@
   = fieldset(:legend => "Locale") do
     %div.fieldset
       = text_field(:name, :label => "Name")
+      = text_field(:slug, :label => "Slug")
       - unless @locales.empty?
         = select(:locale_id, :collection => @locales, :include_blank => true, :value_method => "id", :text_method => "name", :label => "Fallback Locale")
       = check_box(:default, :boolean => true)

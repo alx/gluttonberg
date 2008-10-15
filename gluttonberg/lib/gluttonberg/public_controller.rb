@@ -7,17 +7,17 @@ module Gluttonberg
     private
 
     def set_localization_and_path
-      # Get the dialect
-      dialects = Dialect.all
-      accept_dialect = params[:dialect] || request.env["HTTP_ACCEPT_LANGUAGE"]
-      @dialect = cascade_to_dialect(dialects, accept_dialect)
-      # Get the locale
-      @locale = Locale.first(:name => params[:locale]) || Locale.first(:default => true)
+      if Gluttonberg.localized? || Gluttonberg.translated?
+        # Get the dialect
+        # TODO: Have this only grab the active dialects
+        # TODO: fall back to the accept header i.e. request.env["HTTP_ACCEPT_LANGUAGE"]
+        @dialect = cascade_to_dialect(Dialect.all, params[:dialect])
+        # See if we need the locale as well
+        if Gluttonberg.localized?
+          @locale = Locale.first(:slug => params[:locale]) || Locale.first(:default => true)
+        end
+      end
       
-      # We should examine the path to see if a dialect and/or locale is specified.
-      # How this would be encoded into the path would depend on the options
-      # specified in the settings. For example the locale may be set via a sub-domain
-      # and the language set via the path in the URL.
       @path = params[:full_path]
     end
 

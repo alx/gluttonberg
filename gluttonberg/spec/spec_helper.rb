@@ -2,6 +2,7 @@ require 'rubygems'
 require 'merb-core'
 require 'merb-slices'
 require 'spec'
+require 'spec/mocks'
 
 # Add gluttonberg.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true

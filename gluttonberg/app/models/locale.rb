@@ -3,7 +3,8 @@ module Gluttonberg
     include DataMapper::Resource
 
     property :id,       Integer,  :serial   => true, :key => true
-    property :name,     String,   :length   => 1..70
+    property :name,     String,   :length   => 1..70, :nullable => false
+    property :slug,     String,   :length   => 1..70, :nullable => false
     property :default,  Boolean,  :default  => false
 
     belongs_to  :fallback_locale,     :class_name => "Gluttonberg::Locale"
