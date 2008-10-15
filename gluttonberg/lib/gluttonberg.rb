@@ -9,7 +9,13 @@ if defined?(Merb::Plugins)
   Merb::Slices::register(__FILE__)
   
   # Default configuration
-  Merb::Slices::config[:gluttonberg][:layout] ||= :gluttonberg
+  Merb::Slices::config[:gluttonberg] = {
+    :layout         => :gluttonberg,
+    :localize       => true,
+    :translate      => false,
+    :encode_dialect => :url,
+    :encode_locale  => :url
+  }.merge!(Merb::Slices::config[:gluttonberg])
   
   # All Slice code is expected to be namespaced inside a module
   module Gluttonberg
@@ -80,6 +86,15 @@ if defined?(Merb::Plugins)
         Merb::Router.append { gluttonberg_pages("public") }
       end
     end
+    
+   # Bunch of methods related to the configuration
+    def self.localized?
+      config[:localize] && !config[:translate]
+    end
+    
+    def self.translated?
+      config[:translate] && ! config[:localize]
+    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
@@ -90,9 +105,23 @@ if defined?(Merb::Plugins)
   # This allows users to publish the path to the public pages
   Merb::Router.extensions do
     def gluttonberg_pages(prefix = nil)
-      path = prefix ? "/#{prefix}(/:full_path)" : "(/:full_path)"
+      # See if we need to add the prefix
+      path = prefix ? "/#{prefix}" : ""
+      # Check to see if this is localized or translated and if either need to
+      # be added as a URL prefix. For now we just assume it's going into the
+      # URL.
+      if Gluttonberg.localized?
+        path << "/:locale/:dialect(/:full_path)"
+      elsif Gluttonberg.translated?
+        path << "/:dialect(/:full_path)"
+      else
+        path << "(/:full_path)"
+      end
+      # Add the matcher for the full path.
       match(path, :full_path => /\S+/).to(:controller => "gluttonberg/content/public", :action => "show").
-        name(:gluttonberg_public_page)
+        name(:public_page)
+      # TODO: look at matching a root, which people might hit without 
+      # selecting a locale or dialect
     end
   end
   
