@@ -19,9 +19,9 @@ module Gluttonberg
         end
       end
       Merb.logger.info("Generating stubbed content for new page")
-      template.sections.each do |section|
+      type.sections.each do |section|
         # Create the content
-        association = send(section.type.pluralize)
+        association = send(section.type)
         content = association.create(:section => section)
         # Create each localization
         localizations.all.each do |localization|

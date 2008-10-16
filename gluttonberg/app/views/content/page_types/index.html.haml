@@ -1,0 +1,21 @@
+- @page_title = "Page Types"
+
+- if @page_types.empty?
+  %p.empty No types set
+- else
+  %table{:cellspacing => 0, :cellpadding => 0}
+    %thead
+      %tr
+        %th Name
+        %th.controls Controls
+    %tbody
+      - for type in @page_types
+        %tr
+          %td= type.name
+          %td.controls
+            %ul
+              %li= link_to("Edit", slice_url(:edit_page_type, type))
+              %li= link_to("Edit Sections", slice_url(:page_type_sections, type))
+              %li= link_to("Delete", slice_url(:delete_page_type, type))
+
+%p.newLink= link_to("New", slice_url(:new_page_type), :class => "buttonGrey")

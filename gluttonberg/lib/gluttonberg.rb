@@ -55,6 +55,10 @@ if defined?(Merb::Plugins)
               l.match(:method => "put").to(:action => "update")
             end.name(:localization)
           end
+          c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
+            p.resources(:sections, :controller => "content/page_sections")
+          end
+          c.resources(:layouts, :controller => "content/layouts")
           c.resources(:templates, :controller => "content/templates") do |t|
             t.resources(:sections, :controller => "content/template_sections")
           end

@@ -75,6 +75,11 @@ module Gluttonberg
   RichTextContent::Localization.fixture {{
     :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
   }}
+  
+  PageType.fixture {{
+    :name     => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :filename => /\w+/.gen
+  }}
 end
 
 # 5.of { Dialect.generate }

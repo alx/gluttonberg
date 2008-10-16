@@ -11,13 +11,13 @@
   %dt Slug
   %dd= @page.slug
   %dt Template
-  %dd= @page.template.name || "None set"
+  %dd= @page.type.name || "None set"
   %dt Template Section Count
-  %dd= @page.template ? @page.template.sections.length : 0
+  %dd= @page.type ? @page.type.sections.length : 0
 
 %h2 Sections
 %ul
-  - for section in @page.template.sections
+  - for section in @page.type.sections
     %li= section.label
 
 %h2 Localizations

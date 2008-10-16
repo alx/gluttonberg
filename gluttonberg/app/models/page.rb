@@ -22,8 +22,8 @@ module Gluttonberg
 
     has n,      :localizations, :class_name => "Gluttonberg::PageLocalization"
     has n,      :children,      :class_name => "Gluttonberg::Page",      :child_key => [:parent_id]
-    belongs_to  :layout,        :class_name => "Gluttonberg::Template",  :child_key => [:layout_id]
-    belongs_to  :template
+    belongs_to  :layout
+    belongs_to  :type,          :class_name => "Gluttonberg::PageType"
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
 
@@ -99,7 +99,7 @@ module Gluttonberg
     private
 
     def cache_template_and_layout_name
-      attribute_set(:template_name, template.file_name) if attribute_dirty?(:template_id)
+      attribute_set(:template_name, type.file_name) if attribute_dirty?(:template_id)
       attribute_set(:layout_name, layout.file_name) if attribute_dirty?(:layout_id)
     end
 

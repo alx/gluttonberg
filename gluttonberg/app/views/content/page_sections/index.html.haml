@@ -1,0 +1,20 @@
+- @page_title = "Sections for #{@page_type.name}"
+
+- if @page_sections.empty?
+  %p.empty No Page Sections
+- else
+  %table{:cellspacing => 0, :cellpadding => 0}
+    %thead
+      %tr
+        %th Name
+        %th.controls Controls
+    %tbody
+      - for section in @page_sections
+        %tr
+          %td= section.label
+          %td.controls
+            %ul
+              %li= link_to("Edit", slice_url(:edit_page_type_section, @page_type, section))
+              %li= link_to("Delete", slice_url(:delete_page_type_section, @page_type, section))
+
+%p.newLink= link_to("New", slice_url(:new_page_type_section, @page_type), :class => "buttonGrey")
