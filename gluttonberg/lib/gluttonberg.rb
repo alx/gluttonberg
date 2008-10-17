@@ -14,7 +14,8 @@ if defined?(Merb::Plugins)
     :localize       => true,
     :translate      => false,
     :encode_dialect => :url,
-    :encode_locale  => :url
+    :encode_locale  => :url,
+    :template_dir   => Merb.root / "templates"
   }.merge!(Merb::Slices::config[:gluttonberg])
   
   # All Slice code is expected to be namespaced inside a module
@@ -38,6 +39,7 @@ if defined?(Merb::Plugins)
     def self.activate
       Content.setup
       Library.setup
+      stub_template_dirs
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -98,6 +100,13 @@ if defined?(Merb::Plugins)
     
     def self.translated?
       config[:translate] && ! config[:localize]
+    end
+    
+    def self.stub_template_dirs
+      unless File.exists?(config[:template_dir])
+        FileUtils.mkdir(config[:template_dir])
+        %w(layouts pages).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
+      end
     end
   end
   
