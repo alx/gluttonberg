@@ -1,5 +1,7 @@
 $KCODE = 'UTF8'
 
+require 'dm-core'
+
 use_orm :datamapper
 use_test :rspec
 use_template_engine :haml

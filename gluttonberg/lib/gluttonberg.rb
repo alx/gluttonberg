@@ -2,7 +2,7 @@ if defined?(Merb::Plugins)
 
   $:.unshift File.dirname(__FILE__)
 
-  load_dependency 'merb-slices'
+  load_dependency 'merb-slices', "0.9.10"
   Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks", "gluttonberg/tasks/spectasks"
 
   # Register the Slice for the current host application
@@ -108,6 +108,14 @@ if defined?(Merb::Plugins)
         %w(layouts pages).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
       end
     end
+    
+    def self.templates_dir(type = nil)
+      if type.nil?
+        config[:template_dir]
+      else
+        config[:template_dir] / type
+      end
+    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
@@ -142,15 +150,15 @@ if defined?(Merb::Plugins)
   Gluttonberg.setup_default_structure!
   
   # Third party dependencies
-  dependency 'merb_datamapper'
-  dependency 'dm-is-tree'
-  dependency 'dm-observer'
-  dependency 'dm-is-list'
-  dependency 'dm-validations'
-  dependency 'dm-timestamps'
-  dependency 'dm-types'
-  dependency 'merb-assets'
-  dependency 'merb-helpers'
+  dependency 'merb_datamapper', "0.9.10"
+  dependency 'dm-is-tree', "0.9.6"
+  dependency 'dm-observer', "0.9.6"
+  dependency 'dm-is-list', "0.9.6"
+  dependency 'dm-validations', "0.9.6"
+  dependency 'dm-timestamps', "0.9.6"
+  dependency 'dm-types', "0.9.6"
+  dependency 'merb-assets', "0.9.10"
+  dependency 'merb-helpers', "0.9.10"
 
   # Various mixins and classes
   require "gluttonberg/content"
@@ -158,5 +166,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/admin_controller"
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
+  require "gluttonberg/template_mixin"
   
 end
