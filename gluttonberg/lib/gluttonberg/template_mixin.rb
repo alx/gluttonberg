@@ -15,15 +15,16 @@ module Gluttonberg
           elsif Gluttonberg.translated?
             [/\/#{filename}.([a-z-]+).(\w+).(erb|mab|haml)/, :translated]
           end
-          files.inject([]) do |memo, file|
+          memo = {}
+          files.each do |file|
             unless file.scan(/\/#{filename}.\w+.(erb|mab|haml)/).empty?
               @has_default = true
             else
               match = file.match(matcher)
-              memo << extract_template_details(mode, match)
+              extract_template_details(memo, mode, match)
             end
-            memo
           end
+          memo
         else
           # For the non-localized/dialect mode, just collect the various formats
           files.inject([]) do |memo, file|
@@ -48,11 +49,14 @@ module Gluttonberg
     
     # Extracts a different hash from the matches depending on the current 
     # mode.
-    def extract_template_details(mode, match)
+    def extract_template_details(memo, mode, match)
       if mode == :localized
-        {:locale => match[1], :dialect => match[2], :format => match[3]}
+        memo[match[1]] ||= {}
+        memo[match[1]][match[2]] ||= []
+        memo[match[1]][match[2]] << match[3]
       else
-        {:dialect => match[2], :format => match[3]}
+        memo[match[1]] ||= []
+        memo[match[1]] << match[2]
       end
     end
     

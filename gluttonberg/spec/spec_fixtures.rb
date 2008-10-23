@@ -28,25 +28,6 @@ module Gluttonberg
     :dialects => (1..3).of { Dialect.pick }
   }}
 
-  Template.fixture(:view) {{
-    :name       => (label = /\w+/.gen),
-    :file_name  => label.downcase.gsub(" ", "_"),
-    :type       => :view,
-    :sections   => (1..4).of { TemplateSection.generate} 
-  }}
-
-  Template.fixture(:layout) {{
-    :name       => (label = /\w+/.gen),
-    :file_name  => label.downcase.gsub(" ", "_"),
-    :type       => :layout
-  }}
-
-  TemplateSection.fixture {{
-    :label => (label = /\w+/.gen),
-    :name  => label.downcase.gsub(" ", "_"),
-    :type  => "rich_text_content"
-  }}
-
   Page.fixture(:no_templates) {{
     :name     => (name = (1..3).of { /\w+/.gen }.join(" ")).capitalize,
     :slug     => name.downcase.gsub(" ", "_")

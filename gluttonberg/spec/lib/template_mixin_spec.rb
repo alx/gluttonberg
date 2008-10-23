@@ -34,18 +34,7 @@ module Gluttonberg
     
     it "should return list of templates" do
       @template.templates.should_not be_nil
-      @template.templates.is_a?(Array).should be_true
-    end
-    
-    it "should capture formats" do
-      counts = @template.templates.inject({}) do |memo, template|
-        (memo[template[:format]] ||= 0)
-        memo[template[:format]] += 1
-        memo
-      end
-      counts["html"].should == 2
-      counts["xml"].should == 1
-      counts["yml"].should == 1
+      @template.templates.is_a?(Hash).should be_true
     end
   end
   
@@ -71,7 +60,7 @@ module Gluttonberg
     
     it "should return list of templates" do
        @template.templates.should_not be_nil
-       @template.templates.is_a?(Array).should be_true
+       @template.templates.is_a?(Hash).should be_true
     end
   end
   
