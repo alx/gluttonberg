@@ -16,7 +16,7 @@ module Gluttonberg
           property :updated_at,   Time 
           
           belongs_to :page
-          belongs_to :section, :class_name => "TemplateSection"
+          belongs_to :section, :class_name => "PageSection"
         end
         
         # This registers this class so that the page can later query which 

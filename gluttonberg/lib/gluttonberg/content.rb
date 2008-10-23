@@ -12,7 +12,7 @@ module Gluttonberg
     # running
     def self.setup
       Merb.logger.info("Setting up content classes and assocations")
-      [Page, TemplateSection].each do |klass|
+      [Page, PageSection].each do |klass|
         klass.class_eval do
           Gluttonberg::Content.types.each do |klass| 
             has n, klass.association_name, :class_name => klass.name 
