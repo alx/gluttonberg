@@ -70,7 +70,7 @@ module Gluttonberg
         @pages      = params[:id] ? Page.all(:id.not => params[:id]) : Page.all
         @dialects   = Dialect.all
         @types      = PageType.all
-        @layouts    = Template.layouts
+        @layouts    = Layout.all
         @locales    = Locale.all
       end
 

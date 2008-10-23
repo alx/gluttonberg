@@ -3,6 +3,7 @@ public/assets/*
 spec/log/*
 log/*
 gluttonberg/log/*
+gluttonberg/templates/*
 tmp/*
 gems/cache/*
 TAGS

@@ -99,8 +99,8 @@ module Gluttonberg
     private
 
     def cache_template_and_layout_name
-      attribute_set(:template_name, type.file_name) if attribute_dirty?(:template_id)
-      attribute_set(:layout_name, layout.file_name) if attribute_dirty?(:layout_id)
+      attribute_set(:template_name, type.filename) if attribute_dirty?(:page_type_id)
+      attribute_set(:layout_name, layout.filename) if attribute_dirty?(:layout_id)
     end
 
     # Checks to see if this page has been set as the homepage. If it has, we 
