@@ -8,5 +8,7 @@ module Gluttonberg
     
     has n, :pages
     has n, :sections, :class_name => "Gluttonberg::PageSection"
+    
+    template_type = :page
   end
 end

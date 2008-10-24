@@ -9,11 +9,6 @@ module Gluttonberg
 
     has n, :pages
     
-    private
-    
-    def template_glob
-      Gluttonberg.templates_dir(:layouts) / "#{filename}.*"
-    end
-    
+    template_type = :layout
   end
 end
