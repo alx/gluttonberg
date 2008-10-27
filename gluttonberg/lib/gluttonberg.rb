@@ -61,15 +61,8 @@ if defined?(Merb::Plugins)
             p.resources(:sections, :controller => "content/page_sections")
           end
           c.resources(:layouts, :controller => "content/layouts")
-          c.resources(:templates, :controller => "content/templates") do |t|
-            t.resources(:sections, :controller => "content/template_sections")
-          end
         end
-      
-        # Top level controllers
-        s.resources(:locales)
-        s.resources(:dialects)
-      
+        
         # Asset Library
         s.match("/library").to(:controller => "library/main").name(:library)
         s.match("/library") do |a|
@@ -81,7 +74,11 @@ if defined?(Merb::Plugins)
         s.match("/users").to(:controller => "users").name(:users)
       
         # Settings
-        s.match("/settings").to(:controller => "settings").name(:settings)
+        s.match("/settings").to(:controller => "settings/main").name(:settings)
+        s.match("/settings") do |se|
+          se.resources(:locales, :controller => "settings/locales")
+          se.resources(:dialects, :controller => "settings/dialects")
+        end
         
         s.gluttonberg_pages #if standalone?
       end
