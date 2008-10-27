@@ -88,19 +88,6 @@ module Gluttonberg
       @home_updated = state
     end
 
-    # Sets and saves the page’s path using the prefix passed in. This is intended
-    # to be used by the parent page as part of a cascading update i.e. a parent 
-    # page changes it’s path, so all the child pages need to have their paths
-    # updated.
-    def cache_path!(locale, path)
-      new_path = "#{path}/#{slug}"
-      # Save the path for the specified localization
-      local = localizations.first(:locale => locale)
-      local.update_attributes(:path => "#{path}/#{local.slug}") if local
-      # Cascade down into the other pages
-      next_generation.each { |descendant| descendant.cache_path!(locale, new_path) }
-    end
-
     private
 
     def cache_template_and_layout_name
