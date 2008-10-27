@@ -12,7 +12,7 @@ module Gluttonberg
       File.join(File.dirname(__FILE__), "..", "fixtures", "templates", "layouts/*")
     end
     
-    def template_dir
+    def self.template_dir
       File.join(File.dirname(__FILE__), "..", "fixtures", "templates", "layouts")
     end
   end

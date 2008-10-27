@@ -10,10 +10,6 @@ module Gluttonberg
     has n, :pages
     has n, :sections, :class_name => "Gluttonberg::PageSection"
     
-    private 
-    
-    def template_type
-      :pages
-    end
+    set_template_dir "pages"
   end
 end
