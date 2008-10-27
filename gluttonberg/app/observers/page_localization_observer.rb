@@ -15,7 +15,7 @@ module Gluttonberg
           localization = page.parent.localizations.first({:locale_id => locale_id, :dialect_id => dialect_id})
           path = "#{localization.path}/#{slug || page.slug}"
         else
-          path = "/#{slug || page.slug}"
+          path = "#{slug || page.slug}"
         end
         attribute_set(:path, path)
       end

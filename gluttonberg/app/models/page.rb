@@ -56,8 +56,7 @@ module Gluttonberg
     #
     # FIXME: The way errors are raised here is ver nasty, needs fixing up 
     def self.first_with_localization(options)
-      options[:path] = "/" + options[:path]
-      if options[:path] == "/"
+      if options[:path] == "" or options[:path].nil?
         options.delete(:path)
         page = Page.first(:home => true)
         raise DataMapper::ObjectNotFoundError unless page
