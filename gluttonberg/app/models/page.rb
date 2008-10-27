@@ -29,7 +29,7 @@ module Gluttonberg
 
     # Returns a hash containing the paths to the page and layout templates.
     def template_paths(opts = {})
-      {:page => type.template_for(opts), :layout => layout.template_for(opts)}
+      {:page => PageType.template_for(template_name, opts), :layout => Layout.template_for(layout_name, opts)}
     end
 
     def slug=(new_slug)
@@ -74,7 +74,7 @@ module Gluttonberg
     # Checks to see if a layout has actually been set, otherwise it falls back
     # to the default "public"
     def layout_name
-      attribute_get(:layout_name) || "public"
+      attribute_get(:layout_name) || "default"
     end
 
     # Checks to see if a template has been set, otherwise it falls back and
