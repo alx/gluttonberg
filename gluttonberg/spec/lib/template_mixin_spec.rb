@@ -38,15 +38,15 @@ module Gluttonberg
     end
     
     it "should return a matching template for html" do
-      html = @template.template_for(:dialect => @dialect, :locale => @aust, :format => "html")
+      html = @template.template_for(:dialect => @dialect, :locale => @aust)
       html.should_not be_nil
-      html.match(/default.aust.en-au.html/).should_not be_nil
+      html.match(/default.aust.en-au/).should_not be_nil
     end
     
     it "should return a default template for html" do
-      html = @template.template_for(:dialect => @dialect, :locale => @south_aust, :format => "html")
+      html = @template.template_for(:dialect => @dialect, :locale => @south_aust)
       html.should_not be_nil
-      html.match(/default.html/).should_not be_nil
+      html.match(/default/).should_not be_nil
     end
   end
   
@@ -73,14 +73,8 @@ module Gluttonberg
     end
     
     it "should return default template" do
-      template = @template.template_for(:format => "html")
-      template.match(/default.html/).should_not be_nil
-    end
-    
-    it "should return nil for non-existant format" do
-      Gluttonberg.stub!(:localized?).and_return(false)
-      template = @template.template_for(:format => "pdf")
-      template.should be_nil
+      template = @template.template_for({})
+      template.match(/default/).should_not be_nil
     end
   end
 end

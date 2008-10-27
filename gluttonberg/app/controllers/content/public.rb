@@ -3,6 +3,8 @@ module Gluttonberg
     class Public < Gluttonberg::Application
       include Gluttonberg::PublicController
       
+      self._template_roots = [[Gluttonberg.templates_dir, :_template_location]]
+      
       before :set_localization_and_path, :only => :show
       
       def show
@@ -11,7 +13,8 @@ module Gluttonberg
         rescue DataMapper::ObjectNotFoundError
           raise NotFound
         end
-        render(:template => "public/pages/#{@page.template_name}", :layout => @page.layout_name)
+        templates = @page.template_paths(:dialect => dialect, :locale => locale)
+        render(:template => "pages/" + templates[:page], :layout => "#{templates[:layout]}.#{content_type}")
       end
     end
   end

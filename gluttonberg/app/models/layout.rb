@@ -9,6 +9,10 @@ module Gluttonberg
 
     has n, :pages
     
-    template_type = :layout
+    private 
+    
+    def template_type
+      :layout
+    end
   end
 end

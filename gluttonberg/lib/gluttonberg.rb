@@ -82,14 +82,8 @@ if defined?(Merb::Plugins)
       
         # Settings
         s.match("/settings").to(:controller => "settings").name(:settings)
-      end
-    end
-    
-    # If we're in standalone mode, we want to expose the public routes 
-    # automatically.
-    if Gluttonberg.standalone?
-      Merb::BootLoader.after_app_loads do
-        Merb::Router.append { gluttonberg_pages("public") }
+        
+        s.gluttonberg_pages #if standalone?
       end
     end
     
@@ -105,7 +99,7 @@ if defined?(Merb::Plugins)
     def self.stub_template_dirs
       unless File.exists?(config[:template_dir])
         FileUtils.mkdir(config[:template_dir])
-        %w(layouts pages).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
+        %w(layout pages).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
       end
     end
     
@@ -125,9 +119,10 @@ if defined?(Merb::Plugins)
   
   # This allows users to publish the path to the public pages
   Merb::Router.extensions do
-    def gluttonberg_pages(prefix = nil)
+    def gluttonberg_pages(opts = {})
+      Merb.logger.info("Adding Gluttonberg's public routes")
       # See if we need to add the prefix
-      path = prefix ? "/#{prefix}" : ""
+      path = opts[:prefix] ? "/#{opts[:prefix]}" : ""
       # Check to see if this is localized or translated and if either need to
       # be added as a URL prefix. For now we just assume it's going into the
       # URL.
@@ -139,7 +134,7 @@ if defined?(Merb::Plugins)
         path << "(/:full_path)"
       end
       # Add the matcher for the full path.
-      match(path, :full_path => /\S+/).to(:controller => "gluttonberg/content/public", :action => "show").
+      match(path, :full_path => /\S+/).to(:controller => "/gluttonberg/content/public", :action => "show").
         name(:public_page)
       # TODO: look at matching a root, which people might hit without 
       # selecting a locale or dialect

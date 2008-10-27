@@ -1,35 +1,31 @@
 module Gluttonberg
   module TemplateMixin
-    def self.included(klass)
-      class << klass; attr_accessor :template_type; end
-    end
-    
     # Returns a specific template, or alternately returns a default.
     def template_for(opts = {})
       # A bunch of potential matches in order of preference.
       candidates = if Gluttonberg.localized?
-        puts "WTF?"
         # Locale and dialect
         # Locale only
         # Default
         [
-          "#{filename}.#{opts[:locale].slug}.#{opts[:dialect].code}.#{opts[:format]}",
-          "#{filename}.#{opts[:locale].slug}.#{opts[:format]}",
-          "#{filename}.#{opts[:format]}"
+          "#{filename}.#{opts[:locale].slug}.#{opts[:dialect].code}",
+          "#{filename}.#{opts[:locale].slug}",
+          "#{filename}"
         ]
       elsif Gluttonberg.translated?
         # Dialect
         # Default
         [
-          "#{filename}.#{opts[:dialect].code}.#{opts[:format]}",
-          "#{filename}.#{opts[:format]}"
+          "#{filename}.#{opts[:dialect].code}",
+          "#{filename}"
         ]
       else
-        ["#{filename}.#{opts[:format]}"]
+        ["#{filename}.*"]
       end
       # Loop through them and return the first match
       for candidate in candidates 
-        matches = Dir.glob(template_dir / (candidate + ".*"))
+        path = template_dir / candidate + ".*"
+        matches = Dir.glob(path)
         return candidate unless matches.empty?
       end
       # This nil has to be here, otherwise the last evaluated object is 
@@ -70,8 +66,9 @@ module Gluttonberg
     
     private
     
+    # Stub to be added in the mixed in modules
     def template_type
-      self.class.template_type
+      
     end
     
     # Returns the path to the templates.

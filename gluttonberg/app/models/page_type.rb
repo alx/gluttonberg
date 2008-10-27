@@ -1,6 +1,7 @@
 module Gluttonberg
   class PageType
     include DataMapper::Resource
+    include Gluttonberg::TemplateMixin
 
     property :id,       Serial
     property :name,     String, :length => 100, :nullable => false
@@ -9,6 +10,10 @@ module Gluttonberg
     has n, :pages
     has n, :sections, :class_name => "Gluttonberg::PageSection"
     
-    template_type = :page
+    private 
+    
+    def template_type
+      :pages
+    end
   end
 end

@@ -27,6 +27,11 @@ module Gluttonberg
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
 
+    # Returns a hash containing the paths to the page and layout templates.
+    def template_paths(opts = {})
+      {:page => type.template_for(opts), :layout => layout.template_for(opts)}
+    end
+
     def slug=(new_slug)
       @paths_need_recaching = true
       attribute_set(:slug, new_slug)
@@ -51,6 +56,7 @@ module Gluttonberg
     #
     # FIXME: The way errors are raised here is ver nasty, needs fixing up 
     def self.first_with_localization(options)
+      options[:path] = "/" + options[:path]
       if options[:path] == "/"
         options.delete(:path)
         page = Page.first(:home => true)
