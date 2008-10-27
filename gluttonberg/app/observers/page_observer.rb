@@ -24,8 +24,10 @@ module Gluttonberg
         association = send(section.type)
         content = association.create(:section => section)
         # Create each localization
-        localizations.all.each do |localization|
-          content.localizations.create(:parent => content, :page_localization => localization)
+        if content.respond_to? :localizations
+          localizations.all.each do |localization|
+            content.localizations.create(:parent => content, :page_localization => localization)
+          end
         end
       end
     end
@@ -36,21 +38,30 @@ module Gluttonberg
     after :update do
       if paths_need_recaching?
         localizations.all(:slug => nil).each do |localization|
-          # This accounts for the following possibilities:
-          # "/"
-          # "/bit"
-          # "/more/complex"
-          path_prefix = if localization.path == "/"
-            localization.path
-          elsif localization.path.count("/") == 1
-            localization.path.match(/(\/\S+)/)[1]
+          new_path = if localization.path.count("/") > 0
+            "#{localization.path.match(%r{(\S+)/\w+})[1]}/#{slug}"
           else
-            localization.path.match(/(\/\S+)\/\w+/)[1]
+            slug
           end
           # Save the path in the localization
-          localization.update_attributes(:path => "#{path_prefix}/#{slug}")
+          localization.update_attributes(:path => new_path)
         end
       end
+    end
+    
+    # A dirty hack to remove the page localizations after a page is destroyed.
+    # This is in lieu of a :dependent option in DM associations
+    after :destroy do
+      page_localizations = PageLocalization.all(:page_id => id)
+      # Destroy the localizations first, then the main content record
+      Gluttonberg::Content.types.each do |klass|
+        if klass.const_defined? "Localization"
+          page_localization_ids = page_localizations.collect { |l| l.id }
+          klass.localizations.model.all(:page_localization_id => page_localization_ids).destroy!
+        end
+        klass.all(:page_id => id).destroy!
+      end
+      page_localizations.destroy!
     end
   end
 end
