@@ -1,9 +1,9 @@
-public/assets/*
 .DS_Store
 spec/log/*
 log/*
 gluttonberg/log/*
 gluttonberg/templates/*
+gluttonberg/public/assets/*
 tmp/*
 gems/cache/*
 TAGS
