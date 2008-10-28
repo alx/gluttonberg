@@ -5,7 +5,8 @@ module Gluttonberg
 
     before(:all) do
       Page.all.destroy!
-      Template.all.destroy!
+      PageType.all.destroy!
+      PageSection.all.destroy!
     end
 
     it "should return correct localization"
@@ -14,16 +15,16 @@ module Gluttonberg
 
     it "should return default layout_name" do
       page = Page.generate(:no_templates)
-      page.layout_name.should == "public"
+      page.layout_name.should == "default"
     end
 
     it "should return cached layout_name" do
       page    = Page.generate(:no_templates)
-      layout  = Template.generate(:layout)
+      layout  = Layout.generate
 
       page.update_attributes(:layout => layout)
 
-      page.layout_name.should == layout.name
+      page.layout_name.should == layout.filename
     end
 
     it "should return default template_name" do
@@ -33,16 +34,16 @@ module Gluttonberg
 
     it "should return cached template_name" do
       page      = Page.generate(:no_templates)
-      template  = Template.generate(:view)
+      template  = PageType.generate
 
-      page.update_attributes(:template => template)
+      page.update_attributes(:type => template)
 
-      page.template_name.should == template.name
+      page.template_name.should == template.filename
     end
 
     it "should have only one home page at a time" do
-      Template.generate(:layout)
-      Template.generate(:view)
+      Layout.generate
+      PageType.generate
       4.of { Page.generate(:parent) }
       new_home = Page.pick(:parent)
       current_home = Page.generate(:parent, :home => true)
