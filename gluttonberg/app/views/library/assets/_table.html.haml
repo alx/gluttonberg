@@ -1,0 +1,18 @@
+- if @assets.empty?
+  %p.empty No assets
+- else
+  %table{:cellpadding => 0, :cellspacing => 0}
+    %thead
+      %tr
+        %th Name
+        %th Type
+        %th.controls Controls
+    %tbody
+      - for asset in @assets
+        %tr
+          %td= asset.name
+          %td= asset.type
+          %td.controls
+            %ul
+              %li= link_to("Edit", slice_url(:edit_asset, asset))
+              %li= link_to("Delete", slice_url(:delete_asset, asset))

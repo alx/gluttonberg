@@ -66,6 +66,7 @@ if defined?(Merb::Plugins)
         # Asset Library
         s.match("/library").to(:controller => "library/main").name(:library)
         s.match("/library") do |a|
+          a.match("/categories/:category").to(:controller => "library/assets", :action => "category").name(:asset_category)
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")
         end

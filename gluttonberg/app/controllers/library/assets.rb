@@ -3,11 +3,20 @@ module Gluttonberg
     class Assets < Gluttonberg::Application
       include Gluttonberg::AdminController
       
-      before :find_asset, :exclude => [:index, :new, :create]
+      before :find_asset, :exclude => [:index, :category, :new, :create]
 
       def index
         @assets = Asset.all
         display @assets
+      end
+      
+      def category
+        @assets = Asset.all(:type => params[:category], :order => [:name.desc])
+        render
+      end
+      
+      def show
+        render
       end
       
       def new

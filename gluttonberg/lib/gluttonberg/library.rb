@@ -3,14 +3,14 @@ require Pathname(__FILE__).dirname.expand_path / "library" / "attachment_mixin"
 module Gluttonberg
   module Library
     TYPE_MATCHERS = {
-      :audio    => /audio/,
-      :image    => /image/,
-      :video    => /video/,
-      :document => /[text|pdf]/,
-      :archive  => /binary/,
-      :binary   => /binary/
+      'audio'    => /audio/,
+      'image'    => /image/,
+      'video'    => /video/,
+      'document' => /[text|pdf]/,
+      'archive'  => /binary/,
+      'binary'   => /binary/
     }
-    TYPES = TYPE_MATCHERS.collect {|k, v| k}
+    TYPES = (TYPE_MATCHERS.collect {|k, v| k}).sort
     
     @@assets_root = nil
     @@asset_dirs  = {}
