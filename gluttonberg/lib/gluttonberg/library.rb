@@ -2,15 +2,20 @@ require Pathname(__FILE__).dirname.expand_path / "library" / "attachment_mixin"
 
 module Gluttonberg
   module Library
-    TYPE_MATCHERS = {
-      'audio'    => /audio/,
-      'image'    => /image/,
-      'video'    => /video/,
-      'document' => /[text|pdf]/,
-      'archive'  => /binary/,
-      'binary'   => /binary/
+    # TODO: Define a set of fallbacks for examining extensions if we match
+    # against an ambigous pattern e.g. application/octet-stream
+    #
+    # Also need to account for particular types that are wierdly labelled.
+    # For example ogg files have the mime-type: application/ogg
+    TYPE_PATTERNS = {
+      'audio'    => %r{^audio/},
+      'image'    => %r{^image/},
+      'video'    => %r{^video/},
+      'document' => %r{[text/|/pdf|/excel|/mspowerpoint|/msword|/postscript]},
+      'archive'  => %r{[zip|gzip|tar]},
+      'binary'   => %r{^binary/}
     }
-    TYPES = (TYPE_MATCHERS.collect {|k, v| k}).sort
+    TYPES = TYPE_PATTERNS.keys.sort
     
     @@assets_root = nil
     @@asset_dirs  = {}

@@ -28,11 +28,11 @@ module Gluttonberg
     private
     
     def set_type
-      if new_record?
+      unless file.nil?
         attribute_set(:mime_type, file[:content_type])
         # Determine the type based on the matchers specified in the library
-        Library::TYPE_MATCHERS.each do |t, m|
-          attribute_set(:type, t) if mime_type.scan(m)
+        Library::TYPE_PATTERNS.each do |t, m|
+          attribute_set(:type, t) if mime_type.match(m)
         end
       end
     end
