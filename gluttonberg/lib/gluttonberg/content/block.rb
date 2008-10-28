@@ -29,12 +29,10 @@ module Gluttonberg
         # Is used to set defaults for this class
         def is_content(opts = {})
           self.label = opts[:label] || name
-          self.association_name = begin
-            if opts[:association_name]
-              opts[:association_name].to_s.pluralize.to_sym
-            else
-              Extlib::Inflection.underscore(name.gsub("::", "_").pluralize).to_sym
-            end
+          self.association_name = if opts[:association_name]
+            opts[:association_name]
+          else
+            Extlib::Inflection.underscore(name.gsub("::", "_").pluralize).to_sym
           end
         end
         
