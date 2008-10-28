@@ -1,9 +1,12 @@
 .DS_Store
-spec/log/*
-log/*
-gluttonberg/log/*
-gluttonberg/templates/*
-gluttonberg/public/assets/*
+
+*/log/*
+*/templates/*
+*/public/assets/*
+*/*.gemspec
+*/spec/log/*
+*/pkg/*
+
 tmp/*
 gems/cache/*
 TAGS

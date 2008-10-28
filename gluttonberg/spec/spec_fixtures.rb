@@ -29,8 +29,9 @@ module Gluttonberg
   }}
 
   PageSection.fixture {{
-    :name     => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-    :name   => /\w+/.gen
+    :name => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :name => /\w+/.gen,
+    :type => "rich_texts"
   }}
 
   PageType.fixture {{
