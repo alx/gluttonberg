@@ -83,7 +83,6 @@ body {
   background: right bottom no-repeat url(/images/wrapper_bkg.png);
   padding: 0 7px 7px 0;
   width: 100%;
-  min-height: 20em;
   float: left; }
   #wrapper h1 {
     background: #244e66;
@@ -91,6 +90,8 @@ body {
     font-weight: bold;
     font-size: 1.6em;
     padding: 8px 15px; }
+  #wrapper h2 {
+    font-size: 1.2em; }
 
 /* Sub-navigation */
 #subnav {

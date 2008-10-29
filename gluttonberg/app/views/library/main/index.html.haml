@@ -1,7 +1,8 @@
 - @page_title = "Asset Library"
-%h2 Categories
+%h2 Browse
 %ul
   %li= link_to("Latest", slice_url(:asset_category, "latest"))
+  %li= link_to("All", slice_url(:assets))
   - Gluttonberg::Library::TYPES.each do |type|
     %li= link_to(type.to_s.capitalize, slice_url(:asset_category, type.to_s))
 
@@ -10,10 +11,9 @@
   %p.empty No collections
 - else
   %ul
+    %li= link_to("All", slice_url(:collections))
     - for collection in @collections
       %li= link_to(collection.name, slice_url(:collection, collection))
 
-%h2 All
-%ul
-  %li= link_to("Assets", slice_url(:assets))
-  %li= link_to("Collections", slice_url(:collections))
+%h2 Latest
+= partial("library/shared/assets_table")

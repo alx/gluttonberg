@@ -19,6 +19,11 @@ module Gluttonberg
         render
       end
       
+      def show
+        @assets = @collection.assets.all(:order => [:name.desc])
+        render
+      end
+      
       def delete
         display_delete_confirmation(
           :title      => "Delete “#{@collection.name}”?",

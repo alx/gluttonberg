@@ -1,4 +1,4 @@
 - @page_title = "Assets"
-= partial(:table)
+= partial("library/shared/assets_table", :selector => true)
 
 %p.newLink= link_to('New', slice_url(:new_asset))
