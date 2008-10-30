@@ -1,19 +1,35 @@
 - @page_title = "Asset Library"
-%h2 Browse
-%ul
-  %li= link_to("Latest", slice_url(:asset_category, "latest"))
-  %li= link_to("All", slice_url(:assets))
-  - Gluttonberg::Library::TYPES.each do |type|
-    %li= link_to(type.to_s.capitalize, slice_url(:asset_category, type.to_s))
 
-%h2 Collections
+%h2.assetList Collections
 - if @collections.empty?
-  %p.empty No collections
+  %p.emptyAssets No collections
 - else
-  %ul
-    %li= link_to("All", slice_url(:collections))
+  %ul.assetList
     - for collection in @collections
-      %li= link_to(collection.name, slice_url(:collection, collection))
+      %li
+        %a{:href => slice_url(:collection, collection), :class => "collection"}
+          %h3= collection.name
+          %p nil items
 
-%h2 Latest
-= partial("library/shared/assets_table")
+%h2.assetList Browse
+%ul.assetList
+  %li
+    %a{:href => slice_url(:asset_category, "latest"), :class => "browseLatest"}
+      %h3 Latest
+      %p nil items
+  - Gluttonberg::Library::TYPES.each do |type|
+    %li
+      %a{:href => slice_url(:asset_category, type), :class => "browse#{type.pluralize.capitalize}"}
+        %h3= type.pluralize.capitalize
+        %p nil items
+
+%h2.assetList Latest
+- if @assets.empty?
+  %p.emptyAssets No assets
+- else
+  %ul.assetList
+    - for asset in @assets
+      %li
+        %a{:href => slice_url(:asset, asset), :class => "asset#{asset.type.capitalize}"}
+          %h3= asset.name
+          %p= asset.type.capitalize
