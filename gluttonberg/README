@@ -10,3 +10,34 @@ other Merb app, but is given access to the CMS's API i.e. for authentication.
 
 It's in a minimal state currently, but we have detailed our development plans
 here: http://github.com/lukesutton/gluttonberg/wikis
+
+Contributing
+============
+
+Here are the things you need to know to started contributing to Gluttonberg.
+
+Firstly, there are a whole bunch of dependencies, so make sure you have all 
+of these gems installed. Gems like merb should install their own deps like 
+haml.
+
+  * merb (0.9.12)
+  * dm-adjust (0.9.6)
+  * dm-aggregates (0.9.6)
+  * dm-core (0.9.6)
+  * dm-is-list (0.9.6)
+  * dm-is-tree (0.9.6)
+  * dm-observer (0.9.6)
+  * dm-sweatshop (0.9.6)
+  * dm-timestamps (0.9.6)
+  * dm-types (0.9.6)
+  * dm-validations (0.9.6)
+  
+Next, you need to migrate the app. This is a bit of a pest since we don’t have
+a rake task yet. Firstly make a db directory inside the slice. Then start up
+an interactive merb session and auto migrate DataMapper.
+
+  $ slice -i
+  $ DataMapper.auto_migrate!
+  
+Now, if you run the slice command normally the app should boot up as expected. 
+Yay!
