@@ -2,7 +2,7 @@ if defined?(Merb::Plugins)
 
   $:.unshift File.dirname(__FILE__)
 
-  load_dependency 'merb-slices', "0.9.10"
+  load_dependency 'merb-slices', "0.9.12"
   Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks", "gluttonberg/tasks/spectasks"
 
   # Register the Slice for the current host application
@@ -66,7 +66,10 @@ if defined?(Merb::Plugins)
         # Asset Library
         s.match("/library").to(:controller => "library/main").name(:library)
         s.match("/library") do |a|
-          a.match("/categories/:category").to(:controller => "library/assets", :action => "category").name(:asset_category)
+          a.match("/assets").to(:controller => "library/assets") do |as|
+            as.match("/browser").to(:action => "browser").name(:asset_browser)
+            as.match("/:category", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
+          end
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")
         end
@@ -143,15 +146,15 @@ if defined?(Merb::Plugins)
   Gluttonberg.setup_default_structure!
   
   # Third party dependencies
-  dependency 'merb_datamapper', "0.9.10"
+  dependency 'merb_datamapper', "0.9.12"
   dependency 'dm-is-tree', "0.9.6"
   dependency 'dm-observer', "0.9.6"
   dependency 'dm-is-list', "0.9.6"
   dependency 'dm-validations', "0.9.6"
   dependency 'dm-timestamps', "0.9.6"
   dependency 'dm-types', "0.9.6"
-  dependency 'merb-assets', "0.9.10"
-  dependency 'merb-helpers', "0.9.10"
+  dependency 'merb-assets', "0.9.12"
+  dependency 'merb-helpers', "0.9.12"
 
   # Various mixins and classes
   require "gluttonberg/content"
