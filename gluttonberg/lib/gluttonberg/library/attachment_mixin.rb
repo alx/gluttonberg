@@ -27,7 +27,7 @@ module Gluttonberg
       end
 
       def location_on_disk
-        Library.assets_dir(type) / file_name
+        Library.assets_dir(category) / file_name
       end
 
       private

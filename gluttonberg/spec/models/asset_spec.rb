@@ -25,6 +25,21 @@ module Gluttonberg
       @asset.valid?
       @asset.type.should_not be_nil
     end
+    
+    it "should set category" do
+      @asset.valid?
+      @asset.category.should_not be_nil
+    end
+
+    it "should set the correct type" do
+      @asset.valid?
+      @asset.type.should == "JPEG"
+    end
+    
+    it "should set the correct category" do
+      @asset.valid?
+      @asset.category.should == "image"
+    end
 
   end  
 end

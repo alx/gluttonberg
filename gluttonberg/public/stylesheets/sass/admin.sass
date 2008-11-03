@@ -456,30 +456,32 @@ h2.assetList
   :color #333333
   :padding 0 0 0.3em 0
   :margin-top 1em
+  :margin-bottom 0.6em
   
 ul.assetList
   :margin-bottom 1em
   
   li, a
-    :width 140px
+    :width 15em
     :float left
     
-  h3, p
-    :text-align center !important
-    
   h3
+    :white-space no-wrap
     :color black !important
     :font-size 1.1em
+    :width 100%
     :margin-bottom 0.2em
+    :overflow hidden
     
   p
     :color #666666 !important
     :font-size 0.9em
     
   a
-    :background center top no-repeat
+    :background left top no-repeat
     :text-decoration none
-    :padding 86px 0 0 0
+    :padding 18px 0 0 78px
+    :min-height 52px
     
   a.assetArchive,
   a.assetAudio,
@@ -490,25 +492,87 @@ ul.assetList
     :background-image url(/images/library/asset_generic.gif)
     
   a.collection
-    :background-image url(/images/library/collection.gif)
+    :background-image url(/images/library/collection_medium.gif)
     
-  a.browseLatest
-    :background-image url(/images/library/browse_latest.gif)
+  a.browseAll
+    :background-image url(/images/library/browse_all_medium.gif)
     
   a.browseArchives
-    :background-image url(/images/library/browse_archives.gif)
+    :background-image url(/images/library/browse_archives_medium.gif)
     
   a.browseAudios
-    :background-image url(/images/library/browse_audio.gif)
+    :background-image url(/images/library/browse_audio_medium.gif)
     
   a.browseBinaries
-    :background-image url(/images/library/browse_binaries.gif)
+    :background-image url(/images/library/browse_binaries_medium.gif)
   
   a.browseDocuments
-    :background-image url(/images/library/browse_documents.gif)
+    :background-image url(/images/library/browse_documents_medium.gif)
 
   a.browseImages
-    :background-image url(/images/library/browse_images.gif)
+    :background-image url(/images/library/browse_images_medium.gif)
     
   a.browseVideos
-    :background-image url(/images/library/browse_videos.gif)
+    :background-image url(/images/library/browse_videos_medium.gif)
+    
+/* Asset Browser
+#assetsDialogOverlay
+  :background url(/images/library/dialog_overlay.png)
+  :width 100%
+  :height 100%
+  :position absolute
+  :left 0
+  :top 0
+  :z-index 20
+
+#assetsDialog
+  :border 4px solid #807F65
+  :background #FFFFCC
+  :height 80%
+  :width 80%
+  :position absolute
+  :left 10%
+  :top 10%
+  :z-index 21
+  /* Border Radius */
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px
+  
+  h1
+    :background #807F65
+    :color white
+    :font
+      :weight bold
+      :size 1.6em
+    :padding 0.2em 0
+    :text-indent 10px
+    
+  #assetsNavigation
+    :background #666550
+    :width 100%
+    :float left
+    
+    li, a
+      :float left
+      
+    #assetsSearch
+      :float right
+      
+  #assetsDisplay
+    :width 100%
+    :float left
+    :clear both
+    :overflow auto
+    
+    ul.assetList
+      :overflow hidden
+      
+  .controls
+    :border-top 1px solid #AFAE8B
+    :padding 0.8em 0
+    :height 1.8em
+    :width 100%
+    :position absolute
+    :left 0
+    :bottom 0
+    

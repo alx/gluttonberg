@@ -4,6 +4,7 @@ module Gluttonberg
     include Library::AttachmentMixin
     
     property :id,         Serial 
+    property :category,   Enum[*Library::CATEGORIES]
     property :type,       Enum[*Library::TYPES]
     property :mime_type,  String
     property :localized,  Boolean, :default => false
@@ -19,20 +20,46 @@ module Gluttonberg
     attr_accessor :locale_id, :dialect_id
     
     after   :save,    :update_file
-    before  :valid?,  :set_type
+    before  :valid?,  :set_category_and_type
     
     def localized?
       localized
     end
     
+    def full_type
+      attribute_get(:type) ? "#{attribute_get(:type)} #{category}" : category
+    end
+    
+    def type
+      attribute_get(:type) ? attribute_get(:type) : category
+    end
+    
     private
     
-    def set_type
+    def set_category_and_type
       unless file.nil?
         attribute_set(:mime_type, file[:content_type])
-        # Determine the type based on the matchers specified in the library
-        Library::TYPE_PATTERNS.each do |t, m|
-          attribute_set(:type, t) if mime_type.match(m)
+        # Determine the category based on the matchers specified in the library
+        Library::CATEGORY_PATTERNS.each do |t, m|
+          attribute_set(:category, t) if mime_type.match(m)
+        end
+        # Now slightly more complicated; check the extension, then mime type to
+        # try and determine the exact asset type.
+        #
+        # See if it has an extension
+        # If it has, check it against the list inside the patterns
+        # If it doesn't, use the regex patterns to examine the mime-type
+        # If none match, mark it as generic
+        attribute_set(:type, nil)
+        match = file[:filename].match(%r{\.([a-zA-Z]{2,6})$})
+        if match && match[1]
+          Library::TYPE_PATTERNS.each do |type, values|
+            attribute_set(:type, type) if values.include?(match[1])
+          end
+        else
+          Library::TYPE_PATTERNS.each do |type, values|
+            attribute_set(:type, type) if mime_type.match(values.last)
+          end
         end
       end
     end

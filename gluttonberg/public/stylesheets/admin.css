@@ -403,26 +403,29 @@ h2.assetList {
   font-weight: bold;
   color: #333333;
   padding: 0 0 0.3em 0;
-  margin-top: 1em; }
+  margin-top: 1em;
+  margin-bottom: 0.6em; }
 
 ul.assetList {
   margin-bottom: 1em; }
   ul.assetList li, ul.assetList a {
-    width: 140px;
+    width: 15em;
     float: left; }
-  ul.assetList h3, ul.assetList p {
-    text-align: center !important; }
   ul.assetList h3 {
+    white-space: no-wrap;
     color: black !important;
     font-size: 1.1em;
-    margin-bottom: 0.2em; }
+    width: 100%;
+    margin-bottom: 0.2em;
+    overflow: hidden; }
   ul.assetList p {
     color: #666666 !important;
     font-size: 0.9em; }
   ul.assetList a {
-    background: center top no-repeat;
+    background: left top no-repeat;
     text-decoration: none;
-    padding: 86px 0 0 0; }
+    padding: 18px 0 0 78px;
+    min-height: 52px; }
   ul.assetList a.assetArchive,
   ul.assetList a.assetAudio,
   ul.assetList a.assetBinary,
@@ -431,18 +434,71 @@ ul.assetList {
   ul.assetList a.assetVideo {
     background-image: url(/images/library/asset_generic.gif); }
   ul.assetList a.collection {
-    background-image: url(/images/library/collection.gif); }
-  ul.assetList a.browseLatest {
-    background-image: url(/images/library/browse_latest.gif); }
+    background-image: url(/images/library/collection_medium.gif); }
+  ul.assetList a.browseAll {
+    background-image: url(/images/library/browse_all_medium.gif); }
   ul.assetList a.browseArchives {
-    background-image: url(/images/library/browse_archives.gif); }
+    background-image: url(/images/library/browse_archives_medium.gif); }
   ul.assetList a.browseAudios {
-    background-image: url(/images/library/browse_audio.gif); }
+    background-image: url(/images/library/browse_audio_medium.gif); }
   ul.assetList a.browseBinaries {
-    background-image: url(/images/library/browse_binaries.gif); }
+    background-image: url(/images/library/browse_binaries_medium.gif); }
   ul.assetList a.browseDocuments {
-    background-image: url(/images/library/browse_documents.gif); }
+    background-image: url(/images/library/browse_documents_medium.gif); }
   ul.assetList a.browseImages {
-    background-image: url(/images/library/browse_images.gif); }
+    background-image: url(/images/library/browse_images_medium.gif); }
   ul.assetList a.browseVideos {
-    background-image: url(/images/library/browse_videos.gif); }
+    background-image: url(/images/library/browse_videos_medium.gif); }
+
+/* Asset Browser */
+#assetsDialogOverlay {
+  background: url(/images/library/dialog_overlay.png);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 20; }
+
+#assetsDialog {
+  border: 4px solid #807F65;
+  background: #FFFFCC;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  z-index: 21;
+  /* Border Radius */ */
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px; }
+  #assetsDialog h1 {
+    background: #807F65;
+    color: white;
+    font-weight: bold;
+    font-size: 1.6em;
+    padding: 0.2em 0;
+    text-indent: 10px; }
+  #assetsDialog #assetsNavigation {
+    background: #666550;
+    width: 100%;
+    float: left; }
+    #assetsDialog #assetsNavigation li, #assetsDialog #assetsNavigation a {
+      float: left; }
+    #assetsDialog #assetsNavigation #assetsSearch {
+      float: right; }
+  #assetsDialog #assetsDisplay {
+    width: 100%;
+    float: left;
+    clear: both;
+    overflow: auto; }
+    #assetsDialog #assetsDisplay ul.assetList {
+      overflow: hidden; }
+  #assetsDialog .controls {
+    border-top: 1px solid #AFAE8B;
+    padding: 0.8em 0;
+    height: 1.8em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; }

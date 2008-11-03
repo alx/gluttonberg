@@ -7,13 +7,27 @@ module Gluttonberg
     #
     # Also need to account for particular types that are wierdly labelled.
     # For example ogg files have the mime-type: application/ogg
-    TYPE_PATTERNS = {
+    CATEGORY_PATTERNS = {
       'audio'    => %r{^audio/},
       'image'    => %r{^image/},
       'video'    => %r{^video/},
       'document' => %r{[text/|/pdf|/excel|/mspowerpoint|/msword|/postscript]},
       'archive'  => %r{[zip|gzip|tar]},
       'binary'   => %r{^binary/}
+    }
+    CATEGORIES = CATEGORY_PATTERNS.keys.sort
+    
+    # Types are the actual document type rather than the broad category i.e.
+    # a word document belongs in the document category, but the actual type
+    # itself is "word"
+    TYPE_PATTERNS = {
+      "Word"        => ["doc",          %r{/msword}],
+      "Powerpoint"  => ["ppt",          %r{/mspowerpoint}],
+      "PDF"         => ["pdf",          %r{/pdf}],
+      "Excel"       => ["xl",           %r{/excel}],
+      "PNG"         => ["png",          %r{/png}],
+      "JPEG"        => ["jpg", "jpeg",  %r{/png}],
+      "GIF"         => ["gif",          %r{/gif}]
     }
     TYPES = TYPE_PATTERNS.keys.sort
     
@@ -29,10 +43,10 @@ module Gluttonberg
       @@assets_root = Merb.dir_for(:public) / "assets"
       FileUtils.mkdir(assets_dir) unless File.exists?(assets_dir)
       # Set up a directory for each type and store a reference to each.
-      TYPES.each do |type|
-        type_dir = assets_dir / type.to_s.pluralize
-        @@asset_dirs[type] = type_dir
-        FileUtils.mkdir(type_dir) unless File.exists?(type_dir)
+      CATEGORIES.each do |category|
+        category_dir = assets_dir / category.pluralize
+        @@asset_dirs[category] = category_dir
+        FileUtils.mkdir(category_dir) unless File.exists?(category_dir)
       end
     end
     
@@ -40,11 +54,11 @@ module Gluttonberg
     # it returns the matching path
     #
     #   Library.assets_dir(:images) # => "...myapp/public/assets/images"
-    def self.assets_dir(type = :root)
-      if type == :root
+    def self.assets_dir(category = :root)
+      if category == :root
         @@assets_root
       else
-        @@asset_dirs[type]
+        @@asset_dirs[category]
       end
     end
   end
