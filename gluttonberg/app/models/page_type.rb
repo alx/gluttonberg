@@ -1,7 +1,7 @@
 module Gluttonberg
   class PageType
     include DataMapper::Resource
-    include Gluttonberg::TemplateMixin
+    include Gluttonberg::Templates::Mixin
 
     property :id,       Serial
     property :name,     String, :length => 100, :nullable => false

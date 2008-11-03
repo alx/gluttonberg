@@ -39,7 +39,7 @@ if defined?(Merb::Plugins)
     def self.activate
       Content.setup
       Library.setup
-      stub_template_dirs
+      Templates.setup
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -96,21 +96,6 @@ if defined?(Merb::Plugins)
     def self.translated?
       config[:translate] && ! config[:localize]
     end
-    
-    def self.stub_template_dirs
-      unless File.exists?(config[:template_dir])
-        FileUtils.mkdir(config[:template_dir])
-        %w(layout pages editors).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
-      end
-    end
-    
-    def self.templates_dir(type = nil)
-      if type.nil?
-        config[:template_dir]
-      else
-        config[:template_dir] / type
-      end
-    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
@@ -162,6 +147,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/admin_controller"
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
-  require "gluttonberg/template_mixin"
+  require "gluttonberg/templates"
   
 end

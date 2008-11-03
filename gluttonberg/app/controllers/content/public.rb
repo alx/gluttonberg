@@ -3,7 +3,7 @@ module Gluttonberg
     class Public < Gluttonberg::Application
       include Gluttonberg::PublicController
       
-      self._template_roots = [[Gluttonberg.templates_dir, :_template_location]]
+      self._template_roots = [[Templates.root, :_template_location]]
       
       before :set_localization_and_path, :only => :show
       
