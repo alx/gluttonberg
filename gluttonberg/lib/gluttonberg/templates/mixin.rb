@@ -53,7 +53,7 @@ module Gluttonberg
 
         # A string to be used when globbing the templates.
         def template_glob
-          Gluttonberg.templates_dir(self.class.template_dir_name) / "#{filename}.*"
+          Templates.path_for(self.class.template_dir_name) / "#{filename}.*"
         end
 
         # Extracts a different hash from the matches depending on the current 
@@ -78,7 +78,7 @@ module Gluttonberg
 
         # Returns the path to the templates.
         def template_dir
-          Gluttonberg.templates_dir(template_dir_name)
+          Templates.path_for(template_dir_name)
         end
 
         # Returns a specific template, or alternately returns a default.
