@@ -36,7 +36,7 @@ module Gluttonberg
           end
         end
         
-        def is_localized(&blk)
+        def is_localized(opts, &blk)
           self.localized = true
         
           # Generate the localization model
@@ -55,6 +55,9 @@ module Gluttonberg
           self.after_class_method :auto_upgrade! do
             self::Localization.auto_upgrade!
           end
+          
+          # Tell the content module that we are localized
+          Gluttonberg::Content.register_localization(opts[:association_name], self::Localization)
         
           # Set up the associations
           has n, :localizations

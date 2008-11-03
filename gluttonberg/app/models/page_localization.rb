@@ -15,6 +15,15 @@ module Gluttonberg
 
     attr_accessor :paths_need_recaching
 
+    # Returns an array of content localizations
+    def contents
+      @contents ||= begin
+        Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|
+          memo += send(assoc).all
+        end
+      end
+    end
+
     def paths_need_recaching?
       @paths_need_recaching
     end

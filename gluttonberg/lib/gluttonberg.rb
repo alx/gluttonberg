@@ -100,7 +100,7 @@ if defined?(Merb::Plugins)
     def self.stub_template_dirs
       unless File.exists?(config[:template_dir])
         FileUtils.mkdir(config[:template_dir])
-        %w(layout pages).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
+        %w(layout pages editors).each {|d| FileUtils.mkdir(config[:template_dir] / d)}
       end
     end
     

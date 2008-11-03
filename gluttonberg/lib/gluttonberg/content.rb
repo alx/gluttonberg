@@ -6,6 +6,8 @@ require content / "content" / "localization"
 module Gluttonberg
   module Content
     @@content_classes = []
+    @@localizations = {}
+    @@localization_associations = nil
     
     # This is called after the application loads so that we can define any
     # extra associations or do house-keeping once everything is required and
@@ -19,6 +21,14 @@ module Gluttonberg
           end
         end
       end
+      # Create associations between content localizations and PageLocalization
+      PageLocalization.class_eval do
+        Gluttonberg::Content.localizations.each do |assoc, klass|
+          has n, assoc, :class_name => klass
+        end
+      end
+      # Store the names of the associations in their own array for convenience
+      @@localization_associations = @@localizations.keys
     end
     
     def self.register_as_content(klass)
@@ -27,6 +37,18 @@ module Gluttonberg
     
     def self.types
       @@content_classes
+    end
+    
+    def self.register_localization(assoc_name, klass)
+      @@localizations[assoc_name] = klass
+    end
+    
+    def self.localizations
+      @@localizations
+    end
+    
+    def self.localization_associations
+      @@localization_associations
     end
   end
 end

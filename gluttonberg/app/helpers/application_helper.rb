@@ -2,6 +2,17 @@ module Merb
   module Gluttonberg
     module ApplicationHelper
       
+      # Looks for a matching partial in the templates directory. Failing that, 
+      # it falls back to Gluttonberg's view dir — views/content/editors
+      def content_editor(content_class, locals = {})
+        glob = ::Gluttonberg.templates_dir("editors") / "_#{content_class}.#{content_type}.*"
+        unless Dir[glob].empty?
+          partial(::Gluttonberg.templates_dir("editors") / content_class.to_s, locals)
+        else
+          partial("content/editors/#{content_class}", locals)
+        end
+      end
+      
       # @param *segments<Array[#to_s]> Path segments to append.
       #
       # @return <String> 

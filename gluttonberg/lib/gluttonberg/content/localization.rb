@@ -10,6 +10,14 @@ module Gluttonberg
           belongs_to :page_localization
         end
       end
+      
+      def section_name
+        parent.section.name
+      end
+      
+      def section_label
+        parent.section.label
+      end
     end
   end
 end
