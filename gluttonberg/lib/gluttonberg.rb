@@ -143,6 +143,7 @@ if defined?(Merb::Plugins)
   dependency 'dm-validations',  datamapper_version
   dependency 'dm-timestamps',   datamapper_version
   dependency 'dm-types',        datamapper_version
+  dependency 'RedCloth',        "4.1.0"
 
   # Various mixins and classes
   require "gluttonberg/content"

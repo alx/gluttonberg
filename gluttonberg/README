@@ -18,7 +18,7 @@ Here are the things you need to know to started contributing to Gluttonberg.
 
 Firstly, there are a whole bunch of dependencies, so make sure you have all 
 of these gems installed. Gems like merb should install their own deps like 
-haml.
+haml. You need to install these exact versions.
 
   * merb (0.9.12)
   * dm-adjust (0.9.6)
@@ -31,6 +31,7 @@ haml.
   * dm-timestamps (0.9.6)
   * dm-types (0.9.6)
   * dm-validations (0.9.6)
+  * RedCloth (4.1.0)
   
 Next, you need to migrate the app. This is a bit of a pest since we don’t have
 a rake task yet. Firstly make a db directory inside the slice. Then start up
