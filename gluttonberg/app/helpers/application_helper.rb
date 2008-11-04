@@ -4,12 +4,14 @@ module Merb
       
       # Looks for a matching partial in the templates directory. Failing that, 
       # it falls back to Gluttonberg's view dir — views/content/editors
-      def content_editor(content_class, locals = {})
-        glob = ::Gluttonberg.templates_dir("editors") / "_#{content_class}.#{content_type}.*"
+      def content_editor(content_class)
+        locals  = {:content => content_class}
+        type    = content_class.content_type
+        glob    = ::Gluttonberg::Templates.path_for("editors") / "_#{type}.#{content_type}.*"
         unless Dir[glob].empty?
-          partial(::Gluttonberg.templates_dir("editors") / content_class.to_s, locals)
+          partial(::Gluttonberg::Templates.path_for("editors") / type, locals)
         else
-          partial("content/editors/#{content_class}", locals)
+          partial("content/editors/#{type}", locals)
         end
       end
       

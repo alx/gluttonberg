@@ -5,8 +5,8 @@ module Gluttonberg
 
     property :id, Serial
             
-    # is_localized do
-    #   property :text, Text
-    # end
+    is_localized do
+      property :text, Text
+    end
   end
 end

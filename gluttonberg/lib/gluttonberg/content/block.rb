@@ -7,6 +7,7 @@ module Gluttonberg
       def self.included(klass)
         klass.class_eval do
           extend Block::ClassMethods
+          include Block::InstanceMethods
           
           class << self; attr_accessor :localized, :label, :content_type, :association_name end
           @localized = false
@@ -54,8 +55,8 @@ module Gluttonberg
           self.after_class_method(:auto_upgrade!) { localized_model.auto_upgrade! }
           
           # Tell the content module that we are localized
-          localization_assoc = :"#{self.content_type}_localizations"
-          Gluttonberg::Content.register_localization(localization_assoc, localized_model)
+          localized_model.association_name = :"#{self.content_type}_localizations"
+          Gluttonberg::Content.register_localization(localized_model.association_name, localized_model)
         
           # Set up the associations
           has n, :localizations, :class_name => Gluttonberg.const_get(class_name)
@@ -65,6 +66,12 @@ module Gluttonberg
         # Does this class have an associated localization class.
         def localized?
           self.localized
+        end
+      end
+      
+      module InstanceMethods
+        def localized?
+          self.class.localized?
         end
       end
     end

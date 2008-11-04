@@ -33,7 +33,7 @@ module Gluttonberg
 
       def update
         if @page_localization.update_attributes(params["gluttonberg::page_localization"]) || !@page_localization.dirty?
-          redirect slice_url(:admin, params[:page_id])
+          redirect slice_url(:page, params[:page_id])
         else
           render :edit
         end
