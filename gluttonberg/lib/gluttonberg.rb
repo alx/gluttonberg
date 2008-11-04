@@ -1,8 +1,11 @@
 if defined?(Merb::Plugins)
 
+  merb_version = "0.9.13"
+  datamapper_version = "0.9.6"
+
   $:.unshift File.dirname(__FILE__)
 
-  load_dependency 'merb-slices', "0.9.12"
+  load_dependency 'merb-slices', merb_version
   Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks", "gluttonberg/tasks/spectasks"
 
   # Register the Slice for the current host application
@@ -131,15 +134,15 @@ if defined?(Merb::Plugins)
   Gluttonberg.setup_default_structure!
   
   # Third party dependencies
-  dependency 'merb_datamapper', "0.9.12"
-  dependency 'dm-is-tree', "0.9.6"
-  dependency 'dm-observer', "0.9.6"
-  dependency 'dm-is-list', "0.9.6"
-  dependency 'dm-validations', "0.9.6"
-  dependency 'dm-timestamps', "0.9.6"
-  dependency 'dm-types', "0.9.6"
-  dependency 'merb-assets', "0.9.12"
-  dependency 'merb-helpers', "0.9.12"
+  dependency 'merb-assets',     merb_version
+  dependency 'merb-helpers',    merb_version
+  dependency 'merb_datamapper', merb_version
+  dependency 'dm-is-tree',      datamapper_version
+  dependency 'dm-observer',     datamapper_version
+  dependency 'dm-is-list',      datamapper_version
+  dependency 'dm-validations',  datamapper_version
+  dependency 'dm-timestamps',   datamapper_version
+  dependency 'dm-types',        datamapper_version
 
   # Various mixins and classes
   require "gluttonberg/content"
