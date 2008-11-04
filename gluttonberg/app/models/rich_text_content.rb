@@ -4,11 +4,9 @@ module Gluttonberg
     include Gluttonberg::Content::Block
 
     property :id, Serial
-    
-    is_content :label => "Rich Text", :association_name => :rich_texts
-    
-    is_localized :association_name => :rich_text_localizations do
-      property :text, Text
-    end
+            
+    # is_localized do
+    #   property :text, Text
+    # end
   end
 end

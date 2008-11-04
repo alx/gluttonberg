@@ -70,9 +70,9 @@ module Gluttonberg
     :slug => name.downcase.gsub(" ", "_")
   }}
 
-  RichTextContent::Localization.fixture {{
-    :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
-  }}
+  # RichTextContentLocalization.fixture {{
+  #   :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
+  # }}
   
 end
 

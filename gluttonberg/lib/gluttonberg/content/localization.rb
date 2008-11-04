@@ -3,6 +3,8 @@ module Gluttonberg
     module Localization
       def self.included(klass)
         klass.class_eval do
+          class << self; attr_accessor :content_type end
+          
           property :id,         ::DataMapper::Types::Serial
           property :created_at, Time
           property :updated_at, Time

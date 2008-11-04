@@ -8,6 +8,7 @@ module Gluttonberg
     @@content_classes = []
     @@localizations = {}
     @@localization_associations = nil
+    @@localization_classes = nil
     
     # This is called after the application loads so that we can define any
     # extra associations or do house-keeping once everything is required and
@@ -16,7 +17,7 @@ module Gluttonberg
       Merb.logger.info("Setting up content classes and assocations")
       [Page, PageSection].each do |klass|
         klass.class_eval do
-          Gluttonberg::Content.types.each do |klass| 
+          Gluttonberg::Content.content_classes.each do |klass| 
             has n, klass.association_name, :class_name => klass.name 
           end
         end
@@ -29,13 +30,14 @@ module Gluttonberg
       end
       # Store the names of the associations in their own array for convenience
       @@localization_associations = @@localizations.keys
+      @@localization_classes = @@localizations.values
     end
     
     def self.register_as_content(klass)
       @@content_classes << klass unless @@content_classes.include? klass
     end
     
-    def self.types
+    def self.content_classes
       @@content_classes
     end
     
