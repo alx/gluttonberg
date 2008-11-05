@@ -2,6 +2,17 @@ module Merb
   module Gluttonberg
     module ApplicationHelper
       
+      # Takes text and url and checks to see if the path specified matches the 
+      # current url. This is so we can add a highlight.
+      def main_nav_entry(text, mod, url, opts = {})
+        li_opts = if params[:controller].match(%r{^gluttonberg/#{mod}/})
+          {:class => "current"}
+        else
+          {}
+        end
+        tag("li", link_to(text, url, opts), li_opts)
+      end
+      
       # Finds the matching content block and determines the helper it needs
       # to execute to actually write the contents to page.
       # TODO: if there is no way to to render the content, freak out and raise
