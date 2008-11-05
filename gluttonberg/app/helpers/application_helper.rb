@@ -2,6 +2,17 @@ module Merb
   module Gluttonberg
     module ApplicationHelper
       
+      # Writes out a row for each page and then for each page's children, 
+      # iterating down through the heirarchy.
+      def page_table_rows(pages, output = "", inset = 0)
+        pages.each do |page|
+          output << partial("content/pages/row", :page => page, :inset => inset)
+          page_table_rows(page.children, output, inset + 1)
+        end
+        
+        output
+      end
+      
       # Takes text and url and checks to see if the path specified matches the 
       # current url. This is so we can add a highlight.
       def main_nav_entry(text, mod, url, opts = {})

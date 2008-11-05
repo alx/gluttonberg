@@ -208,6 +208,25 @@ td.controls a {
   margin: 0 0.5em 0 0;
   float: left; }
 
+/* Inset table fields */
+td.inset1 {
+  text-indent: 1.5em; }
+
+td.inset2 {
+  text-indent: 3em; }
+
+td.inset3 {
+  text-indent: 4.5em; }
+
+td.inset4 {
+  text-indent: 6em; }
+
+td.inset5 {
+  text-indent: 7.5em; }
+
+td.inset6 {
+  text-indent: 9em; }
+
 p.empty {
   font-size: 2em;
   color: #cccccc;

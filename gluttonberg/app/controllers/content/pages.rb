@@ -6,7 +6,7 @@ module Gluttonberg
       before :find_page, :only => [:show, :edit, :delete, :update, :destroy]
 
       def index
-        @pages = Page.all(:parent_id => nil)
+        @pages = Page.all(:parent_id => nil, :order => [:order.asc])
         display @pages
       end
 

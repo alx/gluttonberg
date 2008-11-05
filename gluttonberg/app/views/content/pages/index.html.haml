@@ -10,11 +10,4 @@
         %th Page
         %th.controls Controls
     %tbody
-      - for page in @pages
-        %tr{:class => cycle(:rows, "odd", "even")}
-          %td= page.name
-          %td.controls
-            %ul
-              %li= link_to 'Show', slice_url(:page, page)
-              %li= link_to 'Edit', slice_url(:edit_page, page)
-              %li= link_to 'Delete', slice_url(:delete_page, page)
+      = page_table_rows(@pages)
