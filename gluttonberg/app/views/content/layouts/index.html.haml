@@ -1,5 +1,7 @@
 - @page_title = "Layouts"
-
+%ul#subnav
+  %li.new= link_to("New", slice_url(:new_layout))
+  
 - if @layouts.empty?
   %p.empty No layouts available
 - else
@@ -15,8 +17,5 @@
           %td.controls
             %ul
               %li= link_to("Delete", slice_url(:delete_layout, layout))
-              %li= link_to("Show", slice_url(:layout, layout))
               %li= link_to("Edit", slice_url(:edit_layout, layout))
-
-%p.newLink= link_to("New", slice_url(:new_layout))
   

@@ -24,12 +24,12 @@ module Gluttonberg
         association = send(section.type)
         content = association.create(:section => section)
         # Create each localization
-        if content.respond_to? :localizations
+        if content.model.localized?
           localizations.all.each do |localization|
             content.localizations.create(:parent => content, :page_localization => localization)
           end
         end
-      end
+      end      
     end
 
     # This updates localizations which don't have a slug set. In that case they 
@@ -53,10 +53,10 @@ module Gluttonberg
     # This is in lieu of a :dependent option in DM associations
     after :destroy do
       page_localizations = PageLocalization.all(:page_id => id)
+      page_localization_ids = page_localizations.collect { |l| l.id }
       # Destroy the localizations first, then the main content record
-      Gluttonberg::Content.types.each do |klass|
-        if klass.const_defined? "Localization"
-          page_localization_ids = page_localizations.collect { |l| l.id }
+      Gluttonberg::Content.content_classes.each do |klass|
+        if klass.localized?
           klass.localizations.model.all(:page_localization_id => page_localization_ids).destroy!
         end
         klass.all(:page_id => id).destroy!

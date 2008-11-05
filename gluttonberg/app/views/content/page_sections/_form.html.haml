@@ -4,7 +4,7 @@
   %div.fieldset
     = text_field(:label, :label => "Label", :class => "wide")
     = text_field(:name, :label => "Name", :class => "wide")
-    = select(:type, :collection => Gluttonberg::Content.types, :text_method => :label, :value_method => :association_name, :selected => @template_section.type, :label => "Type")
+    = select(:type, :collection => Gluttonberg::Content.content_classes, :text_method => :label, :value_method => :association_name, :selected => @template_section.type, :label => "Type")
   
   %p.controls
     = submit("Save")

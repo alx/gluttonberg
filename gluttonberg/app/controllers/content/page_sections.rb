@@ -40,7 +40,7 @@ module Gluttonberg
       end
     
       def update
-        if @page_section.update_attributes(params["gluttonberg::page_type"]) || !@page_section.dirty?
+        if @page_section.update_attributes(params["gluttonberg::page_section"]) || !@page_section.dirty?
           redirect slice_url(:page_types)
         else
           raise BadRequest
@@ -58,7 +58,7 @@ module Gluttonberg
       private
       
       def find_page_section
-        @page_section = @page_type.sections.get(params[:id])
+        @page_section = PageSection.first(:id => params[:id])
         raise NotFound unless @page_section
       end
    
