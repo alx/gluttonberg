@@ -1,5 +1,6 @@
 - @page_title = "Pages"
-
+%ul#subnav
+  %li.new= link_to('New', slice_url(:new_page))
 - if @pages.empty?
   %p.empty No Pages
 - else
@@ -17,5 +18,3 @@
               %li= link_to 'Show', slice_url(:page, page)
               %li= link_to 'Edit', slice_url(:edit_page, page)
               %li= link_to 'Delete', slice_url(:delete_page, page)
-              
-%p.newLink= link_to('New', slice_url(:new_page), :class => "buttonGrey")

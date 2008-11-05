@@ -28,10 +28,7 @@ em
   
 /* Base
 body
-  :background
-    :color= !mid_grey
-    :image url(/images/page_bkg.gif)
-    :repeat no-repeat
+  :background-color= !mid_grey
   :margin 20px 20px 20px 220px
   :font
     :family "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
@@ -44,15 +41,14 @@ body
   :top 20px
   
   h1
-    :background 14px 0 no-repeat url(/images/logo.png)
     :border-bottom 1px solid #333333
+    :background center left no-repeat url(/images/heading_bkg.gif)
     :font-size 1.6em
+    :color white
+    :text-indent 43px
     :padding 8px 0
     :width 220px
     :height 1em
-    /* Hide text
-    :letter-spacing -1000em
-    :text-indent -1000em
     
   form
     :padding 0
@@ -102,14 +98,13 @@ body
   :background right bottom no-repeat url(/images/wrapper_bkg.png)
   :padding 0 7px 7px 0
   :width 100%
+  :min-height 30em
   :float left
   
   h1
     :background= !mid_aqua
     :color white
-    :font
-      :weight bold
-      :size 1.6em
+    :font-size 1.6em
     :padding 8px 15px
     
   h2
@@ -143,7 +138,8 @@ body
     :-webkit-border-radius 3px
     
   .delete,
-  .edit
+  .edit,
+  .new
     :float right
     
     a
@@ -188,7 +184,6 @@ body
 
 /* Tables
 table
-  
   :width 100%
   :clear both
 
@@ -231,7 +226,7 @@ p.empty
   :font-size 2em
   :color #cccccc
   :text-align center
-  :padding 1em 0 0.5em 0
+  :padding 5.2em 0 0 0
 
 /* Widgets
 p.newLink

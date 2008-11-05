@@ -1,5 +1,7 @@
 - @page_title = "Page Types"
-
+%ul#subnav
+  %li.new= link_to("New", slice_url(:new_page_type))
+  
 - if @page_types.empty?
   %p.empty No types set
 - else
@@ -17,5 +19,3 @@
               %li= link_to("Edit", slice_url(:edit_page_type, type))
               %li= link_to("Edit Sections", slice_url(:page_type_sections, type))
               %li= link_to("Delete", slice_url(:delete_page_type, type))
-
-%p.newLink= link_to("New", slice_url(:new_page_type), :class => "buttonGrey")

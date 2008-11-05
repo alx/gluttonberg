@@ -21,8 +21,6 @@ em {
 /* Base */
 body {
   background-color: #1b1b1b;
-  background-image: url(/images/page_bkg.gif);
-  background-repeat: no-repeat;
   margin: 20px 20px 20px 220px;
   font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
   font-size: 82%; }
@@ -33,15 +31,14 @@ body {
   left: 0;
   top: 20px; }
   #sidebar h1 {
-    background: 14px 0 no-repeat url(/images/logo.png);
     border-bottom: 1px solid #333333;
+    background: center left no-repeat url(/images/heading_bkg.gif);
     font-size: 1.6em;
+    color: white;
+    text-indent: 43px;
     padding: 8px 0;
     width: 220px;
-    height: 1em;
-    /* Hide text */
-    letter-spacing: -1000em;
-    text-indent: -1000em; }
+    height: 1em; }
   #sidebar form {
     padding: 0; }
   #sidebar input {
@@ -83,11 +80,11 @@ body {
   background: right bottom no-repeat url(/images/wrapper_bkg.png);
   padding: 0 7px 7px 0;
   width: 100%;
+  min-height: 30em;
   float: left; }
   #wrapper h1 {
     background: #244e66;
     color: white;
-    font-weight: bold;
     font-size: 1.6em;
     padding: 8px 15px; }
   #wrapper h2 {
@@ -116,10 +113,12 @@ body {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px; }
   #subnav .delete,
-  #subnav .edit {
+  #subnav .edit,
+  #subnav .new {
     float: right; }
     #subnav .delete a,
-    #subnav .edit a {
+    #subnav .edit a,
+    #subnav .new a {
       color: white !important;
       background-color: #244e66;
       background-image: url(/images/button_bkg_aqua.gif);
@@ -197,7 +196,7 @@ p.empty {
   font-size: 2em;
   color: #cccccc;
   text-align: center;
-  padding: 1em 0 0.5em 0; }
+  padding: 5.2em 0 0 0; }
 
 /* Widgets */
 p.newLink {
