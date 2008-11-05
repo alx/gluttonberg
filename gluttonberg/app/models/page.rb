@@ -21,11 +21,21 @@ module Gluttonberg
     is_tree
 
     has n,      :localizations, :class_name => "Gluttonberg::PageLocalization"
-    has n,      :children,      :class_name => "Gluttonberg::Page",      :child_key => [:parent_id]
+    has n,      :children,      :class_name => "Gluttonberg::Page", :child_key => [:parent_id]
     belongs_to  :layout
     belongs_to  :type,          :class_name => "Gluttonberg::PageType"
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
+
+    # Returns the localized title for the page or a default
+    def title
+      current_localization.name.blank? ? attribute_get(:name) : current_localization.name
+    end
+    
+    # Delegates to the current_localization
+    def path
+      current_localization.path
+    end
 
     # Returns a hash containing the paths to the page and layout templates.
     def template_paths(opts = {})
@@ -41,13 +51,12 @@ module Gluttonberg
       @paths_need_recaching
     end
 
-    # Returns all the content classes for this page. This is a slightly naive 
-    # implementation in that it just iterates over the content associations and
-    # calls all on each.
-    def contents
-      @contents ||= Glutton::Content.content_associations.inject([]) do |memo, assoc|
-        memo += send(assoc).all
-        memo
+    # Just palms off the request for the contents to the current localization
+    def localized_contents
+      @contents ||= begin
+        Content.content_associations.inject([]) do |memo, assoc|
+          memo += send(assoc).all_with_localization(:page_localization_id => current_localization.id)
+        end
       end
     end
 

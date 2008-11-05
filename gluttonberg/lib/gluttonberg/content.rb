@@ -5,6 +5,7 @@ require content / "content" / "localization"
 
 module Gluttonberg
   module Content
+    @@content_associations = nil
     @@content_classes = []
     @@localizations = {}
     @@localization_associations = nil
@@ -31,6 +32,7 @@ module Gluttonberg
       # Store the names of the associations in their own array for convenience
       @@localization_associations = @@localizations.keys
       @@localization_classes = @@localizations.values
+      @@content_associations = content_classes.collect { |k| k.association_name }
     end
     
     def self.register_as_content(klass)
@@ -39,6 +41,10 @@ module Gluttonberg
     
     def self.content_classes
       @@content_classes
+    end
+    
+    def self.content_associations
+      @@content_associations
     end
     
     def self.register_localization(assoc_name, klass)

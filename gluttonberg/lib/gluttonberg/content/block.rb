@@ -12,6 +12,8 @@ module Gluttonberg
           class << self; attr_accessor :localized, :label, :content_type, :association_name end
           @localized = false
           
+          attr_reader :current_localization
+          
           property :orphaned,     ::DataMapper::Types::Boolean, :default => false
           property :created_at,   Time
           property :updated_at,   Time 
@@ -33,6 +35,8 @@ module Gluttonberg
       end
     
       module ClassMethods
+        # TODO: Have this create an alias between the parent and localization's
+        # properties. Maybe use the Delegate model.
         def is_localized(&blk)
           self.localized = true
         
@@ -67,11 +71,33 @@ module Gluttonberg
         def localized?
           self.localized
         end
+        
+        # Returns all the matching models with the specificed localization loaded.
+        def all_with_localization(opts)
+          page_localization_id = opts.delete(:page_localization_id)
+          results = all(opts)
+          results.each { |r| r.load_localization(page_localization_id) }
+          results
+        end
       end
       
       module InstanceMethods
         def localized?
           self.class.localized?
+        end
+        
+        # Just delegates to the class.
+        def content_type
+          self.class.content_type
+        end
+        
+        # Loads a localized version based on the specified page localization,
+        # then stashes it in an accessor
+        def load_localization(id_or_model)
+          if localized?
+            id = id_or_model.is_a?(Numeric) ? id_or_model : id_or_model.id
+            @current_localization = localizations.first(:page_localization_id => id)
+          end
         end
       end
     end
