@@ -81,14 +81,12 @@ if defined?(Merb::Plugins)
           a.resources(:collections, :controller => "library/collections")
         end
       
-        # Users
-        s.match("/users").to(:controller => "users").name(:users)
-      
         # Settings
         s.match("/settings").to(:controller => "settings/main").name(:settings)
         s.match("/settings") do |se|
           se.resources(:locales, :controller => "settings/locales")
           se.resources(:dialects, :controller => "settings/dialects")
+          se.resources(:users, :controller => "settings/users")
         end
         
         s.gluttonberg_pages #if standalone?
