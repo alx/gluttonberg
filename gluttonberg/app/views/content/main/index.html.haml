@@ -1,5 +1,5 @@
 - @page_title = "Content"
-%ul
-  %li= link_to("Pages", slice_url(:pages))
-  %li= link_to("Page Types", slice_url(:page_types))
-  %li= link_to("Layouts", slice_url(:layouts))
+%ul#iconNav
+  %li= link_to("Pages", slice_url(:pages), :id => "pagesNav")
+  %li= link_to("Page Types", slice_url(:page_types), :id => "pageTypesNav")
+  %li= link_to("Layouts", slice_url(:layouts), :id => "layoutsNav")

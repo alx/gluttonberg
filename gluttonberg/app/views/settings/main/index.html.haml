@@ -1,5 +1,5 @@
 - @page_title = "Settings"
-%ul
-  %li= link_to("Users", slice_url(:users))
-  %li= link_to("Dialects", slice_url(:dialects))
-  %li= link_to("Locales", slice_url(:locales))
+%ul#iconNav
+  %li= link_to("Users", slice_url(:users), :id => "usersNav")
+  %li= link_to("Dialects", slice_url(:dialects), :id => "dialectsNav")
+  %li= link_to("Locales", slice_url(:locales), :id => "localesNav")
