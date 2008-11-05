@@ -2,7 +2,7 @@ if defined?(Merb::Plugins)
 
   $:.unshift File.dirname(__FILE__)
 
-  load_dependency 'merb-slices', "0.9.12"
+  load_dependency 'merb-slices', "0.9.13"
   Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks", "gluttonberg/tasks/spectasks"
 
   # Register the Slice for the current host application
@@ -40,6 +40,8 @@ if defined?(Merb::Plugins)
       Content.setup
       Library.setup
       stub_template_dirs
+      Merb::Authentication.user_class = Gluttonberg::User
+      Merb::Authentication.activate!(:default_password_form)
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -146,15 +148,17 @@ if defined?(Merb::Plugins)
   Gluttonberg.setup_default_structure!
   
   # Third party dependencies
-  dependency 'merb_datamapper', "0.9.12"
+  dependency 'merb_datamapper', "0.9.13"
   dependency 'dm-is-tree', "0.9.6"
   dependency 'dm-observer', "0.9.6"
   dependency 'dm-is-list', "0.9.6"
   dependency 'dm-validations', "0.9.6"
   dependency 'dm-timestamps', "0.9.6"
   dependency 'dm-types', "0.9.6"
-  dependency 'merb-assets', "0.9.12"
-  dependency 'merb-helpers', "0.9.12"
+  dependency 'merb-assets', "0.9.13"
+  dependency 'merb-helpers', "0.9.13"
+  dependency 'merb-auth-core', "0.9.13"
+  dependency 'merb-auth-more', "0.9.13"
 
   # Various mixins and classes
   require "gluttonberg/content"
@@ -163,5 +167,8 @@ if defined?(Merb::Plugins)
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
   require "gluttonberg/template_mixin"
+  require "gluttonberg/strategies/password_strategy"
+  
+  require 'merb-auth-more/mixins/redirect_back'
   
 end
