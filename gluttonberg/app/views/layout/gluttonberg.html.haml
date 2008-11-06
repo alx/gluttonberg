@@ -2,8 +2,9 @@
 %html
   %head
     %title Administration
-    = css_include_tag :admin
-    = js_include_tag "jquery-1.2.6.min.js", "application.js"
+    %link{:href => public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
+    %script{:src => public_path_for(:javascript, "jquery-1.2.6.min.js"), :type => "text/javascript", :charset => "utf-8"}
+    %script{:src => public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
   %body
     %div#sidebar
       %h1 Gluttonberg
