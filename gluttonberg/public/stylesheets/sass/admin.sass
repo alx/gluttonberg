@@ -621,8 +621,47 @@ ul.assetList
     li, a
       :float left
       
-    #assetsSearch
-      :float right
+    li
+      :padding 0.5em 0
+      
+    a
+      :background right center no-repeat url(../images/library/nav_regular.gif)
+      :font-weight bold
+      :text-decoration none
+      :padding 0.5em 18px 0.5em 10px
+    
+    .current
+      :background-image url(../images/library/nav_current.gif)
+      :color #666550 !important
+      
+  #assetsHome
+    :padding-left 10px !important
+    
+    a
+      /* Browser-specific border-radius
+      :-moz-border-radius-topleft 3px
+      :-moz-border-radius-bottomleft 3px
+      :-webkit-border-top-left-radius 3px
+      :-webkit-border-bottom-left-radius 3px
+      
+  #assetsSearch
+    :float right !important
+    
+    label
+      :color white
+      :padding 0.4em 0.5em 0 0
+    
+    input
+      :background white left center no-repeat url(../images/library/search_icon.gif)
+      :border 2px solid #373B40
+      :padding 0.3em 0.6em 0.3em 28px
+      :width 12em
+      /* Browser-specific border-radius
+      :-moz-border-radius 8px
+      :-webkit-border-radius 8px
+    
+  form
+    :padding 0 10px 0 0
       
   #assetsDisplay
     :width 100%
@@ -641,4 +680,12 @@ ul.assetList
     :position absolute
     :left 0
     :bottom 0
+    
+  #upload
+    :margin-left 15px
+    :float left
+    
+  #cancel
+    :margin-right 15px
+    :float right
     

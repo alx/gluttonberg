@@ -10,8 +10,7 @@
       %h1 Choose Asset
       
       %ul#assetsNavigation
-        %li
-          %a Home
+        %li#assetsHome= link_to("Home", slice_url(:asset_browser), :class => "current")
         %li#assetsSearch
           %form
             %label Search
