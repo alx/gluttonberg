@@ -85,7 +85,7 @@ if defined?(Merb::Plugins)
           se.resources(:users, :controller => "settings/users")
         end
         
-        s.gluttonberg_pages #if standalone?
+        s.gluttonberg_pages if standalone?
       end
     end
     
