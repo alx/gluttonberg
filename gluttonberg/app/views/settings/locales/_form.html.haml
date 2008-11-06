@@ -15,8 +15,5 @@
       - for dialect in @dialects
         = check_box(:name => "gluttonberg::locale[dialect_ids][]", :id => "dialect_#{dialect.code}", :value => dialect.id, :boolean => false, :checked => @locale.dialects.include?(dialect))
         %label{:for => "dialect_#{dialect.code}", :class => "checkbox"}= dialect.name_and_code
-            
-  %p.controls
-    = submit("Save")
-    or
-    = link_to('<strong>Cancel</strong>', slice_url(:locales))
+  
+  = form_controls(slice_url(:locales))

@@ -6,7 +6,4 @@
     = text_field(:name, :label => "Name", :class => "wide")
     = select(:type, :collection => Gluttonberg::Content.content_classes, :text_method => :label, :value_method => :association_name, :selected => @template_section.type, :label => "Type")
   
-  %p.controls
-    = submit("Save")
-    or
-    = link_to("<strong>Cancel</strong>", slice_url(:page_type_sections, params[:type_id]))
+  = form_controls(slice_url(:page_type_sections, params[:type_id]))

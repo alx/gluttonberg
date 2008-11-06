@@ -10,4 +10,4 @@
       - for content in @page_localization.contents
         = content_editor(content)
   
-  = submit("save")
+  = form_controls(slice_url(:page, params[:page_id]))

@@ -1,5 +1,11 @@
 module Gluttonberg
   module Helpers
+    # Controls for standard forms. Writes out a save button and a cancel link
+    def form_controls(return_url)
+      content = "#{submit("Save")} or #{link_to("<strong>Cancel</strong>", return_url)}"
+      tag(:p, content, :class => "controls")
+    end
+    
     # Writes out a nicely styled subnav with an entry for each of the 
     # specified links.
     def sub_nav(&blk)

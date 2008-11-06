@@ -17,8 +17,4 @@
     %div.fieldset
       = file_field(:file, :label => "File to upload")
   
-  %p.controls
-    = submit("Save")
-    or 
-    = link_to("<strong>Cancel</strong>", slice_url(:library))
-  
+  = form_controls(slice_url(:library))

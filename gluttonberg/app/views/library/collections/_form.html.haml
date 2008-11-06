@@ -3,7 +3,4 @@
   %div.fieldset
     = text_field(:name, :label => "Name")
   
-  %p.controls
-    = submit("Save")
-    or
-    = link_to("<strong>Cancel</strong>", slice_url(:collections))
+  = form_controls(slice_url(:collections))

@@ -7,7 +7,4 @@
       = check_box(:default)
       %label{:for => "dialect_default", :class => "checkbox"} Make default
   
-  %p.controls
-    = submit("Save")
-    or
-    = link_to('<strong>Cancel</strong>', slice_url(:gluttonberg, :dialects))
+  = form_controls(slice_url(:dialects))

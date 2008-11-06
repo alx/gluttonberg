@@ -3,8 +3,5 @@
   %div.fieldset
     = text_field(:name, :label => "Name", :class => "wide")
     = text_field(:filename, :label => "File Name", :class => "wide")
-    
-  %p.controls
-    = submit("Save")
-    or
-    = link_to("<strong>Cancel</strong>", slice_url(:layouts))
+
+  = form_controls(slice_url(:layouts))
