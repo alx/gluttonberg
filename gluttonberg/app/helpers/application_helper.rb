@@ -1,6 +1,29 @@
 module Merb
   module Gluttonberg
     module ApplicationHelper
+      def navigation_tree(pages, opts = {})
+        content = ""
+        pages.each do |page|
+          li_opts = {}
+          li_opts[:class] = "current" if page == @page
+          content << "\n\t#{tag(:li, tag(:a, page.title, :href => page_url(page)), li_opts)}"
+          children = page.children_with_localization(:dialect => dialect, :locale => locale)
+          content << navigation_tree(children) unless children.empty?
+        end
+        tag(:ul, "#{content}\n", opts)
+      end
+      
+      # Returns the URL with any locale/dialect prefix it needs
+      def page_url(path_or_page)
+        path = path_or_page.is_a?(String) ? path_or_page : path_or_page.path
+        opts = {:full_path => path}
+        if ::Gluttonberg.localized?
+          opts.merge!({:locale => locale.slug, :dialect => dialect.code})
+        elsif ::Gluttonberg.translated?
+          opts.merge!({:dialect => dialect.code})
+        end
+        slice_url(:public_page, opts)
+      end
       
       # Writes out a row for each page and then for each page's children, 
       # iterating down through the heirarchy.

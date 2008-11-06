@@ -79,7 +79,29 @@ module Gluttonberg
       page.current_localization = localization
       page
     end
+    
+    # Returns the matching pages with their specified localizations preloaded
+    def self.all_with_localization(conditions)
+      l_conditions = extract_localization_conditions(conditions)
+      all(conditions).each {|p| p.load_localization(l_conditions)}
+    end
 
+    # Returns the immediate children of this page, which the specified
+    # localization preloaded.
+    # TODO: Have this actually check the current mode
+    def children_with_localization(conditions)
+      l_conditions = self.class.extract_localization_conditions(conditions)
+      children.all(conditions).each { |c| c.load_localization(l_conditions)}
+    end
+    
+    # Load the matching localization as specified in the options
+    def load_localization(conditions = {})
+      # OMGWTFBBQ: I shouldn't have explicitly set the id in the conditions
+      # like this, since I’m going through an association.
+      conditions[:page_id] = id 
+      @current_localization = localizations.first(conditions) unless conditions.empty?
+    end
+    
     # Checks to see if a layout has actually been set, otherwise it falls back
     # to the default "public"
     def layout_name
@@ -110,6 +132,15 @@ module Gluttonberg
       if @home_updated && @home_updated == true
         previous_home = Page.first(:home => true, :id.not => id)
         previous_home.update_attributes(:home => false) if previous_home
+      end
+    end
+    
+    private
+    
+    def self.extract_localization_conditions(opts)
+      conditions = [:dialect, :locale].inject({}) do |memo, opt|
+        memo[:"#{opt}_id"] = opts.delete(opt).id if opts[opt]
+        memo
       end
     end
   end

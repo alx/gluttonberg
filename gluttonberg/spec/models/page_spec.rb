@@ -8,6 +8,10 @@ module Gluttonberg
       PageType.all.destroy!
       PageSection.all.destroy!
     end
+    
+    it "should load specified localization"
+    
+    it "should load children with specified localization preloaded"
 
     it "should return correct localization"
 
