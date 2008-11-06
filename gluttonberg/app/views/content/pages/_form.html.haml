@@ -1,20 +1,18 @@
 = form_for(@page, :action => action) do
   = error_messages_for(@page)
   
-  = fieldset(:legend => "General") do
-    %div.fieldset
-      = text_field(:name, :label => "Name")
-      = text_field(:slug, :label => "Slug")
-      - unless @pages.empty?
-        = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
-      = check_box(:home)
-      %label{:for => "page_home", :class => "checkbox"} Set as homepage
+  = block("General") do
+    = text_field(:name, :label => "Name")
+    = text_field(:slug, :label => "Slug")
+    - unless @pages.empty?
+      = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
+    = check_box(:home)
+    %label{:for => "page_home", :class => "checkbox"} Set as homepage
   
-  = fieldset(:legend => "Templates") do
-    %div.fieldset
-      - unless @types.empty?
-        = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
-      - unless @layouts.empty?
-        = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
+  = block("Templates") do
+    - unless @types.empty?
+      = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
+    - unless @layouts.empty?
+      = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
    
   = form_controls(slice_url(:page, @page))

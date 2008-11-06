@@ -1,6 +1,6 @@
 = form_for(@collection, :action => action) do
   = error_messages_for(@collection)
-  %div.fieldset
+  = block do
     = text_field(:name, :label => "Name")
   
   = form_controls(slice_url(:collections))

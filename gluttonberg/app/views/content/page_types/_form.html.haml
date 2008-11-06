@@ -1,6 +1,6 @@
 = form_for(@page_type, :action => action) do
   = error_messages_for(@page_type)
-  %div.fieldset
+  = block do
     = text_field(:name, :label => "Name", :class => "wide")
     = text_field(:filename, :label => "File Name", :class => "wide")
   

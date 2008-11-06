@@ -1,5 +1,18 @@
 module Gluttonberg
   module Helpers
+    
+    # If it's passed a label this method will return a fieldset, otherwise it
+    # will just return the contents wrapped in a block.
+    def block(label = nil, &blk)
+      if label
+        fieldset({:legend => label}) do
+          tag(:div, {:class => "fieldset"}, &blk)
+        end
+      else
+        tag(:div, {:class => "fieldset"}, &blk)
+      end
+    end
+    
     # Controls for standard forms. Writes out a save button and a cancel link
     def form_controls(return_url)
       content = "#{submit("Save")} or #{link_to("<strong>Cancel</strong>", return_url)}"

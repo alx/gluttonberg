@@ -1,13 +1,11 @@
 = form_for(@page_localization, :action => action) do
   = error_messages_for(@page_localization)
-  = fieldset(:legend => "Localization") do
-    %div.fieldset
-      = text_field(:name, :label => "Name")
-      = text_field(:slug, :label => "Slug")
+  = block("Localization") do
+    = text_field(:name, :label => "Name")
+    = text_field(:slug, :label => "Slug")
     
-  = fieldset(:legend => "Content") do
-    %div.fieldset
-      - for content in @page_localization.contents
-        = content_editor(content)
+  = block("Content") do
+    - for content in @page_localization.contents
+      = content_editor(content)
   
   = form_controls(slice_url(:page, params[:page_id]))
