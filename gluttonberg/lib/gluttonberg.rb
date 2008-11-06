@@ -98,6 +98,18 @@ if defined?(Merb::Plugins)
     def self.translated?
       config[:translate] && ! config[:localize]
     end
+    
+    # Allows other code to register an entry in Gluttonberg's navigation
+    # TODO: This API is likely temporary, so we'll need to sketch out how
+    # things can be done in the future.
+    @@nav_entries = []
+    def self.register(*args)
+      @@nav_entries << args
+    end
+    
+    def self.nav_entries
+      @@nav_entries
+    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")

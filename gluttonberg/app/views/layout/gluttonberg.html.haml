@@ -11,6 +11,8 @@
       %ul#navigation
         = main_nav_entry("Content", "content", url(:gluttonberg_content))
         = main_nav_entry("Library", "library", url(:gluttonberg_library))
+        - for entry in Gluttonberg.nav_entries
+          = main_nav_entry(*entry)
         = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
       %p
         Logged in as
