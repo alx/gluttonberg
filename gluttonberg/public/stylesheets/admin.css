@@ -107,18 +107,29 @@ body {
     padding: 0.3em 0.6em;
     margin: 2px 0 2px 15px;
     float: left; }
+  #subnav #backLink a,
+  #subnav a.current {
+    color: #244e66 !important; }
   #subnav a.current {
     background: white;
-    color: #244e66 !important;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px; }
+  #subnav #backLink a {
+    background: left center no-repeat url(../images/sub_nav_back_bkg.gif);
+    padding-left: 13px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px; }
   #subnav .delete,
   #subnav .edit,
-  #subnav .new {
+  #subnav .new,
+  #subnav .button {
     float: right; }
     #subnav .delete a,
     #subnav .edit a,
-    #subnav .new a {
+    #subnav .new a,
+    #subnav .button a {
       color: white !important;
       background-color: #244e66;
       background-image: url(../images/button_bkg_aqua.gif);

@@ -1,5 +1,23 @@
 module Gluttonberg
   module Helpers
+    # Writes out a nicely styled subnav with an entry for each of the 
+    # specified links.
+    def sub_nav(&blk)
+      tag(:ul, :id => "subnav", &blk)
+    end
+    
+    # Writes out a link styled like a button. To be used in the sub nav only
+    def nav_link(*args)
+      tag(:li, link_to(*args), :class => "button")
+    end
+    
+    # Writes out the back control for the sub nav.
+    def back_link(name, url)
+      tag(:li, link_to(name, url), :id => "backLink")
+    end
+    
+    # A simple helper which loops through a heirarchy of pages and produces a
+    # set of nested lists with links to each page.
     def navigation_tree(pages, opts = {})
       content = ""
       pages.each do |page|
@@ -23,7 +41,6 @@ module Gluttonberg
       end
       slice_url(:public_page, opts)
     end
-    
     
     # Takes text and url and checks to see if the path specified matches the 
     # current url. This is so we can add a highlight.
