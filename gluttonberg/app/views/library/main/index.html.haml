@@ -33,3 +33,6 @@
         %a{:href => slice_url(:asset, asset), :class => "asset#{asset.type}"}
           %h3= asset.name
           %p= asset.full_type
+          
+          
+%p= link_to("Open browser", slice_url(:asset_browser), :class => "assetBrowserLink")
