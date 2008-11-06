@@ -32,6 +32,7 @@ if defined?(Merb::Plugins)
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
     def self.loaded
+      Merb::GlobalHelpers.send(:include, Gluttonberg::Helpers)
     end
     
     # Initialization hook - runs before AfterAppLoads BootLoader
@@ -150,5 +151,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
   require "gluttonberg/templates"
+  require "gluttonberg/helpers"
   
 end

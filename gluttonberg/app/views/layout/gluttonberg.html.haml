@@ -2,16 +2,16 @@
 %html
   %head
     %title Administration
-    %link{:href => public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
-    %script{:src => public_path_for(:javascript, "jquery-1.2.6.min.js"), :type => "text/javascript", :charset => "utf-8"}
-    %script{:src => public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
+    %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
+    %script{:src => gluttonberg_public_path_for(:javascript, "jquery-1.2.6.min.js"), :type => "text/javascript", :charset => "utf-8"}
+    %script{:src => gluttonberg_public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
   %body
     %div#sidebar
       %h1 Gluttonberg
       %ul#navigation
-        = main_nav_entry("Content", "content", slice_url(:content))
-        = main_nav_entry("Library", "library", slice_url(:library))
-        = main_nav_entry("Settings", "settings", slice_url(:settings))
+        = main_nav_entry("Content", "content", url(:gluttonberg_content))
+        = main_nav_entry("Library", "library", url(:gluttonberg_library))
+        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
       %p
         Logged in as
         %br/
