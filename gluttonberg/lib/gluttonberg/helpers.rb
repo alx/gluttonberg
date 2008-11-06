@@ -1,6 +1,21 @@
 module Gluttonberg
   module Helpers
     
+    # Generates a styled tab bar
+    def tab_bar(&blk)
+      tag(:ul, {:id => "tabBar"}, &blk)
+    end
+    
+    # For adding a tab to the tab bar. It will automatically mark the current
+    # tab by examining the request path.
+    def tab(label, url)
+      if request.env["REQUEST_PATH"].match(%r{^#{url}})
+        tag(:li, link_to(label, url), :class => "current")
+      else
+        tag(:li, link_to(label, url))
+      end
+    end
+    
     # If it's passed a label this method will return a fieldset, otherwise it
     # will just return the contents wrapped in a block.
     def block(label = nil, &blk)
