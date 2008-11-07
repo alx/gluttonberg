@@ -83,10 +83,9 @@ module Gluttonberg
     # Takes text and url and checks to see if the path specified matches the 
     # current url. This is so we can add a highlight.
     def main_nav_entry(text, mod, url, opts = {})
-      li_opts = if params[:controller].match(%r{^gluttonberg/#{mod}/}) || params[:controller].match(%r{^#{mod}/})
-        {:class => "current"}
-      else
-        {}
+      li_opts = {:id => "#{mod}Nav"}
+      if request.env["REQUEST_PATH"].match(%r{^/#{mod}})
+        li_opts[:class] = "current"
       end
       tag("li", link_to(text, url, opts), li_opts)
     end

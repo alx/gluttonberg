@@ -66,6 +66,12 @@ body {
     -moz-border-radius-bottomleft: 3px;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-bottom-left-radius: 3px; }
+  #sidebar #contentNav a {
+    background-image: url(../images/sidebar/content.png); }
+  #sidebar #libraryNav a {
+    background-image: url(../images/sidebar/library.png); }
+  #sidebar #settingsNav a {
+    background-image: url(../images/sidebar/settings.png); }
   #sidebar p {
     background: left top no-repeat url(../images/sidebar/icon_logged_in.gif);
     color: #666666;
