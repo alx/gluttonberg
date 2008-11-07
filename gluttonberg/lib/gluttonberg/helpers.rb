@@ -73,7 +73,11 @@ module Gluttonberg
       elsif ::Gluttonberg.translated?
         opts.merge!({:dialect => dialect.code})
       end
-      slice_url(:public_page, opts)
+      begin
+        url(:public_page, opts)
+      rescue Merb::Router::GenerationError
+        slice_url(:public_page, opts)
+      end
     end
     
     # Takes text and url and checks to see if the path specified matches the 
