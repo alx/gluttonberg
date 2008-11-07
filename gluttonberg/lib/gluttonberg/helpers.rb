@@ -73,10 +73,10 @@ module Gluttonberg
       elsif ::Gluttonberg.translated?
         opts.merge!({:dialect => dialect.code})
       end
-      begin
-        url(:public_page, opts)
-      rescue Merb::Router::GenerationError
+      if Gluttonberg.standalone?
         slice_url(:public_page, opts)
+      else
+        url(:public_page, opts)
       end
     end
     

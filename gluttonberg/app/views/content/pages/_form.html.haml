@@ -15,4 +15,4 @@
     - unless @layouts.empty?
       = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
    
-  = form_controls(slice_url(:page, @page))
+  = form_controls(slice_url(:pages))
