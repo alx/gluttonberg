@@ -1,11 +1,12 @@
 var AssetBrowser = {
   overlay: null,
   dialog: null,
-  load: function(markup) {
+  load: function(link, markup) {
     // Set everthing up
     AssetBrowser.showOverlay();
     $("body").append(markup);
     AssetBrowser.browser = $("#assetsDialog");
+    AssetBrowser.target = $("#" + $(link).attr("rel"));
     // Grab the various nodes we need
     AssetBrowser.display = AssetBrowser.browser.find("#assetsDisplay");
     AssetBrowser.offsets = AssetBrowser.browser.find("> *:not(#assetsDisplay)");
@@ -20,7 +21,7 @@ var AssetBrowser = {
     // Cancel button
     AssetBrowser.browser.find("#cancel").click(AssetBrowser.close);
     // Capture anchor clicks
-    AssetBrowser.display.click(AssetBrowser.click);
+    AssetBrowser.display.find("a").click(AssetBrowser.click);
   },
   resizeDisplay: function() {
     var newHeight = AssetBrowser.browser.innerHeight() - AssetBrowser.offsetHeight;
@@ -39,15 +40,21 @@ var AssetBrowser = {
     AssetBrowser.overlay.css({display: "none"});
     AssetBrowser.browser.remove();
   },
-  loadDisplay: function(markup) {
-    AssetBrowser.display.html(markup);
+  updateDisplay: function(json) {
+    AssetBrowser.display.html(json.markup);
+    AssetBrowser.display.find("a").click(AssetBrowser.click);
   },
-  click: function(e) {
-    var target = $(e.target);
-    if (target.is("a")) {
-      $.get(target.attr("href"), null, AssetBrowser.loadDisplay);
-      return false;
+  click: function() {
+    var target = $(this);
+    if (target.is(".assetLink")) {
+      var id = target.attr("href").match(/\d+$/);
+      AssetBrowser.target.attr("value", id);
+      AssetBrowser.close();
     }
+    else {
+      $.getJSON(target.attr("href") + ".json", null, AssetBrowser.updateDisplay);
+    }
+    return false;
   }
 };
 
@@ -72,7 +79,8 @@ $(document).ready(function() {
   });
   
   $("#wrapper .assetBrowserLink").click(function() {
-    $.get(this.href, null, AssetBrowser.load);
+    var link = this;
+    $.get(link.href, null, function(markup) {AssetBrowser.load(link, markup);});
     return false;
   });
 });

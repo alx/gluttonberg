@@ -17,8 +17,17 @@ module Gluttonberg
       end
       
       def category
+        provides :json
         @assets = Asset.all(:category => params[:category], :order => [:name.desc])
-        render
+        if content_type == :json
+          JSON.pretty_generate({
+            :name       => params[:category].pluralize.capitalize,
+            :depth      => 1,
+            :markup     => partial("library/shared/asset_panels", :format => :html, :editing => false)
+          })
+        else
+          render
+        end
       end
       
       def show

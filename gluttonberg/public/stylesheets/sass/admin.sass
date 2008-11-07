@@ -690,9 +690,6 @@ ul.assetList
       :border 2px solid #373B40
       :padding 0.3em 0.6em 0.3em 28px
       :width 12em
-      /* Browser-specific border-radius
-      :-moz-border-radius 8px
-      :-webkit-border-radius 8px
     
   form
     :padding 0 10px 0 0
@@ -722,4 +719,46 @@ ul.assetList
   #cancel
     :margin-right 15px
     :float right
+
+/* Asset panels
+#assetPanels
+  :margin 1em 2%
+  :width 98%
+  :float left
+
+  li, a
+    :float left
+  
+  a
+    :border 2px solid white
+    :text-decoration none
+    :color black
+    :padding 10px 10px 10px 130px
+    :width 10em
+    :min-height 79px
+    :position relative
     
+    &:hover
+      :background #B9B791
+      :border-color #999778
+    
+  div
+    :border 2px solid #666666
+    :width 110px
+    :height 75px
+    :position absolute
+    :left 10px
+    :top 10px
+    :overflow hidden
+    
+  h2
+    :font
+      :size 1em
+      :weight bold
+    :white-space nowrap
+    :margin 0 10px 0.2em 0
+    :overflow hidden
+    
+  p
+    :font-size 0.85em
+    :color #666666

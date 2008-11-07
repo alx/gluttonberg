@@ -72,7 +72,7 @@ if defined?(Merb::Plugins)
         s.match("/library") do |a|
           a.match("/assets").to(:controller => "library/assets") do |as|
             as.match("/browser").to(:action => "browser").name(:asset_browser)
-            as.match("/browse/:category", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
+            as.match("/browse/:category(.:format)", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
           end
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")

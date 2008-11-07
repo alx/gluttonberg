@@ -1,2 +1,7 @@
 - @page_title = "Assets - #{@collection.name}"
+= sub_nav do
+  = back_link("Library", slice_url(:library))
+  = nav_link("Delete", slice_url(:delete_collection))
+  = nav_link("Edit", slice_url(:edit_collection))
+  
 = partial("library/shared/assets_table", :selector => true)
