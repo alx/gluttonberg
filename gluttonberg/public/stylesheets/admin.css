@@ -109,42 +109,27 @@ body {
   #subnav a {
     font-weight: bold;
     text-decoration: none !important;
-    color: #cccccc !important;
     padding: 0.3em 0.6em;
     margin: 2px 0 2px 15px;
     float: left; }
-  #subnav #backLink a,
-  #subnav a.current {
-    color: #244e66 !important; }
-  #subnav a.current {
-    background: white;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px; }
   #subnav #backLink a {
     background: left center no-repeat url(../images/sub_nav_back_bkg.gif);
+    color: #244e66 !important;
     padding-left: 13px;
     -moz-border-radius-topright: 3px;
     -moz-border-radius-bottomright: 3px;
     -webkit-border-top-right-radius: 3px;
     -webkit-border-bottom-right-radius: 3px; }
-  #subnav .delete,
-  #subnav .edit,
-  #subnav .new,
   #subnav .button {
     float: right; }
-    #subnav .delete a,
-    #subnav .edit a,
-    #subnav .new a,
     #subnav .button a {
       color: white !important;
       background-color: #244e66;
       background-image: url(../images/button_bkg_aqua.gif);
       background-repeat: repeat-x;
-      border: 2px solid white;
-      margin: 0 8px 0 0;
+      border: 1px solid white;
+      margin: 1px 8px 0 0;
       -webkit-border-radius: 3px; }
-  #subnav .edit a {
-    margin-right: 15px; }
 
 /* Tab Bar */
 #tabBar {
@@ -217,10 +202,10 @@ thead th {
   background: #eaeaea left top repeat-x url(../images/table_head_bkg.gif);
   border-top: 1px solid white;
   border-bottom: 1px solid #999999;
-  border-right: 1px solid white;
+  border-right: 1px solid #999999;
   font-weight: bold;
   font-size: 0.9em;
-  padding: 2px 15px 4px 15px;
+  padding: 0.4em 15px 0.5em 15px;
   color: #666666; }
 
 tbody th {
@@ -270,7 +255,9 @@ p.empty {
   font-size: 2em;
   color: #cccccc;
   text-align: center;
-  padding: 5.2em 0 0 0; }
+  padding: 5em 0 0 0;
+  width: 100%;
+  float: left; }
 
 /* Widgets */
 p.newLink {
