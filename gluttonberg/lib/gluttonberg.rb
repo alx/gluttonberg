@@ -64,13 +64,18 @@ if defined?(Merb::Plugins)
     end
     
     def self.setup_router(scope)
+      # Login/Logout
+      scope.match("/login", :method => :get ).to(:controller => "/exceptions", :action => "unauthenticated").name(:login)
+      scope.match("/login", :method => :put ).to(:controller => "sessions", :action => "update").name(:perform_login)
+      scope.match("/logout").to(:controller => "sessions", :action => "destroy").name(:logout)
+      
+      # The admin dashboard
+      scope.match("/").to(:controller => "main").name(:admin_root)
+      
       scope.identify DataMapper::Resource => :id do |s|
         # Controllers in the content module
         s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content") do |c|
-          c.match("/login", :method => :get ).to(:controller => "/exceptions",  :action => "unauthenticated").name(:login)
-          c.match("/login", :method => :put ).to(:controller => "sessions",     :action => "update"         ).name(:perform_login)
-          c.match("/logout"                 ).to(:controller => "sessions",     :action => "destroy"        ).name(:logout)
           c.resources(:pages, :controller => "content/pages") do |p| 
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)

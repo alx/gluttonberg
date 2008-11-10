@@ -1,0 +1,10 @@
+- @page_id = "login"
+- @page_title = "Login"
+
+= form(:action => slice_url(:gluttonberg, :perform_login), :method => :put, :id => "wrapper") do
+  %h1 Login
+  
+  = text_field(:name => "email", :value => params[:email], :label => "E-mail", :class => "large")
+  = password_field(:name => "password", :label => "Password", :class => "medium")
+
+  = submit("Login", :class => "buttonGrey")

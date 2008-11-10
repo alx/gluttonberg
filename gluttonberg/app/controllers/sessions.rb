@@ -25,13 +25,13 @@ module Gluttonberg
     # @overwritable
     def redirect_after_login
       message[:notice] = "Authenticated Successfully"
-      redirect_back_or "/", :message => message, :ignore => [slice_url(:login), slice_url(:logout)]
+      redirect_back_or slice_url(:admin_root), :message => message, :ignore => [slice_url(:login), slice_url(:logout)]
     end
   
     # @overwritable
     def redirect_after_logout
       message[:notice] = "Logged Out"
-      redirect "/", :message => message
+      redirect slice_url(:login), :message => message
     end  
 
     # @private

@@ -1,0 +1,9 @@
+!!! Strict
+%html
+  %head
+    %title 
+      Administration
+      = "- #{@page_title}" if @page_title
+    = css_include_tag :admin
+  %body{:id => @page_id}
+    = catch_content(:for_layout)

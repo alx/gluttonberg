@@ -6,7 +6,7 @@ module Gluttonberg
 
       case content_type
       when :html
-        render
+        render :layout => "bare"
       else
         basic_authentication.request!
         ""
