@@ -84,7 +84,7 @@ module Gluttonberg
     # current url. This is so we can add a highlight.
     def main_nav_entry(text, mod, url, opts = {})
       li_opts = {:id => "#{mod}Nav"}
-      if request.env["REQUEST_PATH"].match(%r{/#{mod}})
+      if request.env["REQUEST_PATH"].match(%r{/#{mod}}) || request.env["REQUEST_PATH"] == url
         li_opts[:class] = "current"
       end
       tag("li", link_to(text, url, opts), li_opts)
