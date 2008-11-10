@@ -1,0 +1,27 @@
+- @page_title = "Asset - #{@asset.name}"
+= sub_nav do
+  = back_link("Library", slice_url(:library))
+  = nav_link("Delete", slice_url(:delete_asset, @asset))
+  = nav_link("Edit", slice_url(:edit_asset, @asset))
+  
+%h2= @asset.name
+%p{:id => "categoryAndType", :class => @asset.category}
+  = "#{@asset.category.capitalize}/#{@asset.type}"
+  
+%div#preview
+  &nbsp;
+    
+%h3 Metadata
+%dl
+  %dt Category
+  %dd= @asset.category.capitalize
+  %dt Type
+  %dd= @asset.type
+  
+%h3 Updates
+%dl
+  %dt Created
+  %dd= @asset.created_at.formatted(:long)
+  %dt Updated
+  %dd= @asset.updated_at.formatted(:long)
+  

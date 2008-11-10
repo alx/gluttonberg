@@ -5,7 +5,7 @@
     %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
     %script{:src => gluttonberg_public_path_for(:javascript, "jquery-1.2.6.min.js"), :type => "text/javascript", :charset => "utf-8"}
     %script{:src => gluttonberg_public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
-  %body
+  %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
     %div#sidebar
       %h1 Gluttonberg
       %ul#navigation

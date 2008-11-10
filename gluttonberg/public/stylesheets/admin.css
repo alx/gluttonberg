@@ -526,6 +526,47 @@ ul.assetList {
 #iconNav #localesNav {
   background-image: url(../images/settings/locales.gif); }
 
+/* Assets */
+#assets.show #subnav {
+  margin-bottom: 30px; }
+#assets.show #wrapper {
+  position: relative; }
+  #assets.show #wrapper h2, #assets.show #wrapper h3, #assets.show #wrapper p, #assets.show #wrapper dl {
+    margin-left: 340px;
+    margin-right: 30px; }
+  #assets.show #wrapper h2 {
+    font-weight: bold;
+    margin-bottom: 0.3em; }
+  #assets.show #wrapper h3 {
+    border-bottom: 1px solid #E6E6E6;
+    font-weight: bold;
+    padding-bottom: 0.6em;
+    margin-bottom: 0.7em; }
+  #assets.show #wrapper dl {
+    margin-bottom: 2em; }
+  #assets.show #wrapper dt {
+    font-weight: bold;
+    color: #333333;
+    padding: 0.2em 0;
+    width: 5em;
+    float: left;
+    clear: left; }
+  #assets.show #wrapper dd {
+    padding: 0.3em 0 0.1em 0;
+    clear: right; }
+#assets.show #preview {
+  border: 1px solid #cccccc;
+  background: #E6E6E6;
+  margin-top: 30px;
+  width: 250px;
+  height: 200px;
+  position: absolute;
+  left: 50px;
+  top: 5.3em;
+  overflow: hidden; }
+#assets.show #categoryAndType {
+  margin-bottom: 1.5em; }
+
 /* Asset Browser */
 #assetsDialogOverlay {
   background: url(../images/library/dialog_overlay.png);
