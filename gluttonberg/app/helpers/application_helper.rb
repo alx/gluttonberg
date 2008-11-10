@@ -1,40 +1,14 @@
 module Merb
   module Gluttonberg
     module ApplicationHelper
-      
-      # Finds the matching content block and determines the helper it needs
-      # to execute to actually write the contents to page.
-      # TODO: if there is no way to to render the content, freak out and raise
-      # an error
-      def render_content_for(section_name)
-        # At present this generates a bunch of queries. Eventually we should 
-        # look at caching section names to save some DB hits.
-        content = @page.localized_contents.pluck {|c| c.section.name == section_name}
-        render_method = :"render_#{content.content_type}"
-        if respond_to? render_method
-          send(:"render_#{content.content_type}", content)
-        elsif content.respond_to? :text
-          content.text
-        else
-          # raise Gluttonberg::ContentRenderError, "Don't know how to render this content"
+      # Writes out a row for each page and then for each page's children, 
+      # iterating down through the heirarchy.
+      def page_table_rows(pages, output = "", inset = 0)
+        pages.each do |page|
+          output << partial("content/pages/row", :page => page, :inset => inset)
+          page_table_rows(page.children, output, inset + 1)
         end
-      end
-      
-      def render_rich_text_content(content)
-        content.current_localization.formatted_text
-      end
-      
-      # Looks for a matching partial in the templates directory. Failing that, 
-      # it falls back to Gluttonberg's view dir — views/content/editors
-      def content_editor(content_class)
-        locals  = {:content => content_class}
-        type    = content_class.content_type
-        glob    = ::Gluttonberg::Templates.path_for("editors") / "_#{type}.#{content_type}.*"
-        unless Dir[glob].empty?
-          partial(::Gluttonberg::Templates.path_for("editors") / type, locals)
-        else
-          partial("content/editors/#{type}", locals)
-        end
+        output
       end
       
       # @param *segments<Array[#to_s]> Path segments to append.

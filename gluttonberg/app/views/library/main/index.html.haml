@@ -1,7 +1,7 @@
 - @page_title = "Asset Library"
-%ul#subnav
-  %li.new= link_to("Add collection", slice_url(:new_collection))
-  %li.new= link_to("Add asset", slice_url(:new_asset))
+= sub_nav do
+  = nav_link("Add collection", slice_url(:new_collection))
+  = nav_link("Add asset", slice_url(:new_asset))
 
 %h2.assetList Collections
 - unless @collections.empty?
@@ -33,3 +33,7 @@
         %a{:href => slice_url(:asset, asset), :class => "asset#{asset.type}"}
           %h3= asset.name
           %p= asset.full_type
+          
+          
+%p= link_to("Open browser", slice_url(:asset_browser), :class => "assetBrowserLink", :rel => "asset_id")
+%input{:type => "hidden", :id => "asset_id", :name => "asset_id"}/

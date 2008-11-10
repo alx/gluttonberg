@@ -1,5 +1,12 @@
 module Gluttonberg
   module AdminController
+    def self.included(klass)
+      klass.class_eval do
+        self._template_roots << [Gluttonberg.root / "app" / "views", :_template_location]
+        layout("gluttonberg")
+      end
+    end
+    
     def display_delete_confirmation(opts)
       @options = opts
       @options[:title]    ||= "Delete Record?"

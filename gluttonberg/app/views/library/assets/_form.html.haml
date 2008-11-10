@@ -1,24 +1,17 @@
 = form_for(@asset, :action => action) do
   = error_messages_for(@asset)
   
-  = fieldset(:legend => "Localization") do
-    %div.fieldset
-      = check_box(:localized)
-      %label{:for => "gluttonberg::localized", :class => "inline"} Localize
-      = select(:dialect_id, :collection => @dialects, :value_method => :id, :text_method => :name, :label => "Dialect")
-      = select(:locale_id, :collection => @locales, :value_method => :id, :text_method => :name, :label => "Locale")
+  = block("Localization") do
+    = check_box(:localized)
+    %label{:for => "gluttonberg::localized", :class => "inline"} Localize
+    = select(:dialect_id, :collection => @dialects, :value_method => :id, :text_method => :name, :label => "Dialect")
+    = select(:locale_id, :collection => @locales, :value_method => :id, :text_method => :name, :label => "Locale")
   
-  = fieldset(:legend => "Details") do
-    %div.fieldset
-      = text_field(:name, :label => "Name", :class => "large")
-      = text_area(:description, :label => "Description", :class => "large short")
+  = block("Details") do
+    = text_field(:name, :label => "Name", :class => "large")
+    = text_area(:description, :label => "Description", :class => "large short")
       
-  = fieldset(:legend => "File") do
-    %div.fieldset
-      = file_field(:file, :label => "File to upload")
+  = block("File") do
+    = file_field(:file, :label => "File to upload")
   
-  %p.controls
-    = submit("Save")
-    or 
-    = link_to("<strong>Cancel</strong>", slice_url(:library))
-  
+  = form_controls(slice_url(:library))

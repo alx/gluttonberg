@@ -1,27 +1,18 @@
 = form_for(@page, :action => action) do
   = error_messages_for(@page)
-  - if @page.new_record?
-    = fieldset(:legend => "Localization") do
-      %div.fieldset
-        - unless @dialects.empty?
-          = select(:dialect_id, :collection => @dialects, :value_method => "id", :text_method => "name", :include_blank => true, :label => "Dialect")
-        - unless @locales.empty?
-          = select(:locale_id, :collection => @locales, :value_method => "id", :text_method => "name", :include_blank => true, :label => "Locale")
   
-  = fieldset(:legend => "General") do
-    %div.fieldset
-      = text_field(:name, :label => "Name")
-      = text_field(:slug, :label => "Slug")
-      - unless @layouts.empty?
-        = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
-      - unless @types.empty?
-        = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
-      - unless @pages.empty?
-        = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
-      = check_box(:home)
-      %label{:for => "page_home", :class => "checkbox"} Set as homepage
-      
-  %p.controls
-    = submit("Save")
-    or
-    = link_to("<strong>Cancel</strong>", slice_url(:pages))
+  = block("General") do
+    = text_field(:name, :label => "Name")
+    = text_field(:slug, :label => "Slug")
+    - unless @pages.empty?
+      = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
+    = check_box(:home)
+    %label{:for => "page_home", :class => "checkbox"} Set as homepage
+  
+  = block("Templates") do
+    - unless @types.empty?
+      = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
+    - unless @layouts.empty?
+      = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
+   
+  = form_controls(slice_url(:pages))

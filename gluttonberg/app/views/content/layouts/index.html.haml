@@ -1,6 +1,7 @@
 - @page_title = "Layouts"
-%ul#subnav
-  %li.new= link_to("New", slice_url(:new_layout))
+= sub_nav do
+  = back_link("Content", slice_url(:content))
+  = nav_link("New", slice_url(:new_layout))
   
 - if @layouts.empty?
   %p.empty No layouts available

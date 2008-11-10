@@ -1,12 +1,12 @@
 if defined?(Merb::Plugins)
 
-  merb_version = "0.9.13"
+  merb_version = "1.0"
   datamapper_version = "0.9.6"
 
   $:.unshift File.dirname(__FILE__)
 
   load_dependency 'merb-slices', merb_version
-  Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks", "gluttonberg/tasks/spectasks"
+  Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks"
 
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)
@@ -32,6 +32,7 @@ if defined?(Merb::Plugins)
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
     def self.loaded
+      Merb::GlobalHelpers.send(:include, Gluttonberg::Helpers)
     end
     
     # Initialization hook - runs before AfterAppLoads BootLoader
@@ -78,7 +79,7 @@ if defined?(Merb::Plugins)
         s.match("/library") do |a|
           a.match("/assets").to(:controller => "library/assets") do |as|
             as.match("/browser").to(:action => "browser").name(:asset_browser)
-            as.match("/:category", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
+            as.match("/browse/:category(.:format)", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
           end
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")
@@ -92,7 +93,7 @@ if defined?(Merb::Plugins)
           se.resources(:users, :controller => "settings/users")
         end
         
-        s.gluttonberg_pages #if standalone?
+        s.gluttonberg_pages if standalone?
       end
     end
     
@@ -103,6 +104,18 @@ if defined?(Merb::Plugins)
     
     def self.translated?
       config[:translate] && ! config[:localize]
+    end
+    
+    # Allows other code to register an entry in Gluttonberg's navigation
+    # TODO: This API is likely temporary, so we'll need to sketch out how
+    # things can be done in the future.
+    @@nav_entries = []
+    def self.register(*args)
+      @@nav_entries << args
+    end
+    
+    def self.nav_entries
+      @@nav_entries
     end
   end
   
@@ -159,6 +172,7 @@ if defined?(Merb::Plugins)
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
   require "gluttonberg/templates"
+  require "gluttonberg/helpers"
   require "gluttonberg/strategies/password_strategy"
   
   require 'merb-auth-more/mixins/redirect_back'

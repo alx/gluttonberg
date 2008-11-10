@@ -1,2 +1,6 @@
 - @page_title = "Assets - #{params[:category].capitalize}"
-= partial("library/shared/assets_table")
+= sub_nav do
+  = back_link("Library", slice_url(:library))
+  = nav_link("Add asset", slice_url(:new_asset))
+  
+= partial("library/shared/asset_panels")

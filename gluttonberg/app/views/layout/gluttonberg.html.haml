@@ -2,15 +2,18 @@
 %html
   %head
     %title Administration
-    = css_include_tag :admin
-    = js_include_tag "jquery-1.2.6.min.js", "application.js"
+    %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
+    %script{:src => gluttonberg_public_path_for(:javascript, "jquery-1.2.6.min.js"), :type => "text/javascript", :charset => "utf-8"}
+    %script{:src => gluttonberg_public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
   %body
     %div#sidebar
       %h1 Gluttonberg
       %ul#navigation
-        %li.current= link_to("Content", slice_url(:content))
-        %li= link_to("Asset Library", slice_url(:library))
-        %li= link_to("Settings", slice_url(:settings))
+        = main_nav_entry("Content", "content", url(:gluttonberg_content))
+        = main_nav_entry("Library", "library", url(:gluttonberg_library))
+        - for entry in Gluttonberg.nav_entries
+          = main_nav_entry(*entry)
+        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
       %p
         Logged in as
         %br/

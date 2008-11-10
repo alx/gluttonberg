@@ -1,22 +1,18 @@
 = form_for(@locale, :action => action) do
   = error_messages_for(@locale)  
   
-  = fieldset(:legend => "Locale") do
-    %div.fieldset
-      = text_field(:name, :label => "Name")
-      = text_field(:slug, :label => "Slug")
-      - unless @locales.empty?
-        = select(:locale_id, :collection => @locales, :include_blank => true, :value_method => "id", :text_method => "name", :label => "Fallback Locale")
-      = check_box(:default, :boolean => true)
-      %label{:for => "gluttonberg::locale_default", :class => "checkbox"} Default
+  = block("Locale") do
+    = text_field(:name, :label => "Name")
+    = text_field(:slug, :label => "Slug")
+    - unless @locales.empty?
+      = select(:locale_id, :collection => @locales, :include_blank => true, :value_method => "id", :text_method => "name", :label => "Fallback Locale")
+    = check_box(:default, :boolean => true)
+    %label{:for => "gluttonberg::locale_default", :class => "checkbox"} Default
   
   = fieldset(:legend => "Dialects", :id => "dialects") do
     %div.fieldset
       - for dialect in @dialects
         = check_box(:name => "gluttonberg::locale[dialect_ids][]", :id => "dialect_#{dialect.code}", :value => dialect.id, :boolean => false, :checked => @locale.dialects.include?(dialect))
         %label{:for => "dialect_#{dialect.code}", :class => "checkbox"}= dialect.name_and_code
-            
-  %p.controls
-    = submit("Save")
-    or
-    = link_to('<strong>Cancel</strong>', slice_url(:locales))
+  
+  = form_controls(slice_url(:locales))

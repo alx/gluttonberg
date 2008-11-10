@@ -1,6 +1,7 @@
 - @page_title = "Page Types"
-%ul#subnav
-  %li.new= link_to("New", slice_url(:new_page_type))
+= sub_nav do
+  = back_link("Content", slice_url(:content))
+  = nav_link("New", slice_url(:new_page_type))
   
 - if @page_types.empty?
   %p.empty No types set

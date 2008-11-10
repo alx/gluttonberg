@@ -1,0 +1,11 @@
+- if @assets.empty?
+  %p.empty No assets
+- else
+  %ul#assetPanels
+    - for asset in @assets
+      %li
+        %a{:href => slice_url(:asset, asset), :class => "assetLink"}
+          %h2= asset.name
+          %p= "Added #{asset.created_at.formatted(:short)}"
+          %div
+            %img{:src => "/images/awesome_kittens.jpg"}/

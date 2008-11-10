@@ -1,10 +1,8 @@
 - @page_title = "Page: #{@page.name}"
-%ul#subnav
-  %li= link_to("Overview", "#overview", :class => "current")
-  %li= link_to("History", "#history")
-  %li.edit= link_to 'Edit', slice_url(:edit_page, @page)
-  %li.delete= link_to 'Delete', slice_url(:delete_page, @page)
-  
+= sub_nav do
+  = back_link("Pages", slice_url(:pages))
+  = nav_link('Delete', slice_url(:delete_page, @page))
+  = nav_link('Edit', slice_url(:edit_page, @page))
   
 %h2 Properties
 %dl

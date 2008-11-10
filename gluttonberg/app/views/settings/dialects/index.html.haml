@@ -1,6 +1,7 @@
 - @page_title = "Dialects"
-%ul#subnav
-  %li.new= link_to('New', slice_url(:gluttonberg, :new_dialect))
+= sub_nav do
+  = back_link("Settings", slice_url(:settings))
+  = nav_link('New', slice_url(:gluttonberg, :new_dialect))
 
 - if @dialects.empty?
   %p No dialects available
