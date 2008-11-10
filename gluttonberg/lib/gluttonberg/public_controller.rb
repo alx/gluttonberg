@@ -1,7 +1,10 @@
 module Gluttonberg
   module PublicController
     def self.included(klass)
-      klass.send(:attr_accessor, :dialect, :locale, :path)
+      klass.class_eval do
+        attr_accessor :dialect, :locale, :path
+        self._template_roots << [Gluttonberg::Templates.root, :_template_location]
+      end
     end
     
     private
