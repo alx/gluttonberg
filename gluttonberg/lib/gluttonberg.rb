@@ -44,6 +44,10 @@ if defined?(Merb::Plugins)
       Content.setup
       Library.setup
       Templates.setup
+
+      Merb::Authentication.user_class = Gluttonberg::User
+      Merb::Authentication.activate!(:default_password_form)
+      Merb::Plugins.config[:"merb-auth"][:login_param] = "email"
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -55,6 +59,9 @@ if defined?(Merb::Plugins)
         # Controllers in the content module
         s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content") do |c|
+          c.match("/login", :method => :get ).to(:controller => "/exceptions",  :action => "unauthenticated").name(:login)
+          c.match("/login", :method => :put ).to(:controller => "sessions",     :action => "update"         ).name(:perform_login)
+          c.match("/logout"                 ).to(:controller => "sessions",     :action => "destroy"        ).name(:logout)
           c.resources(:pages, :controller => "content/pages") do |p| 
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)
@@ -154,6 +161,8 @@ if defined?(Merb::Plugins)
   dependency 'dm-validations',  datamapper_version
   dependency 'dm-timestamps',   datamapper_version
   dependency 'dm-types',        datamapper_version
+  dependency 'merb-auth-core',  merb_version
+  dependency 'merb-auth-more',  merb_version
   dependency 'RedCloth',        "4.1.0"
 
   # Various mixins and classes
@@ -164,5 +173,8 @@ if defined?(Merb::Plugins)
   require "gluttonberg/core_ext"
   require "gluttonberg/templates"
   require "gluttonberg/helpers"
+  require "gluttonberg/strategies/password_strategy"
+  
+  require 'merb-auth-more/mixins/redirect_back'
   
 end
