@@ -17,8 +17,9 @@
       %p
         Logged in as
         %br/
-        %strong Luke Sutton
-        %a logout
+        %strong
+          = session.user.name
+        %a{:href => slice_url(:logout)} logout
     
     %div#wrapper
       %h1#pageTitle= @page_title || "No title set"

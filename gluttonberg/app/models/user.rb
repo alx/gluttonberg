@@ -8,7 +8,5 @@ module Gluttonberg
     property :id, Serial
     property :name, String, :length => 1..100
     property :email, String, :length => 1..100
-
-    
   end
 end

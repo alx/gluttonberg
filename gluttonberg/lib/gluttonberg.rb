@@ -48,6 +48,15 @@ if defined?(Merb::Plugins)
       Merb::Authentication.user_class = Gluttonberg::User
       Merb::Authentication.activate!(:default_password_form)
       Merb::Plugins.config[:"merb-auth"][:login_param] = "email"
+      Merb::Authentication.class_eval do 
+        def store_user(user)
+          return nil unless user 
+          user.id
+        end
+        def fetch_user(session_info)
+          User.get(session_info)
+        end
+      end
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Gluttonberg)
@@ -173,7 +182,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/core_ext"
   require "gluttonberg/templates"
   require "gluttonberg/helpers"
-  require "gluttonberg/strategies/password_strategy"
   
   require 'merb-auth-more/mixins/redirect_back'
   
