@@ -1,16 +1,16 @@
 module Gluttonberg
   module Settings
     class Users < Gluttonberg::Application
-      # provides :xml, :yaml, :js
+      include Gluttonberg::AdminController
+      
+      before :find_user, :exclude => [:index, :new, :create]
   
       def index
         @users = User.all
         display @users
       end
   
-      def show(id)
-        @user = User.get(id)
-        raise NotFound unless @user
+      def show
         display @user
       end
   
@@ -20,43 +20,52 @@ module Gluttonberg
         display @user
       end
   
-      def edit(id)
+      def edit
         only_provides :html
-        @user = User.get(id)
-        raise NotFound unless @user
         display @user
       end
+      
+      def delete
+        display_delete_confirmation(
+          :title      => "Delete the user #{@user.name}?",
+          :action     => slice_url(:user, @user),
+          :return_url => slice_url(:users)
+        )
+      end
   
-      def create(user)
-        @user = User.new(user)
+      def create
+        @user = User.new(params["gluttonberg::user"])
         if @user.save
-          redirect resource(@user), :message => {:notice => "User was successfully created"}
+          redirect slice_url(:users), :message => {:notice => "User was successfully created"}
         else
           message[:error] = "User failed to be created"
           render :new
         end
       end
   
-      def update(id, user)
-        @user = User.get(id)
-        raise NotFound unless @user
-        if @user.update_attributes(user)
-           redirect resource(@user)
+      def update
+        if @user.update_attributes(params["gluttonberg::user"])
+           redirect slice_url(:users)
         else
           display @user, :edit
         end
       end
   
-      def destroy(id)
-        @user = User.get(id)
-        raise NotFound unless @user
+      def destroy
         if @user.destroy
-          redirect resource(:users)
+          redirect slice_url(:users)
         else
           raise InternalServerError
         end
       end
   
-    end # Users
-  end # Settings
+      private
+      
+      def find_user
+        @user = User.get(params[:id])
+        raise NotFound unless @user
+      end
+  
+    end
+  end
 end

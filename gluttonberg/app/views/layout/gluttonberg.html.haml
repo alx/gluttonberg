@@ -14,12 +14,12 @@
         - for entry in Gluttonberg.nav_entries
           = main_nav_entry(*entry)
         = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
-      %p
-        Logged in as
-        %br/
-        %strong
-          = session.user.name
-        %a{:href => slice_url(:logout)} logout
+      - if session.user
+        %p
+          Logged in as
+          %br/
+          %strong= session.user.name
+          %a{:href => slice_url(:logout)} logout
     
     %div#wrapper
       %h1#pageTitle= @page_title || "No title set"

@@ -1,0 +1,13 @@
+= form_for(@user, :action => action) do
+  = error_messages_for(@user)
+  
+  = block("Details") do
+    = text_field(:name, :class => "large", :label => "Name")
+    = text_field(:email, :class => "large", :label => "E-mail")
+    
+  = block("Password") do
+    = password_field(:password, :class => "medium", :label => "Password")
+    = password_field(:password_confirmation, :class => "medium", :label => "Confirm Password")
+    
+  = form_controls(slice_url(:users))
+    

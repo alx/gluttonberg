@@ -309,6 +309,7 @@ input.inline {
   clear: none; }
 
 input.text,
+input.password,
 input.checkbox,
 input.radio,
 textarea,
@@ -325,6 +326,7 @@ input.radio {
 
 /* Input/textarea styles and widths */
 input.text,
+input.password,
 textarea {
   background: white left top no-repeat url(../images/form/input_bkg.gif);
   border: 1px solid #999999;
