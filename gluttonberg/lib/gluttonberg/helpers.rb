@@ -18,13 +18,15 @@ module Gluttonberg
     
     # If it's passed a label this method will return a fieldset, otherwise it
     # will just return the contents wrapped in a block.
-    def block(label = nil, &blk)
+    def block(label = nil, opts = {}, &blk)
+      (opts[:class] ||= "") << " fieldset"
+      opts[:class].strip!
       if label
         fieldset({:legend => label}) do
-          tag(:div, {:class => "fieldset"}, &blk)
+          tag(:div, opts, &blk)
         end
       else
-        tag(:div, {:class => "fieldset"}, &blk)
+        tag(:div, opts, &blk)
       end
     end
     
