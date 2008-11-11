@@ -10,6 +10,7 @@ module Gluttonberg
     property :template_name,  String,   :length => 0..100
     property :layout_name,    String,   :length => 0..100
     property :home,           Boolean,  :default => false,  :writer => :private
+    property :behaviour,      Enum[:default, :dynamic, :component], :default => :default
     property :created_at,     Time
     property :updated_at,     Time
 

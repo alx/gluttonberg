@@ -14,5 +14,22 @@
       = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
     - unless @layouts.empty?
       = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
+      
+  = block("Behaviour", :id => "pageBehaviours") do
+    = radio_button(:behaviour, :value => "default")
+    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Default
+    %p A regular page where all the contents are fully editable.
+    
+    = radio_button(:behaviour, :value => "dynamic")
+    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Dynamic
+    %p 
+      This page will contain dynamic content — pulled from the database. It 
+      may also have some directly editable content.
+    
+    = radio_button(:behaviour, :value => "component")
+    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Component
+    %p
+      This page has no editable content, instead it’s content is set by a 
+      custom component.
    
   = form_controls(slice_url(:pages))
