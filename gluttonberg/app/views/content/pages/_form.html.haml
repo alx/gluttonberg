@@ -25,11 +25,14 @@
     %p 
       This page will contain dynamic content — pulled from the database. It 
       may also have some directly editable content.
-    
-    = radio_button(:behaviour, :value => "component")
-    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Component
-    %p
-      This page has no editable content, instead it’s content is set by a 
-      custom component.
+      
+    - unless Gluttonberg::Components.registered.empty?
+      = radio_button(:behaviour, :value => "component")
+      %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Component
+      %p
+        This page has no editable content, instead it’s content is set by a 
+        custom component.
+        
+      = select(:component, :collection => Gluttonberg::Components.registered, :include_blank => true, :text_method => :label, :value_method => :name)
    
   = form_controls(slice_url(:pages))

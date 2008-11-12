@@ -119,18 +119,6 @@ if defined?(Merb::Plugins)
     def self.translated?
       config[:translate] && ! config[:localize]
     end
-    
-    # Allows other code to register an entry in Gluttonberg's navigation
-    # TODO: This API is likely temporary, so we'll need to sketch out how
-    # things can be done in the future.
-    @@nav_entries = []
-    def self.register(*args)
-      @@nav_entries << args
-    end
-    
-    def self.nav_entries
-      @@nav_entries
-    end
   end
   
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
@@ -148,15 +136,14 @@ if defined?(Merb::Plugins)
       # be added as a URL prefix. For now we just assume it's going into the
       # URL.
       if Gluttonberg.localized?
-        path << "/:locale/:dialect(/:full_path)"
+        path << "/:locale/:dialect"
       elsif Gluttonberg.translated?
-        path << "/:dialect(/:full_path)"
-      else
-        path << "(/:full_path)"
+        path << "/:dialect"
       end
       # Add the matcher for the full path.
-      match(path, :full_path => /\S+/).to(:controller => "/gluttonberg/content/public", :action => "show").
-        name(:public_page)
+      match(path << "(/:full_path)", :full_path => /\S+/).
+        to(:controller => "/gluttonberg/content/public", :action => "show").name(:public_page)
+      
       # TODO: look at matching a root, which people might hit without 
       # selecting a locale or dialect
     end
@@ -186,6 +173,7 @@ if defined?(Merb::Plugins)
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
   require "gluttonberg/templates"
+  require "gluttonberg/components"
   require "gluttonberg/helpers"
   
   require 'merb-auth-more/mixins/redirect_back'

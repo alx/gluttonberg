@@ -437,6 +437,10 @@ div.error {
   width: 25em;
   float: left;
   clear: both; }
+#pageBehaviours select {
+  margin-left: 12.6em;
+  min-width: 13em;
+  clear: both; }
 
 /* Locales form */
 #dialects .checkbox {

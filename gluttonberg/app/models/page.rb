@@ -11,6 +11,7 @@ module Gluttonberg
     property :layout_name,    String,   :length => 0..100
     property :home,           Boolean,  :default => false,  :writer => :private
     property :behaviour,      Enum[:default, :dynamic, :component], :default => :default
+    property :component,      String,   :length => 1...100
     property :created_at,     Time
     property :updated_at,     Time
 
