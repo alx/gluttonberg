@@ -8,11 +8,25 @@ module Gluttonberg
         opts = args.length > 1 ? args.last : {}
         # do something clever to get the current obj, hence the fieldname
         rel = current_form_context.send(:control_name, args.first)
+        asset_id = current_form_context.send(:control_value, args.first)
       else
         opts = args.first
         rel = opts[:name]
+        asset_id = opts[:value]
       end
-      link_contents = "<strong>Nothing selected</strong>"
+      # Find the asset so we can get the name
+      asset_name, indicator = unless asset_id.nil?
+        asset = Gluttonberg::Asset.get(asset_id, :fields => [:name, :category])
+        if asset
+          [asset.name, asset.category]
+        else
+          ["Asset missing!", "missing"]
+        end
+      else
+        ["Nothing selected", "default"]
+      end
+      # Output it all
+      link_contents = "<strong class=\"#{indicator}\">#{asset_name}</strong>"
       link_contents << link_to("Browse", slice_url(:asset_browser), :class => "buttonGrey", :rel => rel)
       output = ""
       output << tag(:label, opts[:label]) if opts[:label]
