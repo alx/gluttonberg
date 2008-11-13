@@ -4,6 +4,6 @@
     %title 
       Administration
       = "- #{@page_title}" if @page_title
-    = css_include_tag :admin
+    %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
   %body{:id => @page_id}
     = catch_content(:for_layout)
