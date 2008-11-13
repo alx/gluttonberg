@@ -46,6 +46,7 @@ module Gluttonberg
 
     def slug=(new_slug)
       @paths_need_recaching = true
+      new_slug = new_slug.downcase.gsub(/\s+/, '_').gsub(/[\!\*'"″′‟‛„‚”“”˝\(\);:@&=+$,\/?%#\[\]]+/, '')
       attribute_set(:slug, new_slug)
     end
 
