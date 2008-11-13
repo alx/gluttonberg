@@ -3,6 +3,8 @@
 */log/*
 */templates/*
 */public/assets/*/*
+gluttonberg/public/stylesheets/*.css
+!gluttonberg/public/stylesheets/admin.css
 */*.gemspec
 */spec/log/*
 */pkg/*
