@@ -13,7 +13,11 @@ module Gluttonberg
       def browser
         @assets = []
         @collections = AssetCollection.all(:order => [:name.desc])
-        render :layout => false
+        if params["no_frame"]
+          partial(:browser_root)
+        else
+          render :layout => false
+        end
       end
       
       def category
@@ -21,9 +25,9 @@ module Gluttonberg
         @assets = Asset.all(:category => params[:category], :order => [:name.desc])
         if content_type == :json
           JSON.pretty_generate({
-            :name       => params[:category].pluralize.capitalize,
-            :depth      => 1,
-            :markup     => partial("library/shared/asset_panels", :format => :html, :editing => false)
+            :name     => params[:category].pluralize.capitalize,
+            :backURL  => slice_url(:asset_browser, :no_frame => false),
+            :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
           })
         else
           render

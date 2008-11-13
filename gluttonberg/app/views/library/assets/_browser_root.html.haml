@@ -1,8 +1,3 @@
-- @page_title = "Asset Library"
-= sub_nav do
-  = nav_link("Add collection", slice_url(:new_collection))
-  = nav_link("Add asset", slice_url(:new_asset))
-
 %h2.assetList Collections
 - unless @collections.empty?
   %ul.assetList
@@ -15,7 +10,7 @@
 %h2.assetList Browse
 %ul.assetList
   %li
-    %a{:href => slice_url(:assets), :class => "browseAll"}
+    %a{:href => slice_url(:asset_category, "all"), :class => "browseAll"}
       %h3 All
       %p nil items
   - Gluttonberg::Library::CATEGORIES.each do |category|
@@ -23,13 +18,3 @@
       %a{:href => slice_url(:asset_category, category), :class => "browse#{category.pluralize.capitalize}"}
         %h3= category.pluralize.capitalize
         %p nil items
-
-
-- unless @assets.empty?
-  %h2.assetList Latest
-  %ul.assetList
-    - for asset in @assets
-      %li
-        %a{:href => slice_url(:asset, asset), :class => "asset#{asset.type}"}
-          %h3= asset.name
-          %p= asset.full_type

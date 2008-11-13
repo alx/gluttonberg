@@ -21,7 +21,7 @@
           Logged in as
           %br/
           %strong= session.user.name
-          %a{:href => slice_url(:logout)} logout
+          %a{:href => url(:gluttonberg_logout)} logout
     
     %div#wrapper
       %h1#pageTitle= @page_title || "No title set"

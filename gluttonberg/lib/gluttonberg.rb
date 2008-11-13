@@ -164,7 +164,7 @@ if defined?(Merb::Plugins)
   dependency 'dm-types',        datamapper_version
   dependency 'merb-auth-core',  merb_version
   dependency 'merb-auth-more',  merb_version
-  dependency 'RedCloth',        "4.1.0"
+  dependency 'RedCloth',        "4.1.0",  {:require_as => 'redcloth'}
 
   # Various mixins and classes
   require "gluttonberg/content"

@@ -683,6 +683,24 @@ ul.assetList
   #categoryAndType
     :margin-bottom 1.5em
 
+/* Asset browser link 
+.assetBrowserLink
+  :margin-bottom 1em
+  :float left
+  :clear right
+  
+  strong, a
+    :float left
+    
+  strong
+    :background-color= !light_aqua
+    :border 1px solid #999999
+    :whitespace nowrap
+    :padding 0.35em 0.8em
+    :margin 0 0.5em 0 0
+    :width 17em
+    :overflow hidden
+  
 /* Asset Browser
 #assetsDialogOverlay
   :background url(../images/library/dialog_overlay.png)
@@ -727,24 +745,17 @@ ul.assetList
       :padding 0.5em 0
       
     a
-      :background right center no-repeat url(../images/library/nav_regular.gif)
+      :background left center no-repeat url(../images/library/back.gif)
       :font-weight bold
+      :color #666550
       :text-decoration none
-      :padding 0.5em 18px 0.5em 10px
-    
-    .current
-      :background-image url(../images/library/nav_current.gif)
-      :color #666550 !important
-      
-  #assetsHome
-    :padding-left 10px !important
-    
-    a
+      :padding 0.5em 10px 0.5em 18px
+      :margin 0 0 0 8px
       /* Browser-specific border-radius
-      :-moz-border-radius-topleft 3px
-      :-moz-border-radius-bottomleft 3px
-      :-webkit-border-top-left-radius 3px
-      :-webkit-border-bottom-left-radius 3px
+      :-moz-border-radius-topright 3px
+      :-moz-border-radius-bottomright 3px
+      :-webkit-border-top-right-radius 3px
+      :-webkit-border-bottom-right-radius 3px
       
   #assetsSearch
     :float right !important
