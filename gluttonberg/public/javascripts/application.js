@@ -10,6 +10,8 @@ var AssetBrowser = {
     // Grab the various nodes we need
     AssetBrowser.display = AssetBrowser.browser.find("#assetsDisplay");
     AssetBrowser.offsets = AssetBrowser.browser.find("> *:not(#assetsDisplay)");
+    AssetBrowser.backControl = AssetBrowser.browser.find("#back a");
+    AssetBrowser.backControl.css({display: "none"});
     // Calculate the offsets
     AssetBrowser.offsetHeight = 0;
     AssetBrowser.offsets.each(function(i, element) {
@@ -22,6 +24,7 @@ var AssetBrowser = {
     AssetBrowser.browser.find("#cancel").click(AssetBrowser.close);
     // Capture anchor clicks
     AssetBrowser.display.find("a").click(AssetBrowser.click);
+    AssetBrowser.backControl.click(AssetBrowser.back);
   },
   resizeDisplay: function() {
     var newHeight = AssetBrowser.browser.innerHeight() - AssetBrowser.offsetHeight;
@@ -40,8 +43,15 @@ var AssetBrowser = {
     AssetBrowser.overlay.css({display: "none"});
     AssetBrowser.browser.remove();
   },
-  updateDisplay: function(json) {
-    AssetBrowser.display.html(json.markup);
+  handleJSON: function(json) {
+    if (json.backURL) {
+      AssetBrowser.backURL = json.backURL;
+      AssetBrowser.backControl.css({display: "block"});
+    }
+    AssetBrowser.updateDisplay(json.markup);
+  },
+  updateDisplay: function(markup) {
+    AssetBrowser.display.html(markup);
     AssetBrowser.display.find("a").click(AssetBrowser.click);
   },
   click: function() {
@@ -52,7 +62,15 @@ var AssetBrowser = {
       AssetBrowser.close();
     }
     else {
-      $.getJSON(target.attr("href") + ".json", null, AssetBrowser.updateDisplay);
+      $.getJSON(target.attr("href") + ".json", null, AssetBrowser.handleJSON);
+    }
+    return false;
+  },
+  back: function() {
+    if (AssetBrowser.backURL) {
+      $.get(AssetBrowser.backURL, null, AssetBrowser.updateDisplay);
+      AssetBrowser.backURL = null;
+      AssetBrowser.backControl.css({display: "none"});
     }
     return false;
   }

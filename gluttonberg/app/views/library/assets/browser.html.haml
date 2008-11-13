@@ -2,33 +2,14 @@
   %h1 Choose Asset
   
   %ul#assetsNavigation
-    %li#assetsHome= link_to("Home", slice_url(:asset_browser), :class => "current")
+    %li#back= link_to("Back", "#back")
     %li#assetsSearch
       %form
         %label Search
         %input{:type => "text"}
         
   %div#assetsDisplay
-    %h2.assetList Collections
-    - unless @collections.empty?
-      %ul.assetList
-        - for collection in @collections
-          %li
-            %a{:href => slice_url(:collection, collection), :class => "collection"}
-              %h3= collection.name
-              %p nil items
-
-    %h2.assetList Browse
-    %ul.assetList
-      %li
-        %a{:href => slice_url(:asset_category, "all"), :class => "browseAll"}
-          %h3 All
-          %p nil items
-      - Gluttonberg::Library::CATEGORIES.each do |category|
-        %li
-          %a{:href => slice_url(:asset_category, category), :class => "browse#{category.pluralize.capitalize}"}
-            %h3= category.pluralize.capitalize
-            %p nil items
+    = partial(:browser_root)
     
   %div.controls
     %button#upload.buttonGrey Upload File
