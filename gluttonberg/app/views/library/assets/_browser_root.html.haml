@@ -1,0 +1,20 @@
+%h2.assetList Collections
+- unless @collections.empty?
+  %ul.assetList
+    - for collection in @collections
+      %li
+        %a{:href => slice_url(:collection, collection), :class => "collection"}
+          %h3= collection.name
+          %p nil items
+
+%h2.assetList Browse
+%ul.assetList
+  %li
+    %a{:href => slice_url(:asset_category, "all"), :class => "browseAll"}
+      %h3 All
+      %p nil items
+  - Gluttonberg::Library::CATEGORIES.each do |category|
+    %li
+      %a{:href => slice_url(:asset_category, category), :class => "browse#{category.pluralize.capitalize}"}
+        %h3= category.pluralize.capitalize
+        %p nil items
