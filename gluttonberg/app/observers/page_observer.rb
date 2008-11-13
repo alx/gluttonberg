@@ -21,6 +21,7 @@ module Gluttonberg
         
       unless behaviour == :component
         Merb.logger.info("Generating stubbed content for new page")
+        puts "type: #{type.inspect}"
         type.sections.each do |section|
           # Create the content
           association = send(section.type)
