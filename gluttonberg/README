@@ -53,16 +53,23 @@ If you want a minimal merb install:
   * webrat (0.3.2)
   * echoe (3.0.2)
 
-  
 Next, you need to migrate the app. This is a bit of a pest since we don’t have
 a rake task yet. Firstly make a db directory inside the slice. Then start up
 an interactive merb session and auto migrate DataMapper.
 
   $ slice -i
   $ DataMapper.auto_migrate!
-  
+  $ Gluttonberg::User.create({:name => 'admin', :email => 'admin@localhost.localdomain', :password => 'password', :password_confirmation => 'password'})
+
+This migrates the database to create the tables and then creates an initial user
+to be able to login with.
+
 Now, if you run the slice command normally the app should boot up as expected. 
 Yay!
+
+  $ slice
+
+Open your browser to http://localhost:4000 to view Gluttonberg!
 
 Notes for Ubuntu Linux
 ======================
