@@ -20,8 +20,17 @@ module Gluttonberg
       end
       
       def show
+        provides :json
         @assets = @collection.assets.all(:order => [:name.desc])
-        render
+        if content_type == :json
+          JSON.pretty_generate({
+            :name     => @collection.name,
+            :backURL  => slice_url(:asset_browser, :no_frame => false),
+            :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
+          })
+        else
+          render
+        end
       end
       
       def delete
