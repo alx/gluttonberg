@@ -6,6 +6,7 @@ require content / "content" / "localization"
 module Gluttonberg
   module Content
     @@content_associations = nil
+    @@non_localized_associations = nil
     @@content_classes = []
     @@localizations = {}
     @@localization_associations = nil
@@ -41,6 +42,13 @@ module Gluttonberg
     
     def self.content_classes
       @@content_classes
+    end
+    
+    def self.non_localized_associations
+      @@non_localized_associations ||= begin
+        non_localized = @@content_classes.select {|c| !c.localized? }
+        non_localized.collect {|c| c.association_name }
+      end
     end
     
     def self.content_associations

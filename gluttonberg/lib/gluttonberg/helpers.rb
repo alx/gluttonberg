@@ -7,11 +7,11 @@ module Gluttonberg
       if bound?(*args)
         opts = args.length > 1 ? args.last : {}
         # do something clever to get the current obj, hence the fieldname
-        rel = current_form_context.send(:control_name, args.first)
+        rel = current_form_context.send(:control_id, args.first)
         asset_id = current_form_context.send(:control_value, args.first)
       else
         opts = args.first
-        rel = opts[:name]
+        rel = opts[:id]
         asset_id = opts[:value]
       end
       # Find the asset so we can get the name
@@ -31,7 +31,7 @@ module Gluttonberg
       output = ""
       output << tag(:label, opts[:label]) if opts[:label]
       output << tag(:p, link_contents, :class => "assetBrowserLink")
-      output << hidden_field(args.first)
+      output << hidden_field(opts)
     end
     
     # Generates a styled tab bar
@@ -145,6 +145,10 @@ module Gluttonberg
     
     def render_rich_text_content(content)
       content.current_localization.formatted_text
+    end
+    
+    def render_image_content(content)
+      tag(:img, :src => content.asset.url, :alt => content.asset.name)
     end
     
     # Looks for a matching partial in the templates directory. Failing that, 

@@ -16,5 +16,9 @@ module Gluttonberg
     def type
       asset.type
     end
+    
+    def url
+      "/assets/#{asset.category.pluralize}/#{file_name}"
+    end
   end
 end
