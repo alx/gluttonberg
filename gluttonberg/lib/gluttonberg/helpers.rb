@@ -4,10 +4,11 @@ module Gluttonberg
     # Generates a link which launches the asset browser
     # TODO: display asset name
     def asset_browser(*args)
-      if bound?(*args)
+      bound = bound?(*args)
+      if bound
         opts = args.length > 1 ? args.last : {}
         # do something clever to get the current obj, hence the fieldname
-        rel = current_form_context.send(:control_id, args.first)
+        rel = "#{current_form_context.instance_variable_get(:@name)}_#{args.first}"
         asset_id = current_form_context.send(:control_value, args.first)
       else
         opts = args.first
@@ -27,11 +28,11 @@ module Gluttonberg
       end
       # Output it all
       link_contents = "<strong class=\"#{indicator}\">#{asset_name}</strong>"
-      link_contents << link_to("Browse", slice_url(:asset_browser), :class => "buttonGrey", :rel => rel)
+      link_contents << link_to("Browse", url(:gluttonberg_asset_browser), :class => "buttonGrey", :rel => rel)
       output = ""
       output << tag(:label, opts[:label]) if opts[:label]
       output << tag(:p, link_contents, :class => "assetBrowserLink")
-      output << hidden_field(opts)
+      output << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
     end
     
     # Generates a styled tab bar
