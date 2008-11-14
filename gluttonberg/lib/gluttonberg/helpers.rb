@@ -148,7 +148,11 @@ module Gluttonberg
     end
     
     def render_image_content(content)
-      tag(:img, :src => content.asset.url, :alt => content.asset.name)
+      if content.asset
+        tag(:img, :src => content.asset.url, :alt => content.asset.name)
+      else
+        tag(:p, "Image missing")
+      end
     end
     
     # Looks for a matching partial in the templates directory. Failing that, 

@@ -60,7 +60,7 @@ module Gluttonberg
       def create
         @asset = Asset.new(params["gluttonberg::asset"])
         if @asset.save
-          redirect(slice_url(:library))
+          redirect(slice_url(:asset, @asset))
         else
           prepare_to_edit
           render :new
@@ -69,7 +69,7 @@ module Gluttonberg
       
       def update
         if @asset.update_attributes(params["gluttonberg::asset"])
-          redirect(slice_url(:library))
+          redirect(slice_url(:asset, @asset))
         else
           prepare_to_edit
           render :new
