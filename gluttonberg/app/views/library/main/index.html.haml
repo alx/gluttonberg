@@ -30,6 +30,6 @@
   %ul.assetList
     - for asset in @assets
       %li
-        %a{:href => slice_url(:asset, asset), :class => "asset#{asset.type}"}
+        %a{:href => slice_url(:asset, asset), :class => "asset#{asset.category.capitalize}"}
           %h3= asset.name
           %p= asset.full_type

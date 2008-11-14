@@ -380,14 +380,13 @@ ul.assetList {
   margin-bottom: 1em; }
   ul.assetList li, ul.assetList a {
     width: 15em;
-    float: left; }
+    float: left;
+    overflow: hidden; }
   ul.assetList h3 {
     white-space: no-wrap;
     color: black !important;
     font-size: 1.1em;
-    width: 100%;
-    margin-bottom: 0.2em;
-    overflow: hidden; }
+    margin-bottom: 0.2em; }
   ul.assetList p {
     color: #666666 !important;
     font-size: 0.9em; }
@@ -402,7 +401,7 @@ ul.assetList {
   ul.assetList a.assetDocument,
   ul.assetList a.assetImage,
   ul.assetList a.assetVideo {
-    background-image: url(../images/library/asset_generic.gif); }
+    background-image: url(../images/library/asset_generic_medium.gif); }
   ul.assetList a.collection {
     background-image: url(../images/library/collection_medium.gif); }
   ul.assetList a.browseAll {
@@ -451,6 +450,7 @@ ul.assetList {
 #assets.show #preview {
   border: 1px solid #cccccc;
   background: #E6E6E6;
+  text-align: center;
   margin-top: 30px;
   width: 250px;
   height: 200px;

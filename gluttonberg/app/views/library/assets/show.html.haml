@@ -9,7 +9,7 @@
   = "#{@asset.category.capitalize}/#{@asset.type}"
   
 %div#preview
-  &nbsp;
+  %img{:src => @asset.url}
     
 %h3 Metadata
 %dl
