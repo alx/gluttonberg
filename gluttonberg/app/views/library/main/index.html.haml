@@ -3,15 +3,6 @@
   = nav_link("Add collection", slice_url(:new_collection))
   = nav_link("Add asset", slice_url(:new_asset))
 
-%h2.assetList Collections
-- unless @collections.empty?
-  %ul.assetList
-    - for collection in @collections
-      %li
-        %a{:href => slice_url(:collection, collection), :class => "collection"}
-          %h3= collection.name
-          %p nil items
-
 %h2.assetList Browse
 %ul.assetList
   %li
@@ -24,6 +15,14 @@
         %h3= category.pluralize.capitalize
         %p nil items
 
+- unless @collections.empty?
+  %h2.assetList Collections
+  %ul.assetList
+    - for collection in @collections
+      %li
+        %a{:href => slice_url(:collection, collection), :class => "collection"}
+          %h3= collection.name
+          %p nil items
 
 - unless @assets.empty?
   %h2.assetList Latest

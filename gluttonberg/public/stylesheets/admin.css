@@ -363,9 +363,9 @@ td.inset6 {
 
 /* Asset Library */
 .assetList {
-  margin-left: 2%;
-  margin-right: 2%;
-  width: 96%;
+  margin-left: 4%;
+  margin-right: 4%;
+  width: 92%;
   float: left; }
 
 h2.assetList {
@@ -542,7 +542,11 @@ ul.assetList {
     width: 100%;
     float: left;
     clear: both;
-    overflow: auto; }
+    overflow: auto;
+    width: 96%; }
+    #assetsDialog #assetsDisplay .assetList {
+      left: 2%;
+      right: 2%; }
     #assetsDialog #assetsDisplay ul.assetList {
       overflow: hidden; }
   #assetsDialog .controls {
