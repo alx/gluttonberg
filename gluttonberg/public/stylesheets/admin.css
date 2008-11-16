@@ -556,7 +556,7 @@ ul.assetList {
   margin-bottom: 30px; }
 #assets.show #wrapper {
   position: relative; }
-  #assets.show #wrapper h2, #assets.show #wrapper h3, #assets.show #wrapper p, #assets.show #wrapper dl {
+  #assets.show #wrapper h2, #assets.show #wrapper h3, #assets.show #wrapper p, #assets.show #wrapper dl, #assets.show #wrapper ul {
     margin-left: 340px;
     margin-right: 30px; }
   #assets.show #wrapper h2 {
@@ -579,6 +579,10 @@ ul.assetList {
   #assets.show #wrapper dd {
     padding: 0.3em 0 0.1em 0;
     clear: right; }
+  #assets.show #wrapper ul {
+    margin-bottom: 2em; }
+  #assets.show #wrapper li {
+    padding: 0.3em 0 0.1em 0; }
 #assets.show #preview {
   border: 1px solid #cccccc;
   background: #E6E6E6;
