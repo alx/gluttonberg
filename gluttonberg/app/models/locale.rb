@@ -28,7 +28,7 @@ module Gluttonberg
     end
 
     def clear_all_dialects
-      self.gluttonberg_dialect_gluttonberg_locales.all.destroy!
+      self.gluttonberg_dialect_gluttonberg_locales.all.destroy! unless self.new_record?
     end
   end
 end

@@ -31,7 +31,7 @@ module Gluttonberg
     end
 
     def clear_all_collections
-      self.gluttonberg_asset_gluttonberg_asset_collections.all.destroy!
+      self.gluttonberg_asset_gluttonberg_asset_collections.all.destroy! unless self.new_record?
     end
 
     # These are for temporarily storing values to be inserted into a 
