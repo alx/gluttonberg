@@ -44,7 +44,7 @@ module Gluttonberg
       def create
         @collection = AssetCollection.new(params["gluttonberg::asset_collection"])
         if @collection.save
-          redirect(slice_url(:collections))
+          redirect(slice_url(:library))
         else
           render :new
         end
@@ -52,7 +52,7 @@ module Gluttonberg
       
       def update
         if @collection.update_attributes(params["gluttonberg::asset_collection"])
-          redirect(slice_url(:collections))
+          redirect(slice_url(:library))
         else
           render :new
         end
@@ -60,7 +60,7 @@ module Gluttonberg
       
       def destroy
         @collection.destroy
-        redirect(slice_url(:collections))
+        redirect(slice_url(:library))
       end
       
       private
