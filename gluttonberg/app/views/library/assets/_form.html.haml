@@ -10,6 +10,12 @@
   = block("Details") do
     = text_field(:name, :label => "Name", :class => "large")
     = text_area(:description, :label => "Description", :class => "large short")
+
+  = fieldset(:legend => "Collections", :id => "collections") do
+    %div.fieldset
+      - for collection in @collections
+        = check_box(:name => "gluttonberg::asset[collection_ids][]", :id => "asset_collection_#{collection.id}", :value => collection.id, :boolean => false, :checked => @asset.collections.include?(collection))
+        %label{:for => "asset_collection_#{collection.id}", :class => "checkbox"}= collection.name
       
   = block("File") do
     = file_field(:file, :label => "File to upload")
