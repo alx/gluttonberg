@@ -91,6 +91,7 @@ module Gluttonberg
       def prepare_to_edit
         @dialects = Dialect.all
         @locales = Locale.all
+        @collections = AssetCollection.all
       end
     end
   end
