@@ -48,6 +48,12 @@ module Gluttonberg
       def update
         @locale = Locale.get(params[:id])
         raise NotFound unless @locale
+
+        unless params["gluttonberg::locale"].has_key?('dialect_ids')
+          # no dialect ids were supplied so need to delete all dialect associations
+          @locale.clear_all_dialects
+        end
+
         if @locale.update_attributes(params["gluttonberg::locale"]) || !@locale.dirty?
           redirect slice_url(:locales)
         else
