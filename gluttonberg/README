@@ -38,6 +38,7 @@ If you want a minimal merb install:
   * merb_datamapper (1.0)
   * merb-auth-core (1.0)
   * merb-auth-more (1.0)
+  * merb-haml (1.0)
   * dm-adjust (0.9.6)
   * dm-aggregates (0.9.6)
   * dm-core (0.9.6)
