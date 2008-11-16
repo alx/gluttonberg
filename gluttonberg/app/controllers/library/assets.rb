@@ -68,6 +68,10 @@ module Gluttonberg
       end
       
       def update
+        unless params["gluttonberg::asset"].has_key?('collection_ids') 
+          # no collection ids were supplied so need to delete all collection associations
+          @asset.clear_all_collections
+        end
         if @asset.update_attributes(params["gluttonberg::asset"])
           redirect(slice_url(:library))
         else
