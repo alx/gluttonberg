@@ -13,7 +13,27 @@ module Gluttonberg
 
     has n, :localizations, :class_name => "Gluttonberg::AssetLocalization"
     has n, :collections, :through => Resource, :class_name => "Gluttonberg::AssetCollection"
-    
+
+    # This replaces the existing set of associated collections with a new set based
+    # on the array of IDs passed in.
+    def collection_ids=(new_ids)
+      # This is slightly crude, but lets just delete the join models that we
+      # don't need anymore.
+
+      # NOTE: Datamapper will try to insert rows into the join table on a Many to Many
+      # even if the relationship is already defined.
+      # You need to clear the relationships and reinsert them to prevent composite key
+      # violation errors
+
+      #self.gluttonberg_asset_gluttonberg_asset_collections.all(:asset_collection_id.not => new_ids).destroy!
+      clear_all_collections
+      self.collections = Gluttonberg::AssetCollection.all(:id => new_ids)
+    end
+
+    def clear_all_collections
+      self.gluttonberg_asset_gluttonberg_asset_collections.all.destroy!
+    end
+
     # These are for temporarily storing values to be inserted into a 
     # localization. They are only used when the asset is first created or
     # when it's in non-localize-mode.
