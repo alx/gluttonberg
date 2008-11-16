@@ -64,6 +64,7 @@ module Gluttonberg
    
       def find_page_type
         @page_type = PageType.get(params[:type_id])
+        raise NotFound unless @page_type
       end
     
     end
