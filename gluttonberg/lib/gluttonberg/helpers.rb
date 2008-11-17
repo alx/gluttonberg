@@ -93,7 +93,13 @@ module Gluttonberg
       pages.each do |page|
         li_opts = {}
         li_opts[:class] = "current" if page == @page
-        content << "\n\t#{tag(:li, tag(:a, page.title, :href => page_url(page)), li_opts)}"
+        if @page.home?
+          li_opts[:id] = "homeNav" 
+          url = page_url("/")
+        else
+          url = page_url(page)
+        end
+        content << "\n\t#{tag(:li, tag(:a, page.nav_label, :href => url), li_opts)}"
         children = page.children_with_localization(:dialect => dialect, :locale => locale)
         content << navigation_tree(children) unless children.empty?
       end
@@ -103,7 +109,8 @@ module Gluttonberg
     # Returns the URL with any locale/dialect prefix it needs
     def page_url(path_or_page)
       path = path_or_page.is_a?(String) ? path_or_page : path_or_page.path
-      opts = {:full_path => path}
+      opts = {}
+      opts[:full_path] = path unless path == "/"
       if ::Gluttonberg.localized?
         opts.merge!({:locale => locale.slug, :dialect => dialect.code})
       elsif ::Gluttonberg.translated?
@@ -130,13 +137,13 @@ module Gluttonberg
     # to execute to actually write the contents to page.
     # TODO: if there is no way to to render the content, freak out and raise
     # an error
-    def render_content_for(section_name)
+    def render_content_for(section_name, opts = {})
       # At present this generates a bunch of queries. Eventually we should 
       # look at caching section names to save some DB hits.
-      content = @page.localized_contents.pluck {|c| c.section.name == section_name}
+      content = content_for(section_name)
       render_method = :"render_#{content.content_type}"
       if respond_to? render_method
-        send(:"render_#{content.content_type}", content)
+        send(:"render_#{content.content_type}", content, opts)
       elsif content.respond_to? :text
         content.text
       else
@@ -144,16 +151,26 @@ module Gluttonberg
       end
     end
     
-    def render_rich_text_content(content)
+    # Returns the content record for the specified section. It will include
+    # the relevant localized version based the current locale/dialect
+    def content_for(section_name, opts = nil)
+      @page.localized_contents.pluck {|c| c.section.name == section_name}
+    end
+    
+    def render_rich_text_content(content, opts = nil)
       content.current_localization.formatted_text
     end
     
-    def render_image_content(content)
+    def render_image_content(content, opts = {})
       if content.asset
-        tag(:img, :src => content.asset.url, :alt => content.asset.name)
+        image_tag(content.asset.url, opts.merge!(:alt => content.asset.name))
       else
         tag(:p, "Image missing")
       end
+    end
+    
+    def render_plain_text_content(content, opts = nil)
+      content.current_localization.text
     end
     
     # Looks for a matching partial in the templates directory. Failing that, 

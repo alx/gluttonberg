@@ -4,6 +4,7 @@
   
   = block("General") do
     = text_field(:name, :label => "Name", :id => "page_title")
+    = text_field(:navigation_label, :label => "Navigation Label")
     = text_field(:slug, :label => "Slug", :id => 'page_slug')
     - unless @pages.empty?
       = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)

@@ -2,12 +2,13 @@ module Gluttonberg
   class PageLocalization
     include DataMapper::Resource
 
-    property :id,           Serial
-    property :name,         String,   :length => 150
-    property :slug,         String,   :length => 0..50
-    property :path,         String,   :length => 255, :writer => :private
-    property :created_at,   Time
-    property :updated_at,   Time
+    property :id,               Serial
+    property :name,             String,   :length => 150
+    property :navigation_label, String,   :length => 0..100
+    property :slug,             String,   :length => 0..50
+    property :path,             String,   :length => 255, :writer => :private
+    property :created_at,       Time
+    property :updated_at,       Time
 
     belongs_to :page
     belongs_to :dialect
