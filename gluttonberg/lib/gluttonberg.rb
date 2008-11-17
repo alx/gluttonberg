@@ -163,7 +163,9 @@ if defined?(Merb::Plugins)
   dependency 'dm-timestamps',   datamapper_version
   dependency 'dm-types',        datamapper_version
   dependency 'merb-auth-core',  merb_version
-  dependency 'merb-auth-more',  merb_version
+  dependency 'merb-auth-more',  merb_version do
+    require 'merb-auth-more/mixins/redirect_back'
+  end
   dependency 'RedCloth',        "4.1.0",  {:require_as => 'redcloth'}
 
   # Various mixins and classes
@@ -175,7 +177,5 @@ if defined?(Merb::Plugins)
   require "gluttonberg/templates"
   require "gluttonberg/components"
   require "gluttonberg/helpers"
-  
-  require 'merb-auth-more/mixins/redirect_back'
   
 end
