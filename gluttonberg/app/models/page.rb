@@ -2,18 +2,19 @@ module Gluttonberg
   class Page
     include DataMapper::Resource
 
-    property :id,             Integer,  :serial => true, :key => true
-    property :parent_id,      Integer
-    property :layout_id,      Integer
-    property :name,           String,   :length => 1..100
-    property :slug,           String,   :length => 1..100
-    property :template_name,  String,   :length => 0..100
-    property :layout_name,    String,   :length => 0..100
-    property :home,           Boolean,  :default => false,  :writer => :private
-    property :behaviour,      Enum[:default, :dynamic, :component], :default => :default
-    property :component,      String,   :length => 1...100
-    property :created_at,     Time
-    property :updated_at,     Time
+    property :id,               Integer,  :serial => true, :key => true
+    property :parent_id,        Integer
+    property :layout_id,        Integer
+    property :name,             String,   :length => 1..100
+    property :navigation_label, String,   :length => 0..100
+    property :slug,             String,   :length => 1..100
+    property :template_name,    String,   :length => 0..100
+    property :layout_name,      String,   :length => 0..100
+    property :home,             Boolean,  :default => false,  :writer => :private
+    property :behaviour,        Enum[:default, :dynamic, :component], :default => :default
+    property :component,        String,   :length => 0...100
+    property :created_at,       Time
+    property :updated_at,       Time
 
     before :save, :cache_template_and_layout_name
     before :valid?, :slug_management
@@ -29,6 +30,20 @@ module Gluttonberg
     belongs_to  :type,          :class_name => "Gluttonberg::PageType"
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
+    
+    # Returns the localized navigation label, or falls back to the page for a
+    # the default.
+    def nav_label
+      if current_localization.navigation_label.blank?
+        if navigation_label.blank?
+          name
+        else
+          navigation_label
+        end
+      else
+        current_localization.navigation_label
+      end
+    end
 
     # Returns the localized title for the page or a default
     def title

@@ -2,6 +2,7 @@
   = error_messages_for(@page_localization)
   = block("Localization") do
     = text_field(:name, :label => "Name")
+    = text_field(:navigation_label, :label => "Navigation Label")
     = text_field(:slug, :label => "Slug")
     
   = block("Content") do
