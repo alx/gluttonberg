@@ -17,7 +17,12 @@
   %dd= @asset.category.capitalize
   %dt Type
   %dd= @asset.type
-  
+
+%h3 Collections
+%ul.collections
+  - for collection in @asset.collections
+    %li= h(collection.name)
+
 %h3 Updates
 %dl
   %dt Created
