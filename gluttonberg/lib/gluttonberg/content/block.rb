@@ -86,6 +86,18 @@ module Gluttonberg
           self.class.localized?
         end
         
+        def association_name
+          self.class.association_name
+        end
+        
+        def section_name
+          section.name
+        end
+        
+        def section_label
+          section.label
+        end
+        
         # Just delegates to the class.
         def content_type
           self.class.content_type

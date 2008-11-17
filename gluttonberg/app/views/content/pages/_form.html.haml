@@ -1,9 +1,10 @@
+- require_js 'slug_management'
 = form_for(@page, :action => action) do
   = error_messages_for(@page)
   
   = block("General") do
-    = text_field(:name, :label => "Name")
-    = text_field(:slug, :label => "Slug")
+    = text_field(:name, :label => "Name", :id => "page_title")
+    = text_field(:slug, :label => "Slug", :id => 'page_slug')
     - unless @pages.empty?
       = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
     = check_box(:home)

@@ -26,8 +26,13 @@ module Gluttonberg
     # Returns an array of content localizations
     def contents
       @contents ||= begin
-        Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|
+        # First collect the localized content
+        contents = Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|
           memo += send(assoc).all
+        end
+        # Then grab the content that belongs directly to the page
+        Gluttonberg::Content.non_localized_associations.inject(contents) do |memo, assoc|
+          contents += page.send(assoc).all
         end
       end
     end

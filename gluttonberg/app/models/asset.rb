@@ -54,6 +54,10 @@ module Gluttonberg
       attribute_get(:type) ? attribute_get(:type) : category
     end
     
+    def url
+      "/assets/#{category.pluralize}/#{file_name}"
+    end
+    
     private
     
     def set_category_and_type

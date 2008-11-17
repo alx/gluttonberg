@@ -20,8 +20,17 @@ module Gluttonberg
       end
       
       def show
+        provides :json
         @assets = @collection.assets.all(:order => [:name.desc])
-        render
+        if content_type == :json
+          JSON.pretty_generate({
+            :name     => @collection.name,
+            :backURL  => slice_url(:asset_browser, :no_frame => false),
+            :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
+          })
+        else
+          render
+        end
       end
       
       def delete
@@ -35,7 +44,7 @@ module Gluttonberg
       def create
         @collection = AssetCollection.new(params["gluttonberg::asset_collection"])
         if @collection.save
-          redirect(slice_url(:collections))
+          redirect(slice_url(:library))
         else
           render :new
         end
@@ -43,7 +52,7 @@ module Gluttonberg
       
       def update
         if @collection.update_attributes(params["gluttonberg::asset_collection"])
-          redirect(slice_url(:collections))
+          redirect(slice_url(:library))
         else
           render :new
         end
@@ -51,7 +60,7 @@ module Gluttonberg
       
       def destroy
         @collection.destroy
-        redirect(slice_url(:collections))
+        redirect(slice_url(:library))
       end
       
       private

@@ -38,7 +38,7 @@ module Gluttonberg
 
       def update_file_on_disk
         if file
-          File.open(location_on_disk, "w") {|f| f.write file[:tempfile].read}
+          FileUtils.mv file[:tempfile].path, location_on_disk
         end
       end
     end

@@ -1,12 +1,13 @@
 var AssetBrowser = {
   overlay: null,
   dialog: null,
-  load: function(link, markup) {
+  load: function(p, link, markup) {
     // Set everthing up
     AssetBrowser.showOverlay();
     $("body").append(markup);
     AssetBrowser.browser = $("#assetsDialog");
     AssetBrowser.target = $("#" + $(link).attr("rel"));
+    AssetBrowser.nameDisplay = p.find("strong");
     // Grab the various nodes we need
     AssetBrowser.display = AssetBrowser.browser.find("#assetsDisplay");
     AssetBrowser.offsets = AssetBrowser.browser.find("> *:not(#assetsDisplay)");
@@ -58,7 +59,10 @@ var AssetBrowser = {
     var target = $(this);
     if (target.is(".assetLink")) {
       var id = target.attr("href").match(/\d+$/);
+      console.log(AssetBrowser.target[0])
       AssetBrowser.target.attr("value", id);
+      var name = target.find("h2").html();
+      AssetBrowser.nameDisplay.html(name);
       AssetBrowser.close();
     }
     else {
@@ -97,8 +101,9 @@ $(document).ready(function() {
   });
   
   $("#wrapper .assetBrowserLink").click(function() {
-    var link = this;
-    $.get(link.href, null, function(markup) {AssetBrowser.load(link, markup);});
+    var p = $(this);
+    var link = p.find("a");
+    $.get(link.attr("href"), null, function(markup) {AssetBrowser.load(p, link, markup);});
     return false;
   });
 });

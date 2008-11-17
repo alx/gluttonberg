@@ -8,4 +8,5 @@
           %h2= asset.name
           %p= "Added #{asset.created_at.formatted(:short)}"
           %div
-            %img{:src => "/images/awesome_kittens.jpg"}/
+            - if asset.category == "image"
+              %img{:src => asset.url}/

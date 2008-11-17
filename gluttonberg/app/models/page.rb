@@ -16,6 +16,7 @@ module Gluttonberg
     property :updated_at,     Time
 
     before :save, :cache_template_and_layout_name
+    before :valid?, :slug_management
     after  :save, :check_for_home_update
     #validate_uniqueness_of :slug, :event => :save, :scope => [:parent_id]
 
@@ -45,7 +46,10 @@ module Gluttonberg
     end
 
     def slug=(new_slug)
+      puts "setting the slug"
       @paths_need_recaching = true
+      #if you're changing this regex, make sure to change the one in /javascripts/slug_management.js too
+      new_slug = new_slug.downcase.gsub(/\s/, '_').gsub(/[\!\*'"″′‟‛„‚”“”˝\(\)\;\:\@\&\=\+\$\,\/?\%\#\[\]]/, '')
       attribute_set(:slug, new_slug)
     end
 
@@ -126,6 +130,11 @@ module Gluttonberg
     def cache_template_and_layout_name
       attribute_set(:template_name, type.filename) if attribute_dirty?(:page_type_id)
       attribute_set(:layout_name, layout.filename) if attribute_dirty?(:layout_id)
+    end
+
+    def slug_management
+      puts "Hey, I'm managing a slug here, slug: #{slug.inspect}, slug.blank?: #{slug.blank?.inspect}"
+      @slug = name if @slug.blank?
     end
 
     # Checks to see if this page has been set as the homepage. If it has, we 
