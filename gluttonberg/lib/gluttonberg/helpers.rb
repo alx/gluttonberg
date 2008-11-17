@@ -93,15 +93,10 @@ module Gluttonberg
       pages.each do |page|
         li_opts = {}
         li_opts[:class] = "current" if page == @page
-        if @page.home?
-          li_opts[:id] = "homeNav" 
-          url = page_url("/")
-        else
-          url = page_url(page)
-        end
-        content << "\n\t#{tag(:li, tag(:a, page.nav_label, :href => url), li_opts)}"
+        li_content = tag(:a, page.nav_label, :href => page_url(page))
         children = page.children_with_localization(:dialect => dialect, :locale => locale)
-        content << navigation_tree(children) unless children.empty?
+        li_content << navigation_tree(children) unless children.empty?
+        content << "\n\t#{tag(:li, li_content, li_opts)}"
       end
       tag(:ul, "#{content}\n", opts)
     end
@@ -109,8 +104,7 @@ module Gluttonberg
     # Returns the URL with any locale/dialect prefix it needs
     def page_url(path_or_page)
       path = path_or_page.is_a?(String) ? path_or_page : path_or_page.path
-      opts = {}
-      opts[:full_path] = path unless path == "/"
+      opts = {:full_path => path}
       if ::Gluttonberg.localized?
         opts.merge!({:locale => locale.slug, :dialect => dialect.code})
       elsif ::Gluttonberg.translated?
