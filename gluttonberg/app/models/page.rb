@@ -87,7 +87,7 @@ module Gluttonberg
     #
     # FIXME: The way errors are raised here is ver nasty, needs fixing up 
     def self.first_with_localization(options)
-      if options[:path] == "" or options[:path].nil?
+      if options[:path] == ""
         options.delete(:path)
         page = Page.first(:home => true)
         return nil unless page

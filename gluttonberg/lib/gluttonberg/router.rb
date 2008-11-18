@@ -52,12 +52,13 @@ module Gluttonberg
     # TODO: look at matching a root, which people might hit without 
     # selecting a locale or dialect
     PUBLIC_DEFER_PROC = lambda do |request, params|
+      params[:full_path] = "" unless params[:full_path]
       additional_params, conditions = Gluttonberg::Router.localization_details(params)
       page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
       if page
         case page.behaviour
           when :component
-            Gluttonberg::Router.rewrite(localization, request, additional_params)
+            Gluttonberg::Router.rewrite(page, params[:full_path], request, additional_params)
           when :passthrough
             page.passthrough_target.load_localization(
               :locale   => additional_params[:locale].id,
@@ -71,13 +72,13 @@ module Gluttonberg
         # TODO: The string concatenation here is Sqlite specific, we need to 
         # handle it differently per adapter.
         component_conditions = conditions.merge(
-          :behaviour  => :component,
-          :conditions => ["? LIKE (path || '%')", params[:full_path]], 
-          :order      => [:path.asc]
+          "page.behaviour"  => :component,
+          :conditions       => ["? LIKE (path || '%')", params[:full_path]], 
+          :order            => [:path.asc]
         )
         page = Gluttonberg::Page.first_with_localization(component_conditions)
         if page
-          Gluttonberg::Router.rewrite(localization, request, additional_params)
+          Gluttonberg::Router.rewrite(page, params[:full_path], request, additional_params)
         else
           raise Merb::ControllerExceptions::NotFound
         end
@@ -133,9 +134,9 @@ module Gluttonberg
       end
     end
     
-    def self.rewrite(page, request, additional_params)
+    def self.rewrite(page, original_path, request, additional_params)
       additional_params[:page] = page
-      request.env["REQUEST_PATH"].gsub!(page.current_localization.path, "public/#{page.component}")
+      request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, "/public/#{page.component}")
       new_params = Merb::Router.match(request)[1]
       new_params.merge(additional_params)
     end
@@ -143,11 +144,11 @@ module Gluttonberg
     def self.localized_url(path, params)
       opts = {:full_path => path}
       if ::Gluttonberg.localized_and_translated?
-        opts.merge!({:locale => params[:locale].slug, :dialect => params[:dialect].code})
+        opts.merge!(:locale => params[:locale].slug, :dialect => params[:dialect].code)
       elsif ::Gluttonberg.localized?
-        opts.merge!({:locale => params[:locale].slug})
+        opts.merge!(:locale => params[:locale].slug)
       elsif ::Gluttonberg.translated?
-        opts.merge!({:dialect => params[:dialect].code})
+        opts.merge!(:dialect => params[:dialect].code)
       end
       Merb::Router.url((Gluttonberg.standalone? ? :gluttonberg_public_page : :public_page), opts)
     end
@@ -169,7 +170,7 @@ module Gluttonberg
         end
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path << "(/:full_path)", :full_path => /\S+/).defer_to(
+        match(path << "/:full_path", :full_path => /\S+/).defer_to(
           {:controller => controller, :action => "show"},
           &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
       end
