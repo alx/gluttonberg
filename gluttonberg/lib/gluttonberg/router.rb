@@ -170,9 +170,11 @@ module Gluttonberg
         end
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path << "/:full_path", :full_path => /\S+/).defer_to(
+        match(path + "/:full_path", :full_path => /\S+/).defer_to(
           {:controller => controller, :action => "show"},
-          &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
+          &Gluttonberg::Router::PUBLIC_DEFER_PROC
+        ).name(:public_page)
+        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC)
       end
     end
   end
