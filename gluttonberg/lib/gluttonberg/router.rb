@@ -167,9 +167,10 @@ module Gluttonberg
         elsif Gluttonberg.translated?
           path << "/:dialect"
         end
+        controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
         match(path << "(/:full_path)", :full_path => /\S+/).defer_to(
-          {:controller => "content/public", :action => "show"},
+          {:controller => controller, :action => "show"},
           &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
       end
     end
