@@ -24,10 +24,11 @@ module Gluttonberg
     is_list :scope => [:parent_id]
     is_tree
 
-    has n,      :localizations, :class_name => "Gluttonberg::PageLocalization"
-    has n,      :children,      :class_name => "Gluttonberg::Page", :child_key => [:parent_id]
+    has n,      :localizations,       :class_name => "Gluttonberg::PageLocalization"
+    has n,      :children,            :class_name => "Gluttonberg::Page", :child_key => [:parent_id]
     belongs_to  :layout
-    belongs_to  :type,          :class_name => "Gluttonberg::PageType"
+    belongs_to  :type,                :class_name => "Gluttonberg::PageType"
+    belongs_to  :passthrough_target,  :class_name => "Gluttonberg::Page"
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
     
@@ -89,12 +90,12 @@ module Gluttonberg
       if options[:path] == "" or options[:path].nil?
         options.delete(:path)
         page = Page.first(:home => true)
-        raise DataMapper::ObjectNotFoundError unless page
+        return nil unless page
         localization = page.localizations.first(options)
-        raise DataMapper::ObjectNotFoundError unless localization
+        return nil unless localization
       else
         localization = PageLocalization.first(options)
-        raise DataMapper::ObjectNotFoundError unless localization
+        return nil unless localization
         page = localization.page
       end
       page.current_localization = localization
