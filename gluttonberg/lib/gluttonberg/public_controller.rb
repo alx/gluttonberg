@@ -21,8 +21,8 @@ module Gluttonberg
       @page     = params[:page]
       # Store the templates
       templates       = @page.template_paths(:dialect => params[:dialect], :locale => params[:locale])
-      @page_template  = "pages/" + templates[:page]
-      @page_layout    = "#{templates[:layout]}.#{content_type}"
+      @page_template  = "pages/" + templates[:page] if templates[:page]
+      @page_layout    = "#{templates[:layout]}.#{content_type}" if templates[:layout]
     end
   end
 end
