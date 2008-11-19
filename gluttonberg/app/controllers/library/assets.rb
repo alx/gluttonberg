@@ -72,6 +72,30 @@ module Gluttonberg
           # no collection ids were supplied so need to delete all collection associations
           @asset.clear_all_collections
         end
+
+        # Create new AssetCollection if requested by the user
+        if params["new_collection"]
+          if params["new_collection"].has_key?('do_new_collection')
+            if params["new_collection"].has_key?('new_collection_name')
+              unless params["new_collection"]['new_collection_name'].blank?
+                # Retireve the existing AssetCollection if it matches or create a new one
+                the_collection = Gluttonberg::AssetCollection.first(:name => params["new_collection"]['new_collection_name'])
+                unless the_collection
+                  the_collection = Gluttonberg::AssetCollection.create(:name => params["new_collection"]['new_collection_name'])
+                end
+
+                # if we have an AssetCollection then add it to the params hash of collections to be
+                # assigned this Asset
+                if the_collection
+                  unless params["gluttonberg::asset"]['collection_ids'].include?(the_collection.id.to_s)
+                    params["gluttonberg::asset"]['collection_ids'] << the_collection.id.to_s
+                  end
+                end
+              end
+            end
+          end
+        end
+
         if @asset.update_attributes(params["gluttonberg::asset"])
           redirect(slice_url(:asset, @asset))
         else
