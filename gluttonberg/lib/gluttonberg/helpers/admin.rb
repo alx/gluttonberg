@@ -2,6 +2,33 @@ module Gluttonberg
   module Helpers
     module Admin
       # Generates a link which launches the asset browser
+      # This method operates in bound or unbound mode.
+      #
+      # In bound mode method accepts two arguments, the first argument must be the models
+      # relationship field to accept the asset (as a symbol) as per merbs bound form controls.
+      # The second argument is the options hash.
+      #
+      # In unbound mode the method accepts one argument, and options hash.
+      #
+      # The options hash accepts the following parameters:
+      #
+      #   The following are required in unbound mode, not used in bound mode:
+      #     :id = This is the id to use for the generated hidden field to store the selected assets id.
+      #     :value = The id of the currently selected asset. ode)
+      #
+      #   The following are optional in either mode:
+      #     < any option accepted by hidden_field() method >
+      #
+      # Example (unbound):
+      #   asset_browser(
+      #       :value => content.asset_id,
+      #       :id => "page_image_#{content.id}",
+      #       :name => "gluttonberg::page_localization[contents][#{content.association_name}][#{content.id}][asset_id]"
+      #   )
+      #
+      # Example (bound):
+      #   asset_browser(:thumbnail_id, :label => "Thumbnail")
+      #
       def asset_browser(*args)
         bound = bound?(*args)
         if bound
