@@ -379,13 +379,13 @@ h2.assetList {
 ul.assetList {
   margin-bottom: 1em; }
   ul.assetList li, ul.assetList a {
-    width: 15em;
+    width: 18em;
     float: left;
     overflow: hidden; }
   ul.assetList h3 {
-    white-space: no-wrap;
     color: black !important;
     font-size: 1.1em;
+    width: 11em;
     margin-bottom: 0.2em; }
   ul.assetList p {
     color: #666666 !important;
@@ -393,8 +393,8 @@ ul.assetList {
   ul.assetList a {
     background: left top no-repeat;
     text-decoration: none;
-    padding: 18px 0 0 78px;
-    min-height: 52px; }
+    padding: 14px 0 0 78px;
+    min-height: 56px; }
   ul.assetList a.assetArchive,
   ul.assetList a.assetAudio,
   ul.assetList a.assetBinary,
@@ -597,9 +597,7 @@ ul.assetList {
   #assetPanels h2 {
     font-size: 1em;
     font-weight: bold;
-    white-space: nowrap;
-    margin: 0 10px 0.2em 0;
-    overflow: hidden; }
+    margin: 0 10px 0.2em 0; }
   #assetPanels p {
     font-size: 0.85em;
     color: #666666; }
