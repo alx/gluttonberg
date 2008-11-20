@@ -13,6 +13,8 @@ Merb::Config.use do |c|
   c[:session_store] = 'cookie'
 end
 
+DataObjects::Sqlite3.logger = DataMapper::Logger.new(STDOUT, :debug)
+
 Merb::BootLoader.before_app_loads do
   Merb::Controller.send(:include, Merb::AssetsMixin)
 end
