@@ -16,7 +16,7 @@
       - for collection in @collections
         = check_box(:name => "gluttonberg::asset[collection_ids][]", :id => "asset_collection_#{collection.id}", :value => collection.id, :boolean => false, :checked => @asset.collections.include?(collection))
         %label{:for => "asset_collection_#{collection.id}", :class => "checkbox"}= collection.name
-      
+      = check_box(:name => "new_collection[do_new_collection]", :id => "do_new_collection", :boolean => false, :checked => false) + text_field(:name => 'new_collection[new_collection_name]'      , :class => "large")
   = block("File") do
     = file_field(:file, :label => "File to upload")
   
