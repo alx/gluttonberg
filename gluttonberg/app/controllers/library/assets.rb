@@ -58,6 +58,14 @@ module Gluttonberg
       end
       
       def create
+        the_collection = find_or_create_asset_collection_from_hash(params["new_collection"])
+        if the_collection
+          params["gluttonberg::asset"]['collection_ids'] = params["gluttonberg::asset"]['collection_ids'] || []
+          unless params["gluttonberg::asset"]['collection_ids'].include?(the_collection.id.to_s)
+            params["gluttonberg::asset"]['collection_ids'] << the_collection.id.to_s
+          end
+        end
+
         @asset = Asset.new(params["gluttonberg::asset"])
         if @asset.save
           redirect(slice_url(:asset, @asset))
