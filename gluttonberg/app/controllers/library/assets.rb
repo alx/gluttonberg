@@ -22,7 +22,8 @@ module Gluttonberg
       
       def category
         provides :json
-        if params[:category] = "all"
+
+        if params[:category] == "all"
           @assets = Asset.all(:order => [:name.desc])
         else
           @assets = Asset.all(:category => params[:category], :order => [:name.desc])
