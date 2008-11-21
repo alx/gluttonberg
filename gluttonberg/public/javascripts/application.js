@@ -196,12 +196,8 @@ var AssetBrowserEx = {
 
 // Displays the Asset Browser popup. This allows the user to select an asset from the asset library
 //   @config.rootUrl = The url to retieve the HTML for rendering the root library page (showing collections and asset types)
-//   @config.current_page_url = the url for the page you want to start the browser at (maybe for a sepecific category or collection.
-//   @config.onAssetSelect = the function to execute when somone clicks an asset
+//   @config.onSelect = the function to execute when somone clicks an asset
 function showAssetBrowser(config){
-  console.log('showAssetBrowser');
-  console.log(config);
-
   AssetBrowserEx.rootPageUrl = config.rootUrl;
   AssetBrowserEx.onAssetSelect = config.onSelect;
   AssetBrowserEx.show();
