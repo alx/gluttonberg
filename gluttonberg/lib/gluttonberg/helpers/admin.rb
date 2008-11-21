@@ -8,7 +8,7 @@ module Gluttonberg
       # relationship field to accept the asset (as a symbol) as per merbs bound form controls.
       # The second argument is the options hash.
       #
-      # In unbound mode the method accepts one argument, and options hash.
+      # In unbound mode the method accepts one argument an options hash.
       #
       # The options hash accepts the following parameters:
       #
