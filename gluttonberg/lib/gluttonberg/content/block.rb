@@ -107,8 +107,9 @@ module Gluttonberg
         # then stashes it in an accessor
         def load_localization(id_or_model)
           if localized?
-            id = id_or_model.is_a?(Numeric) ? id_or_model : id_or_model.id
-            @current_localization = localizations.first(:page_localization_id => id)
+            localization_id = id_or_model.is_a?(Numeric) ? id_or_model : id_or_model.id
+            conditions = {:page_localization_id => localization_id, :"#{self.class.content_type}_id" => id}
+            @current_localization = localizations.first(conditions)
           end
         end
       end
