@@ -61,6 +61,24 @@ module Gluttonberg
         output << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
       end
 
+      # Creates a link tag that shows the AssetBrowser popup
+      def link_to_asset_browser(name, opts={})
+
+        # work out the updating url for the collection from opts[:collection]
+        add_asset_url = slice_url(:add_asset_to_collection, opts[:collection].id)
+
+        js_code = <<JAVASCRIPT_CODE
+showAssetBrowser({rootUrl: '#{url(:gluttonberg_asset_browser)}', onSelect: function(assetId){writeAssetToAssetCollection(assetId,'#{add_asset_url}')}}); return false;
+JAVASCRIPT_CODE
+        opts[:onclick] = opts[:onclick] || js_code
+        link_to(name, '#', opts)
+      end
+
+      # Writes out a link styled like a button. To be used in the sub nav only
+      def asset_browser_nav_link(*args)
+        tag(:li, link_to_asset_browser(*args), :class => "button")
+      end
+
       # Generates a styled tab bar
       def tab_bar(&blk)
         tag(:ul, {:id => "tabBar"}, &blk)
