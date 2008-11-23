@@ -14,5 +14,42 @@ module Gluttonberg
       @options[:message]  ||= "If you delete this record, it will be gone permanently. There is no undo."
       render :template => "shared/delete", :layout => false
     end
+    
+    # Returns an array containing the current page, total page count and 
+    # the results
+    class Paginator
+      attr_reader :current, :total
+      def initialize(current, total)
+        @current  = current
+        @total    = total
+      end
+      
+      def previous?
+        @current > 1
+      end
+      
+      def next?
+        @current < @total
+      end
+      
+      def previous
+        @current - 1
+      end
+      
+      def next
+        @current + 1
+      end
+    end
+    
+    def paginate(model, opts = {})
+      if params[:page]
+        page = params[:page].to_i 
+        opts[:page] = page
+      else
+        page = 1
+      end
+      results = model.send(:paginated, opts)
+      [Paginator.new(page, results[0]), results[1]]
+    end
   end
 end

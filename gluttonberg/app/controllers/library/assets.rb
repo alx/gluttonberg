@@ -22,19 +22,20 @@ module Gluttonberg
       
       def category
         provides :json
-
-        if params[:category] == "all"
-          @assets = Asset.all(:order => [:name.desc])
+        conditions = if params[:category] == "all"
+          {:order => [:name.desc]}
         else
-          @assets = Asset.all(:category => params[:category], :order => [:name.desc])
+          {:category => params[:category], :order => [:name.desc]}
         end
         if content_type == :json
+          @assets = Asset.all(conditions)
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,
             :backURL  => slice_url(:asset_browser, :no_frame => false),
             :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
           })
         else
+          @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
           render
         end
       end

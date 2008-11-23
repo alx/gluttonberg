@@ -93,6 +93,7 @@ if defined?(Merb::Plugins)
   dependency 'merb-assets',     merb_version
   dependency 'merb-helpers',    merb_version
   dependency 'merb_datamapper', merb_version
+  dependency 'dm-aggregates',   datamapper_version
   dependency 'dm-is-tree',      datamapper_version
   dependency 'dm-observer',     datamapper_version
   dependency 'dm-is-list',      datamapper_version
@@ -112,6 +113,7 @@ if defined?(Merb::Plugins)
   require "gluttonberg/admin_controller"
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
+  require "gluttonberg/datamapper_ext"
   require "gluttonberg/templates"
   require "gluttonberg/components"
   require "gluttonberg/helpers"
