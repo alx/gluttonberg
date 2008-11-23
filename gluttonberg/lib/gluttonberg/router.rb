@@ -35,6 +35,7 @@ module Gluttonberg
           end
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")
+          a.match("/collections/:id/add_asset").to(:controller => "library/collections", :action => "add_asset").name(:add_asset_to_collection)
         end
       
         # Settings

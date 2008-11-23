@@ -18,6 +18,22 @@ module Gluttonberg
       def edit
         render
       end
+
+      def add_asset
+        only_provides :json
+        
+
+        @asset = Asset.get(params[:asset_id])
+        raise NotFound unless @asset
+
+        # add the asset to the collection
+        @collection.assets << @asset
+        @collection.save
+
+        JSON.pretty_generate({
+          :success => true
+        })
+      end
       
       def show
         provides :json

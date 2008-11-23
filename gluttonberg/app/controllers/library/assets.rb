@@ -22,7 +22,12 @@ module Gluttonberg
       
       def category
         provides :json
-        @assets = Asset.all(:category => params[:category], :order => [:name.desc])
+
+        if params[:category] == "all"
+          @assets = Asset.all(:order => [:name.desc])
+        else
+          @assets = Asset.all(:category => params[:category], :order => [:name.desc])
+        end
         if content_type == :json
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,

@@ -80,6 +80,160 @@ var AssetBrowser = {
   }
 };
 
+var AssetBrowserEx = {
+  overlay: null,
+  dialog: null,
+  rootPageUrl: null,
+  onAssetSelect: null,
+  show: function(){
+    // display the dialog and do it's stuff
+    var self = this;
+    $("body").append('<div id="asset_load_point">&nbsp</div>');
+   //  $.get(this.root_page_url, null, function(markup){
+   $("#asset_load_point").load(this.rootPageUrl + ' #assetsDialog', null, function(){
+      //$("body").append(markup);
+      self.load();
+    });
+
+  },
+  load: function(/*p, link, markup */) {
+    var self = this;
+    // Set everthing up
+    this.showOverlay();
+    
+    this.browser = $("#assetsDialog");
+
+    // Grab the various nodes we need
+    this.display = this.browser.find("#assetsDisplay");
+    // $("#assetsDialog").dialog({height: 500, width: 500});
+    //$('#assetsDialog').jqm({modal: true});
+    //$.jqmShow();
+    this.offsets = this.browser.find("> *:not(#assetsDisplay)");
+    this.backControl = this.browser.find("#back a");
+    this.backControl.css({display: "none"});
+    // Calculate the offsets
+    this.offsetHeight = 0;
+    this.offsets.each(function(i, element) {
+      self.offsetHeight += $(element).outerHeight();
+    });
+    // Initialize
+    this.resizeDisplay();
+    $(window).resize(this.resizeDisplay);
+    $(window).scroll(this.resizeDisplay);
+    // Cancel button
+    this.browser.find("#cancel").click(this.close);
+    // Capture anchor clicks
+    this.display.find("a").click(this.click);
+    this.backControl.click(this.back);
+  },
+  resizeDisplay: function() {
+    var newHeight = AssetBrowserEx.browser.innerHeight() - AssetBrowserEx.offsetHeight;
+    AssetBrowserEx.display.height(newHeight);
+  },
+  getScrollXY: function() {
+    var scrOfX = 0, scrOfY = 0;
+    if( typeof( window.pageYOffset ) == 'number' ) {
+      //Netscape compliant
+      scrOfY = window.pageYOffset;
+      scrOfX = window.pageXOffset;
+    } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+      //DOM compliant
+      scrOfY = document.body.scrollTop;
+      scrOfX = document.body.scrollLeft;
+    } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+      //IE6 standards compliant mode
+      scrOfY = document.documentElement.scrollTop;
+      scrOfX = document.documentElement.scrollLeft;
+    }
+    return [ scrOfX, scrOfY ];
+  },
+  showOverlay: function() {
+    if (!AssetBrowserEx.overlay) {
+      AssetBrowserEx.overlay = $('<div id="assetsDialogOverlay">&nbsp</div>');
+      $("body").append(AssetBrowserEx.overlay);
+    }
+    else {
+      AssetBrowserEx.overlay.css({display: "block"});
+    }
+  },
+  close: function() {
+    AssetBrowserEx.overlay.css({display: "none"});
+    AssetBrowserEx.browser.remove();
+  },
+  handleJSON: function(json) {
+    if (json.backURL) {
+      AssetBrowserEx.backURL = json.backURL;
+      AssetBrowserEx.backControl.css({display: "block"});
+    }
+    AssetBrowserEx.updateDisplay(json.markup);
+  },
+  updateDisplay: function(markup) {
+    AssetBrowserEx.display.html(markup);
+    AssetBrowserEx.display.find("a").click(AssetBrowserEx.click);
+  },
+  click: function() {
+    // "this" is the item being clicked!
+    var target = $(this);
+    if (target.is(".assetLink")) {
+      var id = target.attr("href").match(/\d+$/);
+      AssetBrowserEx.onAssetSelect(id);
+      AssetBrowserEx.close();
+    }
+    else {
+      $.getJSON(target.attr("href") + ".json", null, AssetBrowserEx.handleJSON);
+    }
+    return false;
+  },
+  back: function() {
+    if (AssetBrowserEx.backURL) {
+      $.get(AssetBrowserEx.backURL, null, AssetBrowserEx.updateDisplay);
+      AssetBrowserEx.backURL = null;
+      AssetBrowserEx.backControl.css({display: "none"});
+    }
+    return false;
+  }
+};
+
+// Displays the Asset Browser popup. This allows the user to select an asset from the asset library
+//   @config.rootUrl = The url to retieve the HTML for rendering the root library page (showing collections and asset types)
+//   @config.onSelect = the function to execute when somone clicks an asset
+function showAssetBrowser(config){
+  AssetBrowserEx.rootPageUrl = config.rootUrl;
+  AssetBrowserEx.onAssetSelect = config.onSelect;
+  AssetBrowserEx.show();
+}
+
+function writeAssetToField(fieldId){
+  field = $("#" + fieldId);
+  field.attr("value", id);
+}
+
+function writeAssetToAssetCollection(assetId, assetCollectionUrl){
+ $.ajax({
+   type: "POST",
+   url: assetCollectionUrl,
+   data: "asset_id=" + assetId,
+   success: function(){
+     window.location.reload();
+   },
+   error: function(){
+     alert('Adding the Asset failed, sorry.');
+     window.location.reload();
+   },
+ });
+}
+
+// Temporary hack called by old Asset Browser code until it is updated to
+// use the new code
+function initializeAssetBrowserField(){
+  $("#wrapper .assetBrowserLink").click(function() {
+    var p = $(this);
+    var link = p.find("a");
+    $.get(link.attr("href"), null, function(markup) {AssetBrowser.load(p, link, markup);});
+    return false;
+  });
+}
+
 $(document).ready(function() {
   $("#templateSections").click(function(e) {
     var target = $(e.target);
@@ -98,12 +252,5 @@ $(document).ready(function() {
       }
       return false;
     }
-  });
-  
-  $("#wrapper .assetBrowserLink").click(function() {
-    var p = $(this);
-    var link = p.find("a");
-    $.get(link.attr("href"), null, function(markup) {AssetBrowser.load(p, link, markup);});
-    return false;
   });
 });

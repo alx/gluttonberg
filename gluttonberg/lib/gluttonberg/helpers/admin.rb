@@ -8,7 +8,7 @@ module Gluttonberg
       # relationship field to accept the asset (as a symbol) as per merbs bound form controls.
       # The second argument is the options hash.
       #
-      # In unbound mode the method accepts one argument, and options hash.
+      # In unbound mode the method accepts one argument an options hash.
       #
       # The options hash accepts the following parameters:
       #
@@ -59,6 +59,25 @@ module Gluttonberg
         output << tag(:label, opts[:label]) if opts[:label]
         output << tag(:p, link_contents, :class => "assetBrowserLink")
         output << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
+        output << "<script>$(document).ready(function(){initializeAssetBrowserField()}</script>"
+      end
+
+      # Creates a link tag that shows the AssetBrowser popup
+      def link_to_asset_browser(name, opts={})
+
+        # work out the updating url for the collection from opts[:collection]
+        add_asset_url = slice_url(:add_asset_to_collection, opts[:collection].id)
+
+        js_code = <<JAVASCRIPT_CODE
+showAssetBrowser({rootUrl: '#{url(:gluttonberg_asset_browser)}', onSelect: function(assetId){writeAssetToAssetCollection(assetId,'#{add_asset_url}')}}); return false;
+JAVASCRIPT_CODE
+        opts[:onclick] = opts[:onclick] || js_code
+        link_to(name, '#', opts)
+      end
+
+      # Writes out a link styled like a button. To be used in the sub nav only
+      def asset_browser_nav_link(*args)
+        tag(:li, link_to_asset_browser(*args), :class => "button")
       end
 
       # Generates a styled tab bar
