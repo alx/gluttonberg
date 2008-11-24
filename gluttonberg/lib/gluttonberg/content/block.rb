@@ -8,6 +8,7 @@ module Gluttonberg
         klass.class_eval do
           extend Block::ClassMethods
           include Block::InstanceMethods
+          include Textilized
           
           class << self; attr_accessor :localized, :label, :content_type, :association_name end
           @localized = false
@@ -48,6 +49,7 @@ module Gluttonberg
         
           # Mix in our base set of properties and methods
           localized_model.send(:include, Gluttonberg::Content::Localization)
+          localized_model.send(:include, Gluttonberg::Content::Textilized)
           # Generate additional properties from the block passed in
           localized_model.class_eval(&blk)
           # Store the name so we can easily access it without having to look 
