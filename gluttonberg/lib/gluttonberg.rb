@@ -1,7 +1,7 @@
 if defined?(Merb::Plugins)
 
-  merb_version = "1.0"
-  datamapper_version = "0.9.6"
+  merb_version = "1.0.1"
+  datamapper_version = "0.9.7"
 
   $:.unshift File.dirname(__FILE__)
 
