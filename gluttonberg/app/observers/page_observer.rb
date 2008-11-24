@@ -21,7 +21,6 @@ module Gluttonberg
         
       unless behaviour == :component
         Merb.logger.info("Generating stubbed content for new page")
-        puts "type: #{type.inspect}"
         type.sections.each do |section|
           # Create the content
           association = send(section.type)
@@ -35,21 +34,20 @@ module Gluttonberg
         end
       end
     end
+    
+    # This checks to make see if we need to regenerate paths for child-pages
+    # and adds a flag if it does.
+    before :update do
+      if attribute_dirty?(:parent_id) || attribute_dirty?(:slug)
+        @paths_need_recaching = true
+      end
+    end
 
-    # This updates localizations which don't have a slug set. In that case they 
-    # need to fallback to the default stored in the page. If that changes, then 
-    # all those relying on the default have to be recached again.
+    # This has the page localizations regenerate their path if the slug or 
+    # parent for this page has changed.
     after :update do
       if paths_need_recaching?
-        localizations.all(:slug => nil).each do |localization|
-          new_path = if localization.path.count("/") > 0
-            "#{localization.path.match(%r{(\S+)/\w+})[1]}/#{slug}"
-          else
-            slug
-          end
-          # Save the path in the localization
-          localization.update_attributes(:path => new_path)
-        end
+        localizations.each { |l| l.regenerate_path! }
       end
     end
     

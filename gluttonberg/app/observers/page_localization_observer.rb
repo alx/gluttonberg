@@ -10,14 +10,9 @@ module Gluttonberg
     before :valid? do
       if attribute_dirty?(:slug) || new_record?
         @paths_need_recaching = true
-
-        if page.parent_id
-          localization = page.parent.localizations.first({:locale_id => locale_id, :dialect_id => dialect_id})
-          path = "#{localization.path}/#{slug || page.slug}"
-        else
-          path = "#{slug || page.slug}"
-        end
-        attribute_set(:path, path)
+        regenerate_path 
+      elsif attribute_dirty?(:path)
+        @paths_need_recaching = true
       end
     end
 

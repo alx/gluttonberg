@@ -62,8 +62,6 @@ module Gluttonberg
     end
 
     def slug=(new_slug)
-      puts "setting the slug"
-      @paths_need_recaching = true
       #if you're changing this regex, make sure to change the one in /javascripts/slug_management.js too
       new_slug = new_slug.downcase.gsub(/\s/, '_').gsub(/[\!\*'"″′‟‛„‚”“”˝\(\)\;\:\@\&\=\+\$\,\/?\%\#\[\]]/, '')
       attribute_set(:slug, new_slug)

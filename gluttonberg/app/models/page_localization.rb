@@ -56,6 +56,30 @@ module Gluttonberg
       "#{name} (#{locale.name}/#{dialect.code})"
     end
     
+    # Forces the localization to regenerate it's full path. It will firstly
+    # look to see if there is a parent page that it need to derive the path
+    # prefix from. Otherwise it will just use the slug, with a fall-back
+    # to it's page's default.
+    def regenerate_path
+      if page.parent_id
+        localization = page.parent.localizations.first(
+          :fields           => [:path],
+          :locale_id        => locale_id, 
+          :dialect_id       => dialect_id
+        )
+        path = "#{localization.path}/#{slug || page.slug}"
+      else
+        path = "#{slug || page.slug}"
+      end
+      attribute_set(:path, path)
+    end
+    
+    # Regenerates and saves the path to this localization.
+    def regenerate_path!
+      regenerate_path
+      save
+    end
+    
     private
     
     def update_content_localizations
