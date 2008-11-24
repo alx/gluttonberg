@@ -6,9 +6,11 @@ module Gluttonberg
           property :name,         String
           property :description,  DataMapper::Types::Text
           property :file_name,    String, :length => 255
+          property :hash,         String, :length => 255, :writer => :private
           property :size,         Integer
           
-          after :destroy, :remove_file_from_disk
+          after   :destroy, :remove_file_from_disk
+          before  :save,    :generate_reference_hash
         end
       end
       
@@ -25,20 +27,39 @@ module Gluttonberg
       def file
         @file
       end
-
+      
+      def url
+        "/assets/#{hash}/#{file_name}"
+      end
+      
       def location_on_disk
-        Library.assets_dir(category) / file_name
+        directory / file_name
+      end
+      
+      def directory
+        Library.root / hash
       end
 
       private
 
       def remove_file_from_disk
-        FileUtils.rm(location_on_disk) if File.exists?(location_on_disk)
+        if File.exists?(directory)
+          FileUtils.rm_r(directory) 
+        end
       end
 
       def update_file_on_disk
         if file
+          FileUtils.mkdir(directory) unless File.exists?(directory)
           FileUtils.mv file[:tempfile].path, location_on_disk
+        end
+      end
+      
+      private
+      
+      def generate_reference_hash
+        unless attribute_get(:hash)
+          attribute_set(:hash, Digest::SHA1.hexdigest(Time.now.to_s + file_name))
         end
       end
     end

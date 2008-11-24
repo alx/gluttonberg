@@ -105,6 +105,9 @@ if defined?(Merb::Plugins)
     require 'merb-auth-more/mixins/redirect_back'
   end
   dependency 'RedCloth',        "4.1.0",  {:require_as => 'redcloth'}
+  
+  # Stdlib dependencies
+  require 'digest/sha1'
 
   # Various mixins and classes
   require "gluttonberg/content"
