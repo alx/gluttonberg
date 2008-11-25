@@ -223,18 +223,17 @@ function writeAssetToAssetCollection(assetId, assetCollectionUrl){
  });
 }
 
-// Temporary hack called by old Asset Browser code until it is updated to
-// use the new code
-function initializeAssetBrowserField(){
+$(document).ready(function() {
+  // Temporary hack called by old Asset Browser code until it is updated to
+  // use the new code
   $("#wrapper .assetBrowserLink").click(function() {
     var p = $(this);
     var link = p.find("a");
     $.get(link.attr("href"), null, function(markup) {AssetBrowser.load(p, link, markup);});
     return false;
   });
-}
-
-$(document).ready(function() {
+  
+  
   $("#templateSections").click(function(e) {
     var target = $(e.target);
     if (target.is("a")) {

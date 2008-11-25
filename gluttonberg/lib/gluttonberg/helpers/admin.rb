@@ -59,7 +59,7 @@ module Gluttonberg
         output << tag(:label, opts[:label]) if opts[:label]
         output << tag(:p, link_contents, :class => "assetBrowserLink")
         output << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
-        output << "<script>$(document).ready(function(){initializeAssetBrowserField()}</script>"
+        
       end
 
       # Creates a link tag that shows the AssetBrowser popup
